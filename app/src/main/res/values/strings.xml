@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Graduation Project</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="graduation_project_name">CrowdFunding</string>
+    <string-array name="category">
+        <item>All projects</item>
+        <item>Art</item>
+        <item>Crafts</item>
+        <item>Design</item>
+        <item>Fashion</item>
+        <item>Film and Video</item>
+        <item>Games</item>
+        <item>Health</item>
+        <item>Productivity</item>
+        <item>Food</item>
+    </string-array>
+    <string name="popular_page">Popular</string>
+    <string name="newest_page">Newest</string>
+    <string name="ending_soon_page">Ending Soon</string>
+    <string name="most_fund_page">Most Funding</string>
+</resources>
