@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_for_shop"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:text="Product Name"
+        android:layout_margin="5dp"
+        android:id="@+id/product_name" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/product_name"
+        android:adjustViewBounds="true"
+        android:layout_margin="5dp"
+        android:id="@+id/imge_of_product"
+        android:minHeight="100dp"
+        android:maxHeight="200dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imge_of_product"
+        android:gravity="center"
+        android:id="@+id/description_of_product"
+        android:text="description"
+        android:textSize="20sp"
+        android:maxLines="2"
+        android:minLines="1"
+        android:layout_margin="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description_of_product"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:text="price: "
+        android:textSize="20sp"
+        android:id="@+id/price_of_product" />
+
+
+</RelativeLayout>
