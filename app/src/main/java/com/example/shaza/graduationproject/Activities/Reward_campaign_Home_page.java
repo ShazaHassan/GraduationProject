@@ -11,10 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.example.shaza.graduationproject.Adapters.PageAdapter;
+import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
 import com.example.shaza.graduationproject.R;
+
+import java.util.zip.Inflater;
 
 public class Reward_campaign_Home_page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,11 +31,11 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         setupViewPager();
     }
 
-    //viewPager set
+    //viewPager set for create tabs
     private void setupViewPager() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewCampaigns);
         //adapter
-        PageAdapter pageAdapter = new PageAdapter(this, getSupportFragmentManager());
+        PageAdapterForCampaign pageAdapter = new PageAdapterForCampaign(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
         //tab
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewCampaigns);
@@ -59,12 +63,15 @@ public class Reward_campaign_Home_page extends AppCompatActivity
             Intent homePage = new Intent(this, Home_Page.class);
             startActivity(homePage);
         } else if (id == R.id.start_campaign) {
+            Intent startCampaign = new Intent(this, Create_new_campaign.class);
+            startActivity(startCampaign);
             // Handle the camera action
         } else if (id == R.id.suppot_startup) {
             Intent supportStartupPage = new Intent(this, SupportStartUp.class);
             startActivity(supportStartupPage);
         } else if (id == R.id.shop) {
-
+            Intent shopPage = new Intent(this, Shop_Page.class);
+            startActivity(shopPage);
         } else if (id == R.id.job) {
 
         } else if (id == R.id.login) {
@@ -90,4 +97,5 @@ public class Reward_campaign_Home_page extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 }

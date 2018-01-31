@@ -15,11 +15,11 @@ import com.example.shaza.graduationproject.R;
  * Created by Shaza Hassan on 24-Jan-18.
  */
 
-public class PageAdapter extends FragmentPagerAdapter {
+public class PageAdapterForCampaign extends FragmentPagerAdapter {
 
     private Context context;
 
-    public PageAdapter(Context context, FragmentManager fragmentManager) {
+    public PageAdapterForCampaign(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
         this.context = context;
     }

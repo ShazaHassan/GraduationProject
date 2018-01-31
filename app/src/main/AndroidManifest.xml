@@ -25,11 +25,27 @@
         <activity
             android:name=".Activities.SupportStartUp"
             android:label="Support startup"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".Activities.Home_Page" />
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
-            android:label="Reward"
+            android:label="Reward campaign"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Create_new_campaign"
+            android:label="Create campaign"
+            android:parentActivityName=".Activities.Home_Page" />
+        <activity
+            android:name=".Activities.New_campaign_reward"
+            android:label="Create reward campaign"
+            android:parentActivityName=".Activities.Create_new_campaign" />
+        <activity
+            android:name=".Activities.Campaign_info_for_creator"
+            android:label="Campaign details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Shop_Page"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Shop"></activity>
     </application>
 
 </manifest>

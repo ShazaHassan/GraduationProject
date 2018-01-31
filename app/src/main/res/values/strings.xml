@@ -15,8 +15,34 @@
         <item>Productivity</item>
         <item>Food</item>
     </string-array>
+    <string-array name="category_for_new_campaign">
+        <item>Select category</item>
+        <item>Art</item>
+        <item>Crafts</item>
+        <item>Design</item>
+        <item>Fashion</item>
+        <item>Film and Video</item>
+        <item>Games</item>
+        <item>Health</item>
+        <item>Productivity</item>
+        <item>Food</item>
+    </string-array>
+    <string-array name="category_for_product">
+        <item>All products</item>
+        <item>Art</item>
+        <item>Crafts</item>
+        <item>Design</item>
+        <item>Fashion</item>
+        <item>Film and Video</item>
+        <item>Games</item>
+        <item>Health</item>
+        <item>Productivity</item>
+        <item>Food</item>
+    </string-array>
     <string name="popular_page">Popular</string>
     <string name="newest_page">Newest</string>
     <string name="ending_soon_page">Ending Soon</string>
     <string name="most_fund_page">Most Funding</string>
+    <string name="most_seller">Most seller</string>
+    <string name="newest_product">Newest product</string>
 </resources>

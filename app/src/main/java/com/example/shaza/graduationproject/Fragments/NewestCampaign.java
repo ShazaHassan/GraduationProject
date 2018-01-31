@@ -1,13 +1,16 @@
 package com.example.shaza.graduationproject.Fragments;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
 import com.example.shaza.graduationproject.Adapters.AdapterForShowCampaign;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
@@ -16,7 +19,9 @@ import java.util.ArrayList;
 
 public class NewestCampaign extends Fragment {
     private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] texts = {"text1", "text2", "text3"};
+    private static final String[] texts = {"text1 this for trying typing multiline aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa "
+            , "text2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            , "text3aaaaaaassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"};
     private static final String[] campaignName = {"Camp1", "Camp2", "Camp3"};
     private static final String[] noOfDays = {"2 days left", "3 days left", "1 day left"};
     private static final String[] need = {"1$", "0$", "6$"};
@@ -37,6 +42,16 @@ public class NewestCampaign extends Fragment {
         AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array);
         ListView listView = rootView.findViewById(R.id.list);
         listView.setAdapter(adapter);
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent i = new Intent(getActivity(), Campaign_info_for_creator.class);
+//                i.putExtra("id", position);
+//                getActivity().startActivity(i);
+//            }
+//        });
+
         return rootView;
     }
 }
