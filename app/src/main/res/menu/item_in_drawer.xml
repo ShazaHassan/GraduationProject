@@ -5,8 +5,9 @@
     android:layout_width="wrap_content"
     tools:showIn="navigation_view">
     <item
-        android:title="Crowdfunding"
-        android:id="@+id/name_of_app" />
+        android:title="ElFund"
+        android:id="@+id/name_of_app"
+        android:icon="@drawable/logo" />
     <group android:id="@+id/part_1">
         <item
             android:id="@+id/start_campaign"

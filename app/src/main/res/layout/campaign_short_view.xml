@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:id="@+id/short_view_to_show_camp">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:text="Campaign name"
         android:id="@+id/campaign_name"
         android:textSize="28sp"
-        android:textColor="#1A237E" />
+        android:textColor="#fff" />
 
     <ImageView
         android:id="@+id/image_of_campaign_in_reward_home_page"
@@ -32,7 +32,7 @@
         android:text="Description About Camp"
         android:textSize="20sp"
         android:layout_below="@id/image_of_campaign_in_reward_home_page"
-        android:textColor="#000000"
+        android:textColor="#fff"
         android:gravity="center"
         android:id="@+id/description_for_reward_campaign_home_page"
         android:maxLines="2"
@@ -62,12 +62,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/description_for_reward_campaign_home_page"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:text="Need $"
         android:id="@+id/need"
         android:textSize="20sp"
-        android:textColor="#000000" />
+        android:textColor="#fff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,9 +76,11 @@
         android:id="@+id/days_left"
         android:layout_below="@id/description_for_reward_campaign_home_page"
         android:textSize="20sp"
-        android:textColor="#000"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp" />
+        android:textColor="#fff"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentLeft="true" />
 
 
 </RelativeLayout>

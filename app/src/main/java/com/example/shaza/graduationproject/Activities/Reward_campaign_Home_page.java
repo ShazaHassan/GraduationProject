@@ -12,13 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
 import com.example.shaza.graduationproject.R;
 
 import java.util.zip.Inflater;
+
+import static com.example.shaza.graduationproject.R.array.category;
 
 public class Reward_campaign_Home_page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +35,14 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         setContentView(R.layout.activity_reward_campaign__home_page);
         setupDrawer();
         setupViewPager();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+        return true;
+
     }
 
     //viewPager set for create tabs

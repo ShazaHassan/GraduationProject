@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -42,20 +44,31 @@ public class Home_Page extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         setupDrawer();
-        initRewardCamp();
-        initEquityCamp();
+        initRewardCampSuccess();
+        initEquityCampSuccess();
+        initRewardCampEnding();
+        initEquityCampEnding();
+        initRewardCampNewest();
+        initEquityCampNewest();
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+        return true;
+    }
+
     //setup view pager for reward campaign for slide campaign
-    private void initRewardCamp() {
+    private void initRewardCampSuccess() {
         for (int i = 0; i < img.length; i++)
             array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pager_reward_success);
         adapter1 = new MyAdapter(Home_Page.this, array);
         mPager.setAdapter(adapter1);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_success);
         indicator.setViewPager(mPager);
         adapter1.notifyDataSetChanged();
 
@@ -81,12 +94,48 @@ public class Home_Page extends AppCompatActivity
 //        }, 4500, 4500);*/
     }
 
+    private void initEquityCampSuccess() {
+//        for (int i = 0; i < img.length; i++)
+//            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+
+        mPager = (ViewPager) findViewById(R.id.pager_equity_success);
+        adapter1 = new MyAdapter(Home_Page.this, array);
+        mPager.setAdapter(adapter1);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_success);
+        indicator.setViewPager(mPager);
+        adapter1.notifyDataSetChanged();
+    }
+
     //setup view pager for equity campaign for slide campaign
-    private void initEquityCamp() {
-        mPager1 = (ViewPager) findViewById(R.id.pager_Equity_Camp);
+    private void initEquityCampEnding() {
+        mPager1 = (ViewPager) findViewById(R.id.pager_equity_ending);
         adapter2 = new MyAdapter(Home_Page.this, array);
         mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_Equity_Camp);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_end);
+        indicator.setViewPager(mPager1);
+    }
+
+    private void initRewardCampEnding() {
+        mPager1 = (ViewPager) findViewById(R.id.pager_reward_ending);
+        adapter2 = new MyAdapter(Home_Page.this, array);
+        mPager1.setAdapter(adapter2);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_ending);
+        indicator.setViewPager(mPager1);
+    }
+
+    private void initRewardCampNewest() {
+        mPager1 = (ViewPager) findViewById(R.id.pager_reward_newest);
+        adapter2 = new MyAdapter(Home_Page.this, array);
+        mPager1.setAdapter(adapter2);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_newest);
+        indicator.setViewPager(mPager1);
+    }
+
+    private void initEquityCampNewest() {
+        mPager1 = (ViewPager) findViewById(R.id.pager_equity_newest);
+        adapter2 = new MyAdapter(Home_Page.this, array);
+        mPager1.setAdapter(adapter2);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_newest);
         indicator.setViewPager(mPager1);
     }
 

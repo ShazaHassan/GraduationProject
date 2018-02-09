@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -28,7 +28,7 @@
             android:parentActivityName=".Activities.Home_Page" />
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
-            android:label="Reward campaign"
+            android:label="Reward camp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Create_new_campaign"

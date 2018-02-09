@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
@@ -26,6 +28,14 @@ public class Shop_Page extends AppCompatActivity
         setContentView(R.layout.activity_shop__page);
         setupDrawer();
         setupViewPager();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+        return true;
+
     }
 
     //pager set and tab set

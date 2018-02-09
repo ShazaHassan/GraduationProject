@@ -40,7 +40,7 @@ public class Ending_soon_campaign extends Fragment {
 
         for (int i = 0; i < img.length; i++)
             array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
-        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array);
+        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.gray);
         ListView listView = rootView.findViewById(R.id.list);
         listView.setAdapter(adapter);
 //

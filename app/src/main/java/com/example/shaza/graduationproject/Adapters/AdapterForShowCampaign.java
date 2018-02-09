@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,20 @@ import java.util.ArrayList;
 public class AdapterForShowCampaign extends ArrayAdapter<ImgAndText> {
     ArrayList<ImgAndText> imgAndTexts;
     private Context context;
+    private int colorResource;
 
     public AdapterForShowCampaign(Context context, ArrayList<ImgAndText> imgAndTexts) {
         super(context, 0, imgAndTexts);
         this.imgAndTexts = imgAndTexts;
         this.context = context;
+        this.colorResource = R.color.white;
     }
 
-    public AdapterForShowCampaign(@NonNull Context context) {
-        super(context, 0);
+    public AdapterForShowCampaign(Context context, ArrayList<ImgAndText> imgAndTexts, int colorResource) {
+        super(context, 0, imgAndTexts);
+        this.imgAndTexts = imgAndTexts;
+        this.context = context;
+        this.colorResource = colorResource;
     }
 
     @NonNull
@@ -82,6 +88,9 @@ public class AdapterForShowCampaign extends ArrayAdapter<ImgAndText> {
                 context.startActivity(detailsPage);
             }
         });
+        View setColorBackground = listItemView.findViewById(R.id.short_view_to_show_camp);
+        int color = ContextCompat.getColor(getContext(), colorResource);
+        setColorBackground.setBackgroundColor(color);
         return listItemView;
     }
 }
