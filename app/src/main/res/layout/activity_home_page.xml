@@ -451,6 +451,14 @@
                     android:id="@+id/fifth_item_in_page"
                     android:layout_marginBottom="5dp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/about_us1_modified"
+                        android:id="@+id/img_helping_community"
+                        android:scaleType="fitXY" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -458,15 +466,6 @@
                         android:textSize="26sp"
                         android:text="Helping Community"
                         android:id="@+id/help_community_home_page" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/about_us1_modified"
-                        android:id="@+id/img_helping_community"
-                        android:layout_below="@+id/help_community_home_page"
-                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -498,13 +497,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/sixth_item_in_page"
-                    android:background="#44929f"
                     android:layout_marginBottom="5dp">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:id="@+id/img_job_home_page"
                         android:src="@drawable/job2"
                         android:adjustViewBounds="true"
@@ -555,7 +554,8 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:id="@+id/img_shop_home_page"
                         android:src="@drawable/product"
                         android:layout_below="@+id/img_job_home_page" />

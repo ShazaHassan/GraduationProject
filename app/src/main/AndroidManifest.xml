@@ -44,8 +44,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Shop_Page"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Shop"></activity>
+            android:label="Shop"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Login"
+            android:label="Login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.SignUp"
+            android:label="Sign up"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

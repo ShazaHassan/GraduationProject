@@ -18,9 +18,6 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar2"
@@ -29,18 +26,21 @@
                     android:background="@color/darkBlue"
                     app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/category_for_product"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:gravity="right"
-                    android:layout_marginRight="25dp" />
-
-            </RelativeLayout>
 
         </android.support.design.widget.AppBarLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/category_for_product"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@color/darkBlue"
+            android:textAlignment="center"
+            style="@style/spinner"
+            android:gravity="right"
+            android:id="@+id/category_spinner" />
+
 
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"

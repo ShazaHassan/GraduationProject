@@ -82,9 +82,11 @@ public class Shop_Page extends AppCompatActivity
         } else if (id == R.id.job) {
 
         } else if (id == R.id.login) {
-
+            Intent loginPage = new Intent(this, Login.class);
+            startActivity(loginPage);
         } else if (id == R.id.sign_up) {
-
+            Intent signUpPage = new Intent(this, SignUp.class);
+            startActivity(signUpPage);
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
