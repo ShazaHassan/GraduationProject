@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -44,15 +46,14 @@ public class HelpingCommunity extends AppCompatActivity  {
         adapter = new Question_List_Adapters(list);
         listView.setAdapter(adapter);
 
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               Intent goToAnswer = new Intent(view.getContext(),CertainQuestion.class);
+               startActivity(goToAnswer); //start activity for result
+           }
+       });
 
-                Intent goToAnswer = new Intent(view.getContext(),CertainQuestionHelpingCommunity.class);
-                startActivity(goToAnswer); //start activity for result
-            }
-        });
-*/
         setupDrawer();
 
     }

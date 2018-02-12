@@ -1,10 +1,13 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.shaza.graduationproject.TemplateForAdapter.AnswerList;
@@ -13,20 +16,23 @@ import com.example.shaza.graduationproject.R;
 
 import java.util.ArrayList;
 
-public class CertainQuestion extends AppCompatActivity {
+public class CertainQuestion extends AppCompatActivity implements View.OnClickListener{
     private ListView listView;
     private Answer_List_Adapter adapter;
+    Button button;
     private ArrayList<AnswerList> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_certain_question_helping_community);
+        button = findViewById(R.id.button6);
+        button.setOnClickListener(this);
         listView = findViewById(R.id.List_of_Answers);
 
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
+        list.add(new AnswerList("Answer1"));
+        list.add(new AnswerList("Answer2"));
+        list.add(new AnswerList("Answer3"));
+        list.add(new AnswerList("Answer4"));
         list.add(new AnswerList("bbbbbb"));
         list.add(new AnswerList("bbbbbb"));
         list.add(new AnswerList("bbbbbb"));
@@ -62,5 +68,13 @@ public class CertainQuestion extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Intent AnswerPage = new Intent(this,AddAnswerPage.class);
+        startActivity(AnswerPage);
+
     }
 }

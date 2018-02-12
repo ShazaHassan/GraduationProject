@@ -47,7 +47,10 @@
             android:layout_gravity="bottom|fill_vertical|center_horizontal"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:text="Add Answer" />
+            android:onClick="GoToAnswerPage"
+            android:background="@color/darkBlue"
+            android:text="Add Answer"
+             />
 
 
     </LinearLayout>

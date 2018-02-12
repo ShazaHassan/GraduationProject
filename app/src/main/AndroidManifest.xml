@@ -57,29 +57,25 @@
         <activity
             android:name=".Activities.AskQuestionHelpingCommunity"
             android:label="@string/AskQuestion"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HelpingCommunity"/>
-
+            android:parentActivityName=".Activities.HelpingCommunity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.CertainQuestion"
             android:label="@string/Questions"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HelpingCommunity"/>
-
+            android:parentActivityName=".Activities.HelpingCommunity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.HelpingCommunity"
             android:label="@string/ElFundCommunity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.New_campgain_equity"
             android:label="@string/CreateEquityCampagin"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-
-
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.AddAnswerPage"
+            android:label="Answer"
+            android:parentActivityName=".Activities.CertainQuestion"/>
     </application>
 
 </manifest>
