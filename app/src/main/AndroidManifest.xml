@@ -13,8 +13,8 @@
             android:name=".Template.Main_Template"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.Home_Page"
-            android:label="@string/graduation_project_name"
+            android:name=".Activities.HelpingCommunity"
+            android:label="Question"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,8 +44,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Shop_Page"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Shop"></activity>
+            android:label="Shop"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

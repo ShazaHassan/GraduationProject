@@ -16,20 +16,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
-import com.example.shaza.graduationproject.Adapters.PageAdapterForShop;
 import com.example.shaza.graduationproject.R;
 
-public class Shop_Page extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class Equity_campaign_Home_page extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop__page);
+        setContentView(R.layout.activity_equity_campaign__home_page);
         setupDrawer();
         setupViewPager();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -38,20 +35,18 @@ public class Shop_Page extends AppCompatActivity
 
     }
 
-    //pager set and tab set
     private void setupViewPager() {
-        ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewProduct);
-        //adapter
-        PageAdapterForShop pageAdapter = new PageAdapterForShop(this, getSupportFragmentManager());
+        ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewCampaigns);
+
+        PageAdapterForCampaign pageAdapter = new PageAdapterForCampaign(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
-        //tab
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewProduct);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewCampaigns);
         tabLayout.setupWithViewPager(pager);
     }
 
-    //Drawer set
     private void setupDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -66,45 +61,40 @@ public class Shop_Page extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.name_of_app) {
-            Intent homePage = new Intent(this, Home_Page.class);
-            startActivity(homePage);
-        } else if (id == R.id.start_campaign) {
-            Intent startCampaign = new Intent(this, Create_new_campaign.class);
-            startActivity(startCampaign);
-            // Handle the camera action
-        } else if (id == R.id.suppot_startup) {
-            Intent supportStartupPage = new Intent(this, SupportStartUp.class);
-            startActivity(supportStartupPage);
-        } else if (id == R.id.shop) {
-            Intent shopPage = new Intent(this, Shop_Page.class);
-            startActivity(shopPage);
-        } else if (id == R.id.job) {
+        switch (id){
+            case R.id.name_of_app:
+                Intent homePage = new Intent(this, Home_Page.class);
+                startActivity(homePage);
 
-        } else if (id == R.id.login) {
+            case R.id.start_campaign:
+                Intent startCampaign = new Intent(this, Create_new_campaign.class);
+                startActivity(startCampaign);
 
-        } else if (id == R.id.sign_up) {
+            case R.id.suppot_startup:
+                Intent supportStartupPage = new Intent(this, SupportStartUp.class);
+                startActivity(supportStartupPage);
 
-        } else if (id == R.id.help) {
-            Intent HelpPage = new Intent(this, HelpingCommunity.class);
-            startActivity(HelpPage);
+            case  R.id.shop:
+                Intent shopPage = new Intent(this, Shop_Page.class);
+                startActivity(shopPage);
 
-        } else if (id == R.id.about_us) {
+            case R.id.job:
+                Intent HelpPage = new Intent(this, HelpingCommunity.class);
+                startActivity(HelpPage);
+            case R.id.sign_up:
+                Intent HelpPage1 = new Intent(this, HelpingCommunity.class);
+                startActivity(HelpPage1);
+            case R.id.help:
+                Intent HelpPage2 = new Intent(this, HelpingCommunity.class);
+                startActivity(HelpPage2);
+            case R.id.about_us:
+                Intent HelpPage3 = new Intent(this, HelpingCommunity.class);
+                startActivity(HelpPage3);
 
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 }

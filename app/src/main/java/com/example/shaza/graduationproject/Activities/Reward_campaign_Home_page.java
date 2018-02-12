@@ -93,6 +93,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         } else if (id == R.id.sign_up) {
 
         } else if (id == R.id.help) {
+            Intent HelpPage = new Intent(this, HelpingCommunity.class);
+            startActivity(HelpPage);
 
         } else if (id == R.id.about_us) {
 

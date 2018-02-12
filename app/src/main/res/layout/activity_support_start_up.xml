@@ -31,13 +31,14 @@
             android:textAllCaps="false"
             android:onClick="goToRewardCampaign" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Equity Campaigns\n\nHave a share of\ncompany when\ncampaign success"
-            android:textAllCaps="false" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="goToEquityCampaign"
+        android:text="Equity Campaigns\n\nHave a share of\ncompany when\ncampaign success"
+        android:textAllCaps="false"
+        android:textSize="20sp" />
 
     </LinearLayout>
 
