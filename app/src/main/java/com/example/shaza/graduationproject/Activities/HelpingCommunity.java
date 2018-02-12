@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -87,6 +88,11 @@ public class HelpingCommunity extends AppCompatActivity  {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        else if (id == R.id.action_Ask){
+            Intent Ask = new Intent(this, AskQuestionHelpingCommunity.class);
+            startActivity(Ask);
         }
         return super.onOptionsItemSelected(item);
     }
