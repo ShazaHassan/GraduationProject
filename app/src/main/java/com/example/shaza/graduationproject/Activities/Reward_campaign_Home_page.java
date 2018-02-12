@@ -89,7 +89,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         } else if (id == R.id.job) {
 
         } else if (id == R.id.login) {
-
+            Intent loginPage = new Intent(this, Login.class);
+            startActivity(loginPage);
         } else if (id == R.id.sign_up) {
 
         } else if (id == R.id.help) {

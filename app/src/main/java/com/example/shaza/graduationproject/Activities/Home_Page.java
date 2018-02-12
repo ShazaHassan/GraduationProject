@@ -157,8 +157,10 @@ public class Home_Page extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.start_campaign) {
-            // Handle the camera action
+        if (id == R.id.name_of_app) {
+            Intent homePage = new Intent(this, Home_Page.class);
+            startActivity(homePage);
+        } else if (id == R.id.start_campaign) {
             Intent startCampaign = new Intent(this, Create_new_campaign.class);
             startActivity(startCampaign);
         } else if (id == R.id.suppot_startup) {
@@ -170,9 +172,11 @@ public class Home_Page extends AppCompatActivity
         } else if (id == R.id.job) {
 
         } else if (id == R.id.login) {
-
+            Intent loginPage = new Intent(this, Login.class);
+            startActivity(loginPage);
         } else if (id == R.id.sign_up) {
-
+            Intent signUpPage = new Intent(this, SignUp.class);
+            startActivity(signUpPage);
         } else if (id == R.id.help) {
             Intent HelpPage = new Intent(this, HelpingCommunity.class);
             startActivity(HelpPage);
