@@ -24,37 +24,61 @@
         </activity>
         <activity
             android:name=".Activities.SupportStartUp"
-            android:label="Support startup"
+            android:label="@string/SpportStartup"
             android:parentActivityName=".Activities.Home_Page" />
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
-            android:label="Reward camp"
+            android:label="@string/RewardCamp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Create_new_campaign"
-            android:label="Create campaign"
+            android:label="@string/CreateCampaign"
             android:parentActivityName=".Activities.Home_Page" />
         <activity
             android:name=".Activities.New_campaign_reward"
-            android:label="Create reward campaign"
+            android:label="@string/CreateRewarCampaign"
             android:parentActivityName=".Activities.Create_new_campaign" />
         <activity
             android:name=".Activities.Campaign_info_for_creator"
-            android:label="Campaign details"
+            android:label="@string/CampaignDetails"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Shop_Page"
-            android:label="Shop"
+            android:label="@string/Shop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Login"
-            android:label="Login"
+            android:label="@string/Login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.SignUp"
-            android:label="Sign up"
+            android:label="@string/SignUp"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AskQuestionHelpingCommunity" />
+        <activity
+            android:name=".Activities.AskQuestionHelpingCommunity"
+            android:label="@string/AskQuestion"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".Activities.CertainQuestion"
+            android:label="@string/Questions"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HelpingCommunity"/>
+
+        <activity
+            android:name=".Activities.HelpingCommunity"
+            android:label="@string/ElFundCommunity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".Activities.New_campgain_equity"
+            android:label="@string/CreateEquityCampagin"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
+
+
+
     </application>
 
 </manifest>
