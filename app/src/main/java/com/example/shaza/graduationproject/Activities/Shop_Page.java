@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForShop;
 import com.example.shaza.graduationproject.R;
 
