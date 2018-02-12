@@ -1,4 +1,4 @@
-package com.example.shaza.graduationproject;
+package com.example.shaza.graduationproject.TemplateForAdapter;
 
 /**
  * Created by Mariam on 2/11/2018.

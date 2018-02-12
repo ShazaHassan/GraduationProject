@@ -7,10 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.shaza.graduationproject.Adapters.Question_List_Adapters;
-import com.example.shaza.graduationproject.AnswerList;
-import com.example.shaza.graduationproject.Answer_List_Adapter;
-import com.example.shaza.graduationproject.QuestionList;
+import com.example.shaza.graduationproject.TemplateForAdapter.AnswerList;
+import com.example.shaza.graduationproject.Adapters.Answer_List_Adapter;
 import com.example.shaza.graduationproject.R;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class CertainQuestion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_certain_question);
+        setContentView(R.layout.activity_certain_question_helping_community);
         listView = findViewById(R.id.List_of_Answers);
 
         list.add(new AnswerList("bbbbbb"));

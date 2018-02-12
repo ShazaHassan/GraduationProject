@@ -1,24 +1,13 @@
 package com.example.shaza.graduationproject.Activities;
 
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.shaza.graduationproject.QuestionList;
+import com.example.shaza.graduationproject.TemplateForAdapter.QuestionList;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.Adapters.Question_List_Adapters;
 
@@ -52,7 +41,7 @@ public class HelpingCommunity extends AppCompatActivity  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Intent goToAnswer = new Intent(view.getContext(),CertainQuestion.class);
+                Intent goToAnswer = new Intent(view.getContext(),CertainQuestionHelpingCommunity.class);
                 startActivity(goToAnswer); //start activity for result
             }
         });

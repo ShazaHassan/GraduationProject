@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.QuestionList;
+import com.example.shaza.graduationproject.TemplateForAdapter.QuestionList;
 import com.example.shaza.graduationproject.R;
 
 import java.util.ArrayList;

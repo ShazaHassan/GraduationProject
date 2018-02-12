@@ -1,10 +1,13 @@
-package com.example.shaza.graduationproject;
+package com.example.shaza.graduationproject.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.shaza.graduationproject.TemplateForAdapter.AnswerList;
+import com.example.shaza.graduationproject.R;
 
 import java.util.ArrayList;
 

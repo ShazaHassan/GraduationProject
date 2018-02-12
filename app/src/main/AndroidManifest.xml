@@ -54,6 +54,7 @@
             android:name=".Activities.SignUp"
             android:label="Sign up"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.AskQuestionHelpingCommunity"></activity>
     </application>
 
 </manifest>
