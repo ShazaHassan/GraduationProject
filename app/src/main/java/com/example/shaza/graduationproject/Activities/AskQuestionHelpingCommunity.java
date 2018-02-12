@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -25,6 +26,8 @@ public class AskQuestionHelpingCommunity extends AppCompatActivity{
     }
 
     public void psotQuestion(){
-
+      // on vlick remove data from this activity to list view in helping community
+        // andd numbering in questions and answers
+        //  Intent Ask = new Intent(AskQuestionHelpingCommunity.this, HelpingCommunity.class);
     }
 }

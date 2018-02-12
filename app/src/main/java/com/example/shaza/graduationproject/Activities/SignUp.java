@@ -59,6 +59,9 @@ public class SignUp extends AppCompatActivity
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);
+        }else if (id == R.id.help_community){
+            Intent HelpPage = new Intent(this, HelpingCommunity.class);
+            startActivity(HelpPage);
         } else if (id == R.id.sign_up) {
             Intent signUpPage = new Intent(this, SignUp.class);
             startActivity(signUpPage);

@@ -177,9 +177,11 @@ public class Home_Page extends AppCompatActivity
         } else if (id == R.id.sign_up) {
             Intent signUpPage = new Intent(this, SignUp.class);
             startActivity(signUpPage);
-        } else if (id == R.id.help) {
+        } else if (id == R.id.help_community){
             Intent HelpPage = new Intent(this, HelpingCommunity.class);
             startActivity(HelpPage);
+        }
+        else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
 
