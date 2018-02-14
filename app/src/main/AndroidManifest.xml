@@ -26,13 +26,10 @@
             android:name=".Activities.SupportStartUp"
             android:label="@string/SpportStartup"
             android:parentActivityName=".Activities.Home_Page" />
-
-
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
             android:label="@string/RewardCamp"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.Create_new_campaign"
             android:label="@string/CreateCampaign"
@@ -41,6 +38,10 @@
             android:name=".Activities.New_campaign_reward"
             android:label="@string/CreateRewarCampaign"
             android:parentActivityName=".Activities.Create_new_campaign" />
+        <activity
+            android:name=".Activities.New_Campaign_Equity"
+            android:label="Create equity campaign"/>
+
         <activity
             android:name=".Activities.Campaign_info_for_creator"
             android:label="@string/CampaignDetails"
@@ -67,8 +68,6 @@
             android:label="@string/Questions"
             android:parentActivityName=".Activities.HelpingCommunity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".Activities.HelpingCommunity"
             android:label="@string/ElFundCommunity"
@@ -76,7 +75,7 @@
         <activity
             android:name=".Activities.TalkToExpert"
             android:label="Talk to expert"
-            android:theme="@style/AppTheme.CustomThem"></activity>
+            android:theme="@style/AppTheme.CustomThem" />
 
     </application>
 

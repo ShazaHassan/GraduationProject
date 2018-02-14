@@ -26,8 +26,8 @@ public class Create_new_campaign extends AppCompatActivity {
     }
 
     public void goToEquityCapmpagin (View view){
-//        Intent equityPage = new Intent(this,New_campgain_equity.class);
-//        startActivity(equityPage);
+     Intent equityPage = new Intent(this,New_Campaign_Equity.class);
+     startActivity(equityPage);
     }
 
 }
