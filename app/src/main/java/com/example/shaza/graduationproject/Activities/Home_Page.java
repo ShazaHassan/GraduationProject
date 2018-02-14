@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,6 +39,7 @@ public class Home_Page extends AppCompatActivity
     private static final int[] total = {5, 3, 12};
     private static final int[] get = {4, 3, 6};
     private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,9 @@ public class Home_Page extends AppCompatActivity
         initEquityCampEnding();
         initRewardCampNewest();
         initEquityCampNewest();
+        dialog = new Dialog(this);
     }
+
 
 
     @Override
@@ -111,7 +115,7 @@ public class Home_Page extends AppCompatActivity
         mPager1 = (ViewPager) findViewById(R.id.pager_equity_ending);
         adapter2 = new MyAdapter(Home_Page.this, array);
         mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_end);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_ending);
         indicator.setViewPager(mPager1);
     }
 
@@ -207,5 +211,16 @@ public class Home_Page extends AppCompatActivity
     }
 
     public void goToEquityCampaign(View view) {
+    }
+
+
+    public void goToShop(View view) {
+        Intent shopPage = new Intent(this, Shop_Page.class);
+        startActivity(shopPage);
+    }
+
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
     }
 }

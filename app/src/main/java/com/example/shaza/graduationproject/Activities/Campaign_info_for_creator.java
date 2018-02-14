@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -134,4 +135,8 @@ public class Campaign_info_for_creator extends AppCompatActivity
     }
 
 
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
+    }
 }

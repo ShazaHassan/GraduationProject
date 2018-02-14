@@ -32,11 +32,6 @@
             android:name=".Activities.Reward_campaign_Home_page"
             android:label="@string/RewardCamp"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Activities.New_campgain_equity"
-            android:label="@string/CreateEquityCampagin"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.Home_Page"/>
 
         <activity
             android:name=".Activities.Create_new_campaign"
@@ -75,13 +70,13 @@
 
 
         <activity
-            android:name=".Activities.AddAnswerPage"
-            android:label="Answer"
-            android:parentActivityName=".Activities.CertainQuestion"/>
-        <activity
             android:name=".Activities.HelpingCommunity"
             android:label="@string/ElFundCommunity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.TalkToExpert"
+            android:label="Talk to expert"
+            android:theme="@style/AppTheme.CustomThem"></activity>
 
     </application>
 

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
 import com.example.shaza.graduationproject.R;
@@ -109,4 +110,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         }
     }
 
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
+    }
 }

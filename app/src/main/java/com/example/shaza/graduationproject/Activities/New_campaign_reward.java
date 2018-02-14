@@ -54,4 +54,9 @@ public class New_campaign_reward extends AppCompatActivity {
             }
         }
     }
+
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
+    }
 }

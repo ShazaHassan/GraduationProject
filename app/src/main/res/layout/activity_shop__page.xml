@@ -19,40 +19,61 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/darkBlue"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/darkBlue"
+                app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
 
 
         </android.support.design.widget.AppBarLayout>
 
-        <Spinner
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:entries="@array/category_for_product"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:background="@color/darkBlue"
-            android:textAlignment="center"
-            style="@style/spinner"
-            android:gravity="right"
-            android:id="@+id/category_spinner" />
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/chat"
+                android:onClick="openExpertChat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:entries="@array/category_for_product"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@color/darkBlue"
+                    android:textAlignment="center"
+                    style="@style/spinner"
+                    android:gravity="right"
+                    android:id="@+id/category_spinner" />
 
 
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tabForViewProduct" />
+                <android.support.design.widget.TabLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabForViewProduct" />
 
-        <android.support.v4.view.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/pagesForViewProduct" />
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/pagesForViewProduct" />
 
 
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

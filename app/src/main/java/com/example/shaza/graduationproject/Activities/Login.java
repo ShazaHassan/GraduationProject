@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.shaza.graduationproject.R;
 
@@ -22,6 +23,7 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupDrawer();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     //set up toolbar and side drawer
@@ -92,5 +94,10 @@ public class Login extends AppCompatActivity
     public void signUpPage(View view) {
         Intent signUpPage = new Intent(this, SignUp.class);
         startActivity(signUpPage);
+    }
+
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
     }
 }

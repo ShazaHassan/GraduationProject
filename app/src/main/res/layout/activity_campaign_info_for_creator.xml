@@ -27,88 +27,102 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/chat"
+                android:onClick="openExpertChat" />
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/border">
+                android:layout_height="match_parent">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/campaign_name_creator"
-                    android:textSize="28sp"
-                    android:textColor="#1A237E" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/border">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/campaign_image"
-                    android:layout_below="@+id/campaign_name_creator"
-                    android:scaleType="fitXY"
-                    android:adjustViewBounds="true"
-                    android:minHeight="100dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/campaign_name_creator"
+                        android:textSize="28sp"
+                        android:textColor="#1A237E" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/description_of_campaign"
-                    android:layout_margin="5dp"
-                    android:layout_below="@id/campaign_image"
-                    android:textSize="20sp"
-                    android:minLines="1"
-                    android:textColor="#000000"
-                    android:gravity="center" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/campaign_image"
+                        android:layout_below="@+id/campaign_name_creator"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:minHeight="100dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/description_of_campaign"
-                    android:layout_centerInParent="true"
-                    android:text="hi"
-                    android:id="@+id/days_left_for_creator"
-                    android:textSize="20sp"
-                    android:textColor="#000000" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/description_of_campaign"
+                        android:layout_margin="5dp"
+                        android:layout_below="@id/campaign_image"
+                        android:textSize="20sp"
+                        android:minLines="1"
+                        android:textColor="#000000"
+                        android:gravity="center" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/description_of_campaign"
-                    android:layout_alignParentRight="true"
-                    android:text="bye"
-                    android:layout_marginRight="20dp"
-                    android:id="@+id/need_money"
-                    android:textSize="20sp"
-                    android:textColor="#000" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/description_of_campaign"
+                        android:layout_centerInParent="true"
+                        android:text="hi"
+                        android:id="@+id/days_left_for_creator"
+                        android:textSize="20sp"
+                        android:textColor="#000000" />
 
-                <ProgressBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/days_left_for_creator"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:id="@+id/progress_bar_for_show_percentage"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/description_of_campaign"
+                        android:layout_alignParentRight="true"
+                        android:text="bye"
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/need_money"
+                        android:textSize="20sp"
+                        android:textColor="#000" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/progress_bar_for_show_percentage"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
-                    android:id="@+id/percentage_for_creator"
-                    android:textSize="20sp" />
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/days_left_for_creator"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:id="@+id/progress_bar_for_show_percentage"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp" />
 
-            </RelativeLayout>
-        </ScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/progress_bar_for_show_percentage"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:id="@+id/percentage_for_creator"
+                        android:textSize="20sp" />
 
+                </RelativeLayout>
+            </ScrollView>
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

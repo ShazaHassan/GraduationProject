@@ -29,582 +29,735 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
 
-            <LinearLayout
-                android:id="@+id/home_page"
-                android:layout_width="match_parent"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/chat"
+                android:onClick="openExpertChat" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-                <!--quotaView-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:fillViewport="true">
 
-                    <ImageView
-                        android:id="@+id/quota_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/about_us1_modified"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="If you think about some startup or have some one."
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="#fff"
-                        android:id="@+id/quota_text_1"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/quota_text_1"
-                        android:textColor="#cfcfcf"
-                        android:textSize="18sp"
-                        android:text="We help you to Communicate with entrepreneurs, investors and job seekers. so you can take experiance from them, and collect some money if you need."
-                        android:gravity="center"
-                        android:id="@+id/quota_text_2"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_below="@+id/quota_text_2"
-                        android:text="If you need to invest, need product or need jop."
-                        android:textSize="22sp"
-                        android:textColor="#fff"
-                        android:textStyle="bold"
-                        android:id="@+id/quota_text_3" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/quota_text_3"
-                        android:gravity="center"
-                        android:textColor="#cfcfcf"
-                        android:id="@+id/quota_text_4"
-                        android:textStyle="bold"
-                        android:text="It easy to get all with special offers."
-                        android:textSize="18sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/darkBlue"
-                        android:id="@+id/about_us_home"
-                        android:layout_margin="10dp"
-                        android:layout_below="@+id/quota_text_4"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:text="More about us.."
-                        android:textColor="#cfcfcf"
-                        android:textAllCaps="false"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/quota_text_4"
-                        android:id="@+id/talk_to_expect"
-                        android:background="@color/darkBlue"
-                        android:layout_margin="10dp"
-                        android:text="talk to expert .."
-                        android:padding="10dp"
-                        android:textColor="#cfcfcf"
-                        android:gravity="center"
-                        android:layout_toEndOf="@+id/about_us_home"
-                        android:layout_toRightOf="@+id/about_us_home"
-                        android:textAllCaps="false"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-                <!--SuccessCamp-->
-                <RelativeLayout
-                    android:id="@+id/second_item_in_home_page"
+                <LinearLayout
+                    android:id="@+id/home_page"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:background="@color/darkBlue">
-
-                    <TextView
-                        android:id="@+id/success_camp"
+                    android:orientation="vertical">
+                    <!--quotaView-->
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Successful Campaign"
-                        android:textSize="24sp"
-                        android:textColor="#fff"
-                        android:layout_marginLeft="10dp" />
+                        android:id="@+id/first_item">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/show_success_camp"
-                        android:layout_below="@+id/success_camp">
+                        <ImageView
+                            android:id="@+id/quota_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/about_us_edited"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY" />
 
-                        <RelativeLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Reward Campaign"
-                                android:id="@+id/Reward_campaign"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
-
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_reward_success"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/Reward_campaign" />
-
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_reward_success"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_reward_success"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false" />
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/gray"
+                            android:text="If you think about some startup or have some one."
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="#fff"
+                            android:id="@+id/quota_text_1"
+                            android:gravity="center"
                             android:layout_marginTop="5dp" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/quota_text_1"-->
+                        <!--android:textColor="#fff"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:layout_marginStart="5dp"-->
+                        <!--android:layout_marginEnd="5dp"-->
+                        <!--android:text="We help you to Communicate with entrepreneurs, investors and job seekers. so you can take experiance from them, and collect some money if you need."-->
+                        <!--android:gravity="center"-->
+                        <!--android:id="@+id/quota_text_2" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Equity campaign"
-                                android:id="@+id/equity_camp"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
-
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_equity_success"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/equity_camp" />
-
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_equity_success"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_equity_success"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false"
-                                android:layout_marginBottom="5dp" />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                </RelativeLayout>
-                <!--EndingSoon-->
-                <RelativeLayout
-                    android:id="@+id/third_item_in_home_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/gray">
-
-                    <TextView
-                        android:id="@+id/ending_soon_camp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ending soon"
-                        android:textSize="24sp"
-                        android:textColor="#fff"
-                        android:layout_marginLeft="10dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/show_newset_camp"
-                        android:layout_below="@+id/ending_soon_camp">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Reward Campaign"
-                                android:id="@+id/Reward_campaign_newest"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
-
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_reward_newest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/Reward_campaign_newest" />
-
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_reward_newest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_reward_newest"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false"
-                                android:layout_marginBottom="5dp" />
-                        </RelativeLayout>
-
-                        <View
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_below="@+id/quota_text_1"
+                            android:text="If you need to invest, need product or need jop."
+                            android:textSize="22sp"
+                            android:textColor="#fff"
+                            android:textStyle="bold"
+                            android:id="@+id/quota_text_3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/quota_text_3"
+                            android:gravity="center"
+                            android:textColor="#cfcfcf"
+                            android:id="@+id/quota_text_4"
+                            android:textStyle="bold"
+                            android:text="It easy to get all with special offers."
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@color/darkBlue"
-                            android:layout_marginTop="5dp" />
+                            android:id="@+id/about_us_home"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
+                            android:gravity="center"
+                            android:text="More about us.."
+                            android:textColor="#cfcfcf"
+                            android:textAllCaps="false"
+                            android:textSize="16sp"
+                            android:layout_alignBottom="@id/quota_view" />
 
-                        <RelativeLayout
+                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
+                            android:id="@+id/talk_to_expect"
+                            android:background="@color/darkBlue"
+                            android:layout_margin="10dp"
+                            android:text="talk to expert .."
+                            android:padding="10dp"
+                            android:textColor="#cfcfcf"
+                            android:gravity="center"
+                            android:layout_toEndOf="@+id/about_us_home"
+                            android:layout_toRightOf="@+id/about_us_home"
+                            android:textAllCaps="false"
+                            android:textSize="16sp"
+                            android:layout_alignBottom="@id/quota_view"
+                            android:onClick="openExpertChat" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Equity campaign"
-                                android:id="@+id/equity_camp_newest"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
 
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_equity_newest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/equity_camp_newest" />
-
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_equity_newest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_equity_newest"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false"
-                                android:layout_marginBottom="5dp" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                </RelativeLayout>
-                <!--NewestCamp-->
-                <RelativeLayout
-                    android:id="@+id/forth_item_in_home_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@color/yellow">
-
-                    <TextView
-                        android:id="@+id/newest_camp"
+                    </RelativeLayout>
+                    <!--SuccessCamp-->
+                    <RelativeLayout
+                        android:id="@+id/second_item_in_home_page"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Newest Campaign"
-                        android:textSize="24sp"
-                        android:textColor="#fff"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_margin="10dp"
+                        android:background="@color/darkBlue">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/show_ending_soon_camp"
-                        android:layout_below="@+id/newest_camp">
+                        <TextView
+                            android:id="@+id/success_camp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Successful Campaign"
+                            android:textSize="24sp"
+                            android:textColor="#fff"
+                            android:layout_marginLeft="10dp" />
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
+                            android:id="@+id/show_success_camp"
+                            android:layout_below="@+id/success_camp">
 
-                            <TextView
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Reward Campaign"
-                                android:id="@+id/Reward_campaign_ending"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
 
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_reward_ending"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/Reward_campaign_ending" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reward Campaign"
+                                    android:id="@+id/Reward_campaign"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
 
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_reward_ending"
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_reward_success"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/Reward_campaign" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_reward_success"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_reward_success"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToRewardCampaign"
+                                    android:layout_below="@id/indicator_reward_success"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"
+                                android:layout_marginTop="5dp" />
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_reward_ending"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false"
-                                android:layout_marginBottom="5dp" />
-                        </RelativeLayout>
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
 
-                        <View
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Equity campaign"
+                                    android:id="@+id/equity_camp"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_equity_success"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/equity_camp" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_equity_success"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_equity_success"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false"
+                                    android:layout_marginBottom="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/indicator_equity_success"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToEquityCampaign"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                    <!--EndingSoon-->
+                    <RelativeLayout
+                        android:id="@+id/third_item_in_home_page"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/gray">
+
+                        <TextView
+                            android:id="@+id/ending_soon_camp"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/gray"
-                            android:layout_marginTop="5dp" />
+                            android:layout_height="wrap_content"
+                            android:text="Ending soon"
+                            android:textSize="24sp"
+                            android:textColor="#fff"
+                            android:layout_marginLeft="10dp" />
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="5dp">
+                            android:orientation="vertical"
+                            android:id="@+id/show_ending_camp"
+                            android:layout_below="@+id/ending_soon_camp">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reward Campaign"
+                                    android:id="@+id/Reward_campaign_ending"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_reward_ending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/Reward_campaign_ending" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_reward_ending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_reward_ending"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false"
+                                    android:layout_marginBottom="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/indicator_reward_ending"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToRewardCampaign"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/darkBlue"
+                                android:layout_marginTop="5dp" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Equity campaign"
+                                    android:id="@+id/equity_camp_ending"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_equity_ending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/equity_camp_ending" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_equity_ending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_equity_ending"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false"
+                                    android:layout_marginBottom="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/indicator_equity_ending"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToEquityCampaign"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <!--NewestCamp-->
+                    <RelativeLayout
+                        android:id="@+id/forth_item_in_home_page"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/yellow">
+
+                        <TextView
+                            android:id="@+id/newest_camp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Newest Campaign"
+                            android:textSize="24sp"
+                            android:textColor="#fff"
+                            android:layout_marginLeft="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:id="@+id/show_newest_camp"
+                            android:layout_below="@+id/newest_camp">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reward Campaign"
+                                    android:id="@+id/Reward_campaign_newest"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_reward_newest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/Reward_campaign_newest" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_reward_newest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_reward_newest"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false"
+                                    android:layout_marginBottom="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/indicator_reward_newest"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToRewardCampaign"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"
+                                android:layout_marginTop="5dp" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Equity campaign"
+                                    android:id="@+id/equity_camp_newest"
+                                    android:textSize="20sp"
+                                    android:textColor="#fff"
+                                    android:layout_marginLeft="5dp" />
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/pager_equity_newest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@+id/equity_camp_newest" />
+
+                                <com.viewpagerindicator.CirclePageIndicator
+                                    android:id="@+id/indicator_equity_newest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:pointerIcon="arrow"
+                                    android:layout_below="@id/pager_equity_newest"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerVertical="false"
+                                    app:centered="true"
+                                    app:fillColor="#1ebad6"
+                                    app:pageColor="#c752"
+                                    app:snap="false"
+                                    android:layout_marginBottom="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/indicator_equity_newest"
+                                    android:text="More"
+                                    android:textSize="20sp"
+                                    android:onClick="goToEquityCampaign"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/gray">
+                        <!--HelpingCommunity-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/fifth_item_in_page"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/community_modified"
+                                android:id="@+id/img_helping_community"
+                                android:scaleType="fitXY" />
 
                             <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000"
+                                android:textSize="26sp"
+                                android:text="Helping Community"
+                                android:id="@+id/help_community_home_page"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="You have good experience with our app."
+                                android:textColor="#000"
+                                android:gravity="center"
+                                android:textSize="22sp"
+                                android:layout_marginTop="25dp"
+                                android:textStyle="bold"
+                                android:id="@+id/help_community_description"
+                                android:layout_below="@id/help_community_home_page" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/help_community_description1"
+                                android:text="You need to know experience of other."
+                                android:textSize="22sp"
+                                android:textStyle="bold"
+                                android:textColor="#000"
+                                android:layout_below="@id/help_community_description"
+                                android:gravity="center"
+                                android:layout_marginTop="25dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:id="@+id/help_community_description2"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:layout_marginTop="25dp"
+                                android:text="You can share yours experiences here."
+                                android:layout_below="@+id/help_community_description1" />
+
+                            <Button
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Equity campaign"
-                                android:id="@+id/equity_camp_ending"
-                                android:textSize="20sp"
-                                android:textColor="#fff"
-                                android:layout_marginLeft="5dp" />
+                                android:background="#000"
+                                android:layout_margin="5dp"
+                                android:textSize="18sp"
+                                android:layout_marginBottom="10dp"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:text="More"
+                                android:id="@+id/more_button"
+                                android:layout_centerHorizontal="true"
+                                android:layout_alignBottom="@id/img_helping_community" />
+                        </RelativeLayout>
+                        <!--ShopAndJob-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/sixth_item_in_page"
+                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
+                            app:layout_constraintTop_toBottomOf="@id/fifth_item_in_page">
+                            <!--job-->
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:id="@+id/img_job_home_page"
+                                android:src="@drawable/job_2_edited"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitXY" />
 
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/pager_equity_ending"
-                                android:layout_width="wrap_content"
-                                android:layout_height="420dp"
-                                android:layout_below="@+id/equity_camp_ending" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="24sp"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:text="You need job, but you can't find."
+                                android:gravity="center"
+                                android:layout_above="@+id/job_title1"
+                                android:id="@+id/job_title" />
 
-                            <com.viewpagerindicator.CirclePageIndicator
-                                android:id="@+id/indicator_equity_end"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="24sp"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:id="@+id/job_title1"
+                                android:gravity="center"
+                                android:text="You have startup, but you can't find employee."
+                                android:layout_above="@+id/job_desc1" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000"
+                                android:id="@+id/job_desc1"
+                                android:gravity="center"
+                                android:text="If your campain has successed in our website, we may help you to find employee."
+                                android:layout_above="@+id/see_all_job" />
+
+                            <Button
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:pointerIcon="arrow"
-                                android:layout_below="@id/pager_equity_ending"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="false"
-                                app:centered="true"
-                                app:fillColor="#1ebad6"
-                                app:pageColor="#c752"
-                                app:snap="false"
-                                android:layout_marginBottom="5dp" />
+                                android:text="See all"
+                                android:textColor="@color/white"
+                                android:background="#000"
+                                android:textSize="18sp"
+                                android:textAllCaps="false"
+                                android:layout_alignBottom="@+id/img_job_home_page"
+                                android:id="@+id/see_all_job"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp" />
+                            <!--Shop-->
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitXY"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/img_shop_home_page"
+                                android:src="@drawable/shopping_1_modified"
+                                android:layout_below="@+id/img_job_home_page" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="24sp"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:text="Enjoy shopping."
+                                android:gravity="center"
+                                android:layout_above="@+id/shop_title1"
+                                android:id="@+id/shop_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="24sp"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:id="@+id/shop_title1"
+                                android:gravity="center"
+                                android:text="We may help you in marketing."
+                                android:layout_above="@+id/shop_desc" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentLeft="true"
+                                android:textSize="18sp"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:id="@+id/shop_desc"
+                                android:gravity="center"
+                                android:text="If your campaign has succeeded in our website, you can publish your product."
+                                android:layout_above="@+id/see_all_shop" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="See all"
+                                android:textColor="@color/white"
+                                android:background="#000"
+                                android:textSize="18sp"
+                                android:textAllCaps="false"
+                                android:layout_alignBottom="@+id/img_shop_home_page"
+                                android:id="@+id/see_all_shop"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:onClick="goToShop" />
                         </RelativeLayout>
                     </LinearLayout>
-                </RelativeLayout>
-                <!--HelpingCommuinty-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fifth_item_in_page"
-                    android:layout_marginBottom="5dp">
+                </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/about_us1_modified"
-                        android:id="@+id/img_helping_community"
-                        android:scaleType="fitXY" />
+            </ScrollView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#000"
-                        android:textSize="26sp"
-                        android:text="Helping Community"
-                        android:id="@+id/help_community_home_page" />
+        </android.support.constraint.ConstraintLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=" Many people has a lot of experiance, they need to help others but they not find the environment to give this experiance.
-                                    \nAnther people are beginners in their fields, they need some helps.
-                                    \nif you are one of two before, you go to helping comunity, which you exchange an experiance"
-                        android:layout_below="@+id/help_community_home_page"
-                        android:textColor="#000"
-                        android:gravity="center"
-                        android:textSize="18sp"
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/help_community_description" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/help_community_description"
-                        android:background="@color/lightBlue"
-                        android:layout_margin="5dp"
-                        android:textSize="18sp"
-                        android:textAllCaps="false"
-                        android:textColor="@color/gray"
-                        android:text="More"
-                        android:layout_centerHorizontal="true" />
-                </RelativeLayout>
-                <!--ShopAndJob-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sixth_item_in_page"
-                    android:layout_marginBottom="5dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:id="@+id/img_job_home_page"
-                        android:src="@drawable/job2"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="24sp"
-                        android:textColor="#000"
-                        android:text="We can help you to find jops in any contry."
-                        android:gravity="center"
-                        android:layout_above="@+id/job_desc"
-                        android:id="@+id/job_title" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/job_desc"
-                        android:gravity="center"
-                        android:text="you need jop, but you can't find. If you have startup, and your campain has successed in our website you can find some employee."
-                        android:layout_above="@+id/see_all_job" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="See all"
-                        android:textColor="@color/gray"
-                        android:background="@color/darkBlue"
-                        android:textSize="18sp"
-                        android:textAllCaps="false"
-                        android:layout_alignBottom="@+id/img_job_home_page"
-                        android:id="@+id/see_all_job"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/img_shop_home_page"
-                        android:src="@drawable/product"
-                        android:layout_below="@+id/img_job_home_page" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="24sp"
-                        android:textColor="#000"
-                        android:text="We can help you to find jops in any contry."
-                        android:gravity="center"
-                        android:layout_above="@+id/shop_desc"
-                        android:id="@+id/shop_title" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="20sp"
-                        android:textColor="#000"
-                        android:id="@+id/shop_desc"
-                        android:gravity="center"
-                        android:text="you need jop, but you can't find. If you have startup, and your campain has successed in our website you can find some employee."
-                        android:layout_above="@+id/see_all_shop" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="See all"
-                        android:textColor="@color/gray"
-                        android:background="@color/darkBlue"
-                        android:textSize="18sp"
-                        android:textAllCaps="false"
-                        android:layout_alignBottom="@+id/img_shop_home_page"
-                        android:id="@+id/see_all_shop"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp" />
-
-
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

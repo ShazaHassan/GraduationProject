@@ -30,6 +30,11 @@ public class SupportStartUp extends AppCompatActivity {
         Intent rewardPage = new Intent(this, Reward_campaign_Home_page.class);
         startActivity(rewardPage);
     }
+
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
+    }
     public void  goToEquityCampaign(View view){
         Intent equityPage = new Intent(this,Equity_campaign_Home_page.class);
         startActivity(equityPage);
