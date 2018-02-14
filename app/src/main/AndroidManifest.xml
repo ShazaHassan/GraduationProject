@@ -26,10 +26,18 @@
             android:name=".Activities.SupportStartUp"
             android:label="@string/SpportStartup"
             android:parentActivityName=".Activities.Home_Page" />
+
+
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
             android:label="@string/RewardCamp"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.New_campgain_equity"
+            android:label="@string/CreateEquityCampagin"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.Home_Page"/>
+
         <activity
             android:name=".Activities.Create_new_campaign"
             android:label="@string/CreateCampaign"
@@ -65,10 +73,7 @@
             android:parentActivityName=".Activities.HelpingCommunity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".Activities.New_campgain_equity"
-            android:label="@string/CreateEquityCampagin"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activities.AddAnswerPage"
             android:label="Answer"

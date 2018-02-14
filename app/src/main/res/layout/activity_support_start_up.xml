@@ -22,16 +22,16 @@
         <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
         <!--</android.support.design.widget.AppBarLayout>-->
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
-            android:textAllCaps="false"
-            android:onClick="goToRewardCampaign" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
+        android:textAllCaps="false"
+        android:textSize="20sp" />
 
     <Button
+        android:id="@+id/any"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

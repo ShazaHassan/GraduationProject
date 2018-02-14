@@ -30,7 +30,6 @@ import java.util.ArrayList;
 public class HelpingCommunity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ListView listView;
     private Question_List_Adapters adapter;
-    private ImageButton imageButton;
     private ArrayList<QuestionList> list = new ArrayList<>();
 
 
@@ -38,13 +37,6 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helping_community);
-        imageButton = findViewById(R.id.imageButton4);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         listView = findViewById(R.id.List_of_Questions);
 
         list.add(new QuestionList("How to create new activity", "android", "5 mins ago"));

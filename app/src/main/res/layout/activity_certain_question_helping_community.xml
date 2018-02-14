@@ -47,13 +47,20 @@
             android:layout_gravity="bottom|fill_vertical|center_horizontal"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:onClick="GoToAnswerPage"
             android:background="@color/darkBlue"
             android:text="Add Answer"
              />
 
 
     </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/item_in_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
 
