@@ -64,10 +64,7 @@
             android:label="@string/Questions"
             android:parentActivityName=".Activities.HelpingCommunity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Activities.HelpingCommunity"
-            android:label="@string/ElFundCommunity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activities.New_campgain_equity"
             android:label="@string/CreateEquityCampagin"
@@ -76,6 +73,11 @@
             android:name=".Activities.AddAnswerPage"
             android:label="Answer"
             android:parentActivityName=".Activities.CertainQuestion"/>
+        <activity
+            android:name=".Activities.HelpingCommunity"
+            android:label="@string/ElFundCommunity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
