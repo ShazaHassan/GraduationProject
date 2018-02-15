@@ -21,20 +21,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
 
-    <Button
+        <Button
         android:id="@+id/any"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="goToEquityCampaign"
+        android:onClick="goToEquityCapmpagin"
         android:text="Equity Campaigns\n\nHave a share of\ncompany when\ncampaign success"
         android:textAllCaps="false"
         android:textSize="20sp" />

@@ -172,7 +172,7 @@ android:fitsSystemWindows="true">
                 android:editable="true"
                 android:ems="10"
                 android:enabled="true"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:isScrollContainer="true"
                 android:maxLines="6"
                 android:minLines="6"
@@ -199,7 +199,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -222,7 +222,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -245,7 +245,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -268,7 +268,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -291,7 +291,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -314,7 +314,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -337,7 +337,7 @@ android:fitsSystemWindows="true">
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_with_border"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

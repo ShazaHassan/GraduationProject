@@ -34,7 +34,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/darkBlue">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginVertical="20dp"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/noty" />
 
             <Spinner
                 android:id="@+id/category_spinner"
@@ -52,24 +65,41 @@
         </LinearLayout>
 
 
-                <EditText
-                    android:id="@+id/editText8"
-                    style="@android:style/Widget.SeekBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_edittext"
-                    android:ems="10"
-                    android:freezesText="false"
-                    android:hint="write post..."
-                    android:inputType="textMultiLine"
-                    android:textColor="@android:color/black"
-                    android:textColorLink="@android:color/black"
-                    android:textSize="18sp"
-                    android:visibility="visible" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText8"
+                style="@android:style/Widget.SeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_edittext"
+                android:ems="10"
+                android:freezesText="false"
+                android:hint="write post..."
+                android:inputType="textMultiLine"
+                android:textColor="@android:color/black"
+                android:textColorLink="@android:color/black"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/upload_photo" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button3"
@@ -80,7 +110,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/darkBlue"
             android:text="Post"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <ListView
             android:id="@+id/List_of_Questions"
