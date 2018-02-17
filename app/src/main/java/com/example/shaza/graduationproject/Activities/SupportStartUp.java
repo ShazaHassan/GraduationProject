@@ -41,7 +41,7 @@ public class SupportStartUp extends AppCompatActivity {
         startActivity(expertChat);
     }
 
-    public void goToEquityCapmpagin(View view) {
+    public void goToEquityCampaign(View view) {
         Intent equityPage = new Intent(this,Equity_campaign_Home_page.class);
         startActivity(equityPage);
     }
