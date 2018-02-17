@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +39,8 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helping_community);
         listView = findViewById(R.id.List_of_Questions);
+        registerForContextMenu(listView);
+
 
         list.add(new QuestionList("How to create new activity", "android", "5 mins ago"));
         list.add(new QuestionList("How to add item to arraylist", "Java", "2 days ago"));
@@ -62,7 +65,10 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
 
         setupDrawer();
 
+
     }
+
+
 
     private void setupDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -79,6 +85,16 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
     }
 
 
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_scrolling, menu);
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Question_List_Adapters obj = (Question_List_Adapters) listView.getItemAtPosition(acmi.position);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -87,7 +103,21 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        else if (id == R.id.action_Ask){
+            Intent Ask = new Intent(this, AskQuestionHelpingCommunity.class);
+            startActivity(Ask);
+        }
+        return super.onContextItemSelected(item);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
