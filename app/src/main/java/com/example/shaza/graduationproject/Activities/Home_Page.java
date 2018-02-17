@@ -30,9 +30,9 @@ public class Home_Page extends AppCompatActivity
     private ViewPager mPager, mPager1;
     private static int currentPage = 0;
     private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] texts = {"text1 this for trying typing multiline aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa "
-            , "text2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            , "text3aaaaaaassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"};
+    private static final String[] texts = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.  "
+            , "Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. "
+            , "Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. "};
     private static final String[] campaignName = {"Camp1", "Camp2", "Camp3"};
     private static final String[] noOfDays = {"2 days left", "3 days left", "1 day left"};
     private static final String[] need = {"1$", "0$", "6$"};
@@ -113,7 +113,7 @@ public class Home_Page extends AppCompatActivity
     //setup view pager for equity campaign for slide campaign
     private void initEquityCampEnding() {
         mPager1 = (ViewPager) findViewById(R.id.pager_equity_ending);
-        adapter2 = new MyAdapter(Home_Page.this, array);
+        adapter2 = new MyAdapter(Home_Page.this, array, R.color.darkBlue);
         mPager1.setAdapter(adapter2);
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_ending);
         indicator.setViewPager(mPager1);
@@ -121,7 +121,7 @@ public class Home_Page extends AppCompatActivity
 
     private void initRewardCampEnding() {
         mPager1 = (ViewPager) findViewById(R.id.pager_reward_ending);
-        adapter2 = new MyAdapter(Home_Page.this, array);
+        adapter2 = new MyAdapter(Home_Page.this, array, R.color.darkBlue);
         mPager1.setAdapter(adapter2);
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_ending);
         indicator.setViewPager(mPager1);
@@ -174,7 +174,8 @@ public class Home_Page extends AppCompatActivity
             Intent shopPage = new Intent(this, Shop_Page.class);
             startActivity(shopPage);
         } else if (id == R.id.job) {
-
+            Intent jobPage = new Intent(this, Job.class);
+            startActivity(jobPage);
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);
@@ -211,6 +212,8 @@ public class Home_Page extends AppCompatActivity
     }
 
     public void goToEquityCampaign(View view) {
+        Intent equityPage = new Intent(this, Equity_campaign_Home_page.class);
+        startActivity(equityPage);
     }
 
 
@@ -222,5 +225,15 @@ public class Home_Page extends AppCompatActivity
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
+    }
+
+    public void goToHelpCommunity(View view) {
+        Intent helpCommunityPage = new Intent(this, HelpingCommunity.class);
+        startActivity(helpCommunityPage);
+    }
+
+    public void goToJobPage(View view) {
+        Intent jobPage = new Intent(this, Job.class);
+        startActivity(jobPage);
     }
 }

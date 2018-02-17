@@ -18,7 +18,8 @@ import android.view.MenuItem;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
 import com.example.shaza.graduationproject.R;
 
-public class Equity_campaign_Home_page extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Equity_campaign_Home_page extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

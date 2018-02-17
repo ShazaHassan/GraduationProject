@@ -80,7 +80,8 @@ public class Shop_Page extends AppCompatActivity
             Intent shopPage = new Intent(this, Shop_Page.class);
             startActivity(shopPage);
         } else if (id == R.id.job) {
-
+            Intent jobPage = new Intent(this, Job.class);
+            startActivity(jobPage);
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);

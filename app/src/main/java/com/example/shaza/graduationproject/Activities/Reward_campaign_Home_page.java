@@ -80,7 +80,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
             Intent shopPage = new Intent(this, Shop_Page.class);
             startActivity(shopPage);
         } else if (id == R.id.job) {
-
+            Intent jobPage = new Intent(this, Job.class);
+            startActivity(jobPage);
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);
@@ -88,7 +89,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
             Intent HelpPage = new Intent(this, HelpingCommunity.class);
             startActivity(HelpPage);
         } else if (id == R.id.sign_up) {
-
+            Intent signUp = new Intent(this, SignUp.class);
+            startActivity(signUp);
         } else if (id == R.id.help) {
 
 

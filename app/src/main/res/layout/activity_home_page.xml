@@ -41,6 +41,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="@dimen/fab_margin"
+                android:adjustViewBounds="true"
+                android:background="@drawable/chat"
                 android:src="@drawable/chat"
                 android:onClick="openExpertChat" />
 
@@ -111,7 +113,8 @@
                             android:id="@+id/quota_text_4"
                             android:textStyle="bold"
                             android:text="It easy to get all with special offers."
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:layout_marginBottom="10dp" />
 
                         <Button
                             android:layout_width="wrap_content"
@@ -125,24 +128,7 @@
                             android:textColor="#cfcfcf"
                             android:textAllCaps="false"
                             android:textSize="16sp"
-                            android:layout_alignBottom="@id/quota_view" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/talk_to_expect"
-                            android:background="@color/darkBlue"
-                            android:layout_margin="10dp"
-                            android:text="talk to expert .."
-                            android:padding="10dp"
-                            android:textColor="#cfcfcf"
-                            android:gravity="center"
-                            android:layout_toEndOf="@+id/about_us_home"
-                            android:layout_toRightOf="@+id/about_us_home"
-                            android:textAllCaps="false"
-                            android:textSize="16sp"
-                            android:layout_alignBottom="@id/quota_view"
-                            android:onClick="openExpertChat" />
+                            android:layout_below="@id/quota_text_4" />
 
 
                     </RelativeLayout>
@@ -288,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:text="Ending soon"
                             android:textSize="24sp"
-                            android:textColor="#fff"
+                            android:textColor="@color/darkBlue"
                             android:layout_marginLeft="10dp" />
 
                         <LinearLayout
@@ -312,7 +298,7 @@
                                     android:text="Reward Campaign"
                                     android:id="@+id/Reward_campaign_ending"
                                     android:textSize="20sp"
-                                    android:textColor="#fff"
+                                    android:textColor="@color/darkBlue"
                                     android:layout_marginLeft="5dp" />
 
                                 <android.support.v4.view.ViewPager
@@ -365,7 +351,7 @@
                                     android:text="Equity campaign"
                                     android:id="@+id/equity_camp_ending"
                                     android:textSize="20sp"
-                                    android:textColor="#fff"
+                                    android:textColor="@color/darkBlue"
                                     android:layout_marginLeft="5dp" />
 
                                 <android.support.v4.view.ViewPager
@@ -558,41 +544,47 @@
                                 android:id="@+id/help_community_home_page"
                                 android:textStyle="bold" />
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="You have good experience with our app."
-                                android:textColor="#000"
-                                android:gravity="center"
-                                android:textSize="22sp"
-                                android:layout_marginTop="25dp"
-                                android:textStyle="bold"
-                                android:id="@+id/help_community_description"
-                                android:layout_below="@id/help_community_home_page" />
+                                android:orientation="vertical"
+                                android:layout_centerInParent="true">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/help_community_description1"
-                                android:text="You need to know experience of other."
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="#000"
-                                android:layout_below="@id/help_community_description"
-                                android:gravity="center"
-                                android:layout_marginTop="25dp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="You have good experience with our app."
+                                    android:textColor="#000"
+                                    android:gravity="center"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:id="@+id/help_community_description"
+                                    android:layout_below="@id/help_community_home_page" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:id="@+id/help_community_description2"
-                                android:textColor="#000"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:layout_marginTop="25dp"
-                                android:text="You can share yours experiences here."
-                                android:layout_below="@+id/help_community_description1" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/help_community_description1"
+                                    android:text="You need to know experience of other."
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#000"
+                                    android:layout_below="@id/help_community_description"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/help_community_description2"
+                                    android:textColor="#000"
+                                    android:textStyle="bold"
+                                    android:textSize="18sp"
+                                    android:text="You can share yours experiences here."
+                                    android:layout_below="@+id/help_community_description1" />
+
+                            </LinearLayout>
+
 
                             <Button
                                 android:layout_width="wrap_content"
@@ -606,7 +598,8 @@
                                 android:text="More"
                                 android:id="@+id/more_button"
                                 android:layout_centerHorizontal="true"
-                                android:layout_alignBottom="@id/img_helping_community" />
+                                android:layout_alignBottom="@id/img_helping_community"
+                                android:onClick="goToHelpCommunity" />
                         </RelativeLayout>
                         <!--ShopAndJob-->
                         <RelativeLayout
@@ -681,7 +674,8 @@
                                 android:id="@+id/see_all_job"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp" />
+                                android:layout_marginTop="5dp"
+                                android:onClick="goToJobPage" />
                             <!--Shop-->
                             <ImageView
                                 android:layout_width="match_parent"

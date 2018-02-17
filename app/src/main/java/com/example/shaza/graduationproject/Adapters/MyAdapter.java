@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
+import com.example.shaza.graduationproject.Activities.Home_Page;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 
@@ -25,6 +27,7 @@ public class MyAdapter extends PagerAdapter {
     private ArrayList<ImgAndText> imgAndTexts;
     private LayoutInflater inflater;
     private Context context;
+    private int color = R.color.white;
 
 
     public MyAdapter(Context context, ArrayList<ImgAndText> imgAndTexts) {
@@ -32,6 +35,13 @@ public class MyAdapter extends PagerAdapter {
         this.imgAndTexts = imgAndTexts;
         inflater = LayoutInflater.from(context);
 
+    }
+
+    public MyAdapter(Context context, ArrayList<ImgAndText> imgAndTexts, int color) {
+        this.context = context;
+        this.imgAndTexts = imgAndTexts;
+        inflater = LayoutInflater.from(context);
+        this.color = color;
     }
 
     @Override
@@ -44,6 +54,7 @@ public class MyAdapter extends PagerAdapter {
         return imgAndTexts.size();
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public Object instantiateItem(ViewGroup view, final int position) {
         View myImageLayout = inflater.inflate(R.layout.campaign_short_view, view, false);
@@ -54,15 +65,19 @@ public class MyAdapter extends PagerAdapter {
 
         TextView description = myImageLayout
                 .findViewById(R.id.description_for_reward_campaign_home_page);
+        description.setTextColor(context.getResources().getColor(color));
         description.setText(add.getText());
 
         TextView campaignName = myImageLayout.findViewById(R.id.campaign_name);
+        campaignName.setTextColor(context.getResources().getColor(color));
         campaignName.setText(add.getCampaignName());
 
         TextView daysLeft = myImageLayout.findViewById(R.id.days_left);
+        daysLeft.setTextColor(context.getResources().getColor(color));
         daysLeft.setText(add.getDaysLeft());
 
         TextView need = myImageLayout.findViewById(R.id.need);
+        need.setTextColor(context.getResources().getColor(color));
         need.setText("Need " + add.getNeed());
 
         int percentage = (int) (((float) add.getGet() / (float) add.getTotal()) * 100);
@@ -72,6 +87,7 @@ public class MyAdapter extends PagerAdapter {
         showPercentage.setProgress(percentage);
 
         TextView percentageView = (TextView) myImageLayout.findViewById(R.id.percentage);
+        percentageView.setTextColor(context.getResources().getColor(color));
         percentageView.setText(percentage + "%");
         view.addView(myImageLayout);
 

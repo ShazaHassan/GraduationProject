@@ -14,30 +14,84 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/chat"
-        android:onClick="openExpertChat" />
+        android:onClick="openExpertChat"
+        android:adjustViewBounds="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:orientation="vertical"
+            android:textAllCaps="false">
 
-    <Button
-        android:id="@+id/any"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:onClick="goToEquityCampaign"
-        android:text="Equity Campaigns\n\nHave a share of\ncompany when\ncampaign success"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Reward Campaigns\n\nGet reward from\ncampaigns that\nyou support"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/reward_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="#00ACC1"
+                android:onClick="goToRewardCampaign"
+                android:padding="10dp"
+                android:text="@string/CreateRewarCampaign"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:orientation="vertical"
+            android:textAllCaps="false">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Equity Campaigns\n\nHave a share of\ncompany when\ncampaign success"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/equity_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="#3949AB"
+                android:onClick="goToEquityCampaign"
+                android:padding="10dp"
+                android:text="@string/CreateEquityCampagin"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

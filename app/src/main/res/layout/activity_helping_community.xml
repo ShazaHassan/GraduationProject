@@ -26,37 +26,52 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="@color/darkBlue"
-                app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
-
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
-
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <Spinner
-                android:id="@+id/category_spinner"
-                style="@style/spinner"
-                android:layout_width="176dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="false"
-                android:layout_gravity="right|center"
-                android:layout_weight="1"
-                android:background="@color/darkBlue"
-                android:entries="@array/category"
-                android:gravity="right"
-                android:textAlignment="center" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/chat"
+                android:onClick="openExpertChat" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/category_spinner"
+                        style="@style/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="false"
+                        android:layout_gravity="right|center"
+                        android:layout_weight="1"
+                        android:background="@color/darkBlue"
+                        android:entries="@array/category"
+                        android:gravity="right"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/editText8"
-                    style="@android:style/Widget.SeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
@@ -69,27 +84,31 @@
                     android:textColor="@android:color/black"
                     android:textColorLink="@android:color/black"
                     android:textSize="18sp"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:padding="10dp"
+                    android:maxLines="3" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/darkBlue"
-            android:text="Post"
-            android:textColor="@color/white"/>
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/darkBlue"
+                    android:text="Post"
+                    android:textColor="@color/white" />
 
-        <ListView
-            android:id="@+id/List_of_Questions"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
+                <ListView
+                    android:id="@+id/List_of_Questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
 
-        </ListView>
+                </ListView>
             </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

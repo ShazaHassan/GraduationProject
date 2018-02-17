@@ -36,7 +36,7 @@
                 android:ems="10"
                 android:layout_margin="5dp"
                 android:text="Campaign name"
-                android:textColor="#01579B" />
+                android:textColor="@color/darkBlue" />
 
             <EditText
                 android:id="@+id/editText"
@@ -52,7 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/category_for_new_campaign"
-                android:layout_margin="5dp" />
+                android:layout_margin="5dp"
+                style="@style/AppTheme.spinner.normal" />
 
             <TextView
                 android:id="@+id/textView"
@@ -62,7 +63,7 @@
                 android:textSize="18sp"
                 android:layout_margin="5dp"
                 android:onClick="uploadPhotoAndVideo"
-                android:textColor="#01579B" />
+                android:textColor="@color/darkBlue" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -72,14 +73,14 @@
                 android:textSize="18sp"
                 android:layout_margin="5dp"
                 android:onClick="uploadPhotoAndVideo"
-                android:textColor="#01579B" />
+                android:textColor="@color/darkBlue" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_margin="5dp"
-                android:textColor="#01579B"
+                android:textColor="@color/darkBlue"
                 android:text="Duration of the campaign"
                 android:textSize="18sp" />
 
@@ -96,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textColor="#01579B"
+                android:textColor="@color/darkBlue"
                 android:textSize="18sp"
                 android:text="Amount of money"
                 android:layout_margin="5dp" />
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:textColor="#01579B"
+                android:textColor="@color/darkBlue"
                 android:textSize="18sp"
                 android:text="Company heighlight" />
 
@@ -145,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="#01579B"
+                android:textColor="@color/darkBlue"
                 android:layout_margin="5dp"
                 android:text="Vision" />
 
@@ -160,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="#01579B"
+                android:textColor="@color/darkBlue"
                 android:text="Excutive team"
                 android:textSize="18sp" />
 

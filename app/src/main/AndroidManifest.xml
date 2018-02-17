@@ -29,7 +29,7 @@
         <activity
             android:name=".Activities.Reward_campaign_Home_page"
             android:label="@string/RewardCamp"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.spinner" />
         <activity
             android:name=".Activities.Create_new_campaign"
             android:label="@string/CreateCampaign"
@@ -37,11 +37,13 @@
         <activity
             android:name=".Activities.New_campaign_reward"
             android:label="@string/CreateRewarCampaign"
-            android:parentActivityName=".Activities.Create_new_campaign" />
+            android:parentActivityName=".Activities.Create_new_campaign"
+            android:theme="@style/AppTheme.spinner.normal" />
         <activity
             android:name=".Activities.New_Campaign_Equity"
-            android:label="Create equity campaign"/>
-
+            android:label="Create equity campaign"
+            android:theme="@style/AppTheme.spinner.normal"
+            android:parentActivityName=".Activities.Create_new_campaign" />
         <activity
             android:name=".Activities.Campaign_info_for_creator"
             android:label="@string/CampaignDetails"
@@ -49,7 +51,7 @@
         <activity
             android:name=".Activities.Shop_Page"
             android:label="@string/Shop"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.spinner" />
         <activity
             android:name=".Activities.Login"
             android:label="@string/Login"
@@ -71,12 +73,19 @@
         <activity
             android:name=".Activities.HelpingCommunity"
             android:label="@string/ElFundCommunity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.spinner" />
         <activity
             android:name=".Activities.TalkToExpert"
             android:label="Talk to expert"
             android:theme="@style/AppTheme.CustomThem" />
-
+        <activity
+            android:name=".Activities.Equity_campaign_Home_page"
+            android:label="Equity Campaign"
+            android:theme="@style/AppTheme.spinner" />
+        <activity
+            android:name=".Activities.Job"
+            android:label="Job"
+            android:theme="@style/AppTheme.spinner" />
     </application>
 
 </manifest>

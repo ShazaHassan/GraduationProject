@@ -52,6 +52,20 @@
         <item>Food</item>
     </string-array>
 
+    <string-array name="category_for_job">
+        <item>All types</item>
+        <item>Medical</item>
+        <item>Enigneering</item>
+        <item>Lawyer</item>
+        <item>Financial</item>
+        <item>Sales</item>
+        <item>Marketing</item>
+        <item>Research and Development</item>
+        <item>Customer service</item>
+        <item>Production</item>
+    </string-array>
+    <string name="home_page_job">Home</string>
+    <string name="new_page_job">Newest Job</string>
     <string name="popular_page">Popular</string>
     <string name="newest_page">Newest</string>
     <string name="ending_soon_page">Ending Soon</string>

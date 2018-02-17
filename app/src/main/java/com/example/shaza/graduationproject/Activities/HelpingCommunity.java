@@ -125,7 +125,8 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
             Intent shopPage = new Intent(this, Shop_Page.class);
             startActivity(shopPage);
         } else if (id == R.id.job) {
-
+            Intent jobPage = new Intent(this, Job.class);
+            startActivity(jobPage);
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);
@@ -144,5 +145,10 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void openExpertChat(View view) {
+        Intent expertChat = new Intent(this, TalkToExpert.class);
+        startActivity(expertChat);
     }
 }

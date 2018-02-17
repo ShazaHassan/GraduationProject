@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.shaza.graduationproject.R;
@@ -22,6 +23,10 @@ public class SupportStartUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_start_up);
+        Button rewardButton = findViewById(R.id.reward_button);
+        rewardButton.setText("Go To Reward Campaigns");
+        Button equityButton = findViewById(R.id.equity_button);
+        equityButton.setText("Go To Equity Campaigns");
 
     }
 
