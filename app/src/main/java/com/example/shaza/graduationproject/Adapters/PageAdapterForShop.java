@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.shaza.graduationproject.Fragments.Ending_soon_campaign;
+import com.example.shaza.graduationproject.Fragments.Home_page_for_shop;
 import com.example.shaza.graduationproject.Fragments.MostFundCampaign;
 import com.example.shaza.graduationproject.Fragments.Most_seller_product;
 import com.example.shaza.graduationproject.Fragments.NewestCampaign;
@@ -34,6 +35,8 @@ public class PageAdapterForShop extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
+            return new Home_page_for_shop();
+        } else if (position == 1) {
             return new Most_seller_product();
         } else {
             return new Newest_product();
@@ -43,12 +46,14 @@ public class PageAdapterForShop extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
+            return context.getString(R.string.home_page_job);
+        } else if (position == 1) {
             return context.getString(R.string.most_seller);
         } else {
             return context.getString(R.string.newest_product);
