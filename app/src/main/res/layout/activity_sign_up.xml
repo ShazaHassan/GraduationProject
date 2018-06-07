@@ -76,12 +76,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your first name"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/first_name_text_for_sign_up" />
+                        android:id="@+id/first_name_text_for_sign_up"
+                        android:inputType="textShortMessage" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -92,19 +92,19 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/second_name_for_sign_up" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your second name"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/second_name_text_for_sign_up" />
+                        android:id="@+id/second_name_text_for_sign_up"
+                        android:inputType="textShortMessage" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -115,19 +115,18 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/birthday_for_sign_up" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your birthday"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:inputType="datetime"
+                        android:inputType="date"
                         android:id="@+id/birtday_text_for_sign_up" />
 
                     <TextView
@@ -139,14 +138,13 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/email_for_sign_up" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your email"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
@@ -163,19 +161,19 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/password_for_sign_up" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your password"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/password_text_for_sign_up" />
+                        android:id="@+id/password_text_for_sign_up"
+                        android:inputType="textPassword" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -183,10 +181,10 @@
                         android:textColor="@color/darkBlue"
                         android:textSize="24sp"
                         android:text="Repeat password"
+                        android:layout_marginTop="20dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
                         android:id="@+id/rePassword_for_sign_up" />
 
                     <EditText
@@ -198,7 +196,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/rePassword_text_for_sign_up" />
+                        android:id="@+id/rePassword_text_for_sign_up"
+                        android:inputType="textPassword" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -209,19 +208,19 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/Country_for_sign_up" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter your country"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/country_text_for_sign_up" />
+                        android:id="@+id/country_text_for_sign_up"
+                        android:inputType="textShortMessage" />
                 </LinearLayout>
 
                 <Button
@@ -229,12 +228,13 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/input_place"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="profilePage"
                     android:text="Sign up"
                     android:textAllCaps="false"
                     android:textSize="18dp"
-                    android:textColor="@color/darkBlue" />
+                    android:textColor="@color/darkBlue"
+                    app:layout_constraintLeft_toLeftOf="parent" />
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
         </android.support.constraint.ConstraintLayout>

@@ -1,22 +1,27 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.shaza.graduationproject.R;
 
 public class SignUp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    EditText firstName, secondName, password, rePassword, email, country, birthday;
+    String fName, sName, pass, rePass, eMail, coun, birth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,15 @@ public class SignUp extends AppCompatActivity
         setContentView(R.layout.activity_sign_up);
         setupDrawer();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        firstName = (EditText) findViewById(R.id.first_name_text_for_sign_up);
+        secondName = (EditText) findViewById(R.id.second_name_text_for_sign_up);
+        email = (EditText) findViewById(R.id.email_text_for_sign_up);
+        password = (EditText) findViewById(R.id.password_text_for_sign_up);
+        rePassword = (EditText) findViewById(R.id.rePassword_text_for_sign_up);
+        country = (EditText) findViewById(R.id.country_text_for_sign_up);
+        birthday = (EditText) findViewById(R.id.birtday_text_for_sign_up);
+
     }
 
     //set up toolbar and side drawer
@@ -92,5 +106,36 @@ public class SignUp extends AppCompatActivity
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
+    }
+
+    public void profilePage(View view) {
+        fName = String.valueOf(firstName.getText());
+        sName = String.valueOf(secondName.getText());
+        eMail = String.valueOf(email.getText());
+        coun = String.valueOf(country.getText());
+        pass = String.valueOf(password.getText());
+        rePass = String.valueOf(rePassword.getText());
+        birth = String.valueOf(birthday.getText());
+        if (fName.equals("")) {
+            Toast.makeText(this, "Enter the first name", Toast.LENGTH_LONG).show();
+        } else if (sName.equals("")) {
+            Toast.makeText(this, "Enter the second name", Toast.LENGTH_LONG).show();
+        } else if (birth.isEmpty()) {
+            Toast.makeText(this, "Enter your birthday", Toast.LENGTH_LONG).show();
+        } else if (eMail.equals("")) {
+            Toast.makeText(this, "Enter your mail", Toast.LENGTH_LONG).show();
+        } else if (pass.equals("")) {
+            Toast.makeText(this, "Enter your password", Toast.LENGTH_LONG).show();
+        } else if (rePass.equals("")) {
+            Toast.makeText(this, "Enter your repeated password", Toast.LENGTH_LONG).show();
+        } else if (coun.equals("")) {
+            Toast.makeText(this, "Enter your country", Toast.LENGTH_LONG).show();
+        } else if (!pass.equals(rePass)) {
+            Toast.makeText(this, "Not Same Password, Please enter repeat password right", Toast.LENGTH_LONG).show();
+        } else {
+            Intent profilePage = new Intent(this, Personal_Page.class);
+            startActivity(profilePage);
+        }
+
     }
 }

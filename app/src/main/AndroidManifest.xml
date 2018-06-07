@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shaza.graduationproject">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -42,8 +47,8 @@
         <activity
             android:name=".Activities.New_Campaign_Equity"
             android:label="Create equity campaign"
-            android:theme="@style/AppTheme.spinner.normal"
-            android:parentActivityName=".Activities.Create_new_campaign" />
+            android:parentActivityName=".Activities.Create_new_campaign"
+            android:theme="@style/AppTheme.spinner.normal" />
         <activity
             android:name=".Activities.Campaign_info_for_creator"
             android:label="@string/CampaignDetails"
@@ -86,6 +91,10 @@
             android:name=".Activities.Job"
             android:label="Job"
             android:theme="@style/AppTheme.spinner" />
+        <activity
+            android:name=".Activities.Personal_Page"
+            android:label="Your name"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
