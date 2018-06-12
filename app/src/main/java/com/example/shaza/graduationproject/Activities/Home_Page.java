@@ -64,6 +64,7 @@ public class Home_Page extends AppCompatActivity
         mail.setText("Shazahassan2020@gmail.com");
         ImageView pp = header.findViewById(R.id.profile_image_at_header);
         pp.setImageResource(R.drawable.unkown_user);
+
         header.setOnClickListener(new View.OnClickListener() {
 
             @Override
