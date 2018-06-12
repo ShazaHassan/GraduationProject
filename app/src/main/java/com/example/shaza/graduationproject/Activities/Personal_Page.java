@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Adapters.AdapterForPersonalPage;
+import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
 import com.example.shaza.graduationproject.Fragments.Profile;
 import com.example.shaza.graduationproject.R;
 
@@ -119,11 +119,12 @@ public class Personal_Page extends AppCompatActivity
     private void setupViewPager() {
         pager = (ViewPager) findViewById(R.id.pagesForViewPersonalPage);
         //adapter
-        AdapterForPersonalPage pageAdapter = new AdapterForPersonalPage(this, getSupportFragmentManager());
+        PageAdapterForPersonalPage pageAdapter = new PageAdapterForPersonalPage(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
         //tab
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewPersonalPage);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     //set up toolbar and side drawer

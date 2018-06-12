@@ -1,15 +1,12 @@
 package com.example.shaza.graduationproject.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
 import com.example.shaza.graduationproject.Adapters.AdapterForShowCampaign;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
@@ -38,6 +35,7 @@ public class PopularCampaign extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
+        array.clear();
         for (int i = 0; i < img.length; i++)
             array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
         AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.lightYellow);

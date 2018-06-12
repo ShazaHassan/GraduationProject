@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.MyAdapter;
 import com.example.shaza.graduationproject.R;
@@ -53,6 +55,27 @@ public class Home_Page extends AppCompatActivity
         initRewardCampNewest();
         initEquityCampNewest();
         dialog = new Dialog(this);
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        navView.setItemIconTintList(null);
+        View header = navView.getHeaderView(0);
+        TextView name = (TextView) header.findViewById(R.id.name_at_header);
+        name.setText("Shaza Hassan");
+        TextView mail = (TextView) header.findViewById(R.id.mail_at_header);
+        mail.setText("Shazahassan2020@gmail.com");
+        ImageView pp = header.findViewById(R.id.profile_image_at_header);
+        pp.setImageResource(R.drawable.unkown_user);
+        header.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent pp = new Intent(Home_Page.this, Personal_Page.class);
+                startActivity(pp);
+            }
+        });
+        Menu menu = navView.getMenu();
+        menu.findItem(R.id.login).setVisible(false);
+        menu.findItem(R.id.sign_up).setVisible(false);
+        menu.findItem(R.id.logout).setVisible(true);
     }
 
 
@@ -190,6 +213,14 @@ public class Home_Page extends AppCompatActivity
 
         } else if (id == R.id.about_us) {
 
+        } else if (id == R.id.logout) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

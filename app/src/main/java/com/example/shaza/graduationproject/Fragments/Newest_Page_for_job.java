@@ -29,7 +29,7 @@ public class Newest_Page_for_job extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
-
+        jobTemplates.clear();
         for (int i = 0; i < logo.length; i++)
             jobTemplates.add(new JobTemplate(logo[i], companyName[i], descriptionForPosition[i]));
         AdapterForShowJob adapter = new AdapterForShowJob(getActivity(), jobTemplates);

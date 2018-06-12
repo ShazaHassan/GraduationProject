@@ -13,19 +13,15 @@ import com.example.shaza.graduationproject.TemplateForAdapter.ShopForShow;
 
 import java.util.ArrayList;
 
-/**
- * Created by ShazaHassan on 17-Feb-18.
- */
+import static com.example.shaza.graduationproject.Fragments.Home_page_for_shop.ProductName;
+import static com.example.shaza.graduationproject.Fragments.Home_page_for_shop.desc;
+import static com.example.shaza.graduationproject.Fragments.Home_page_for_shop.img;
+import static com.example.shaza.graduationproject.Fragments.Home_page_for_shop.price;
 
-public class Home_page_for_shop extends Fragment {
-
-    public static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    public static final String[] desc = {"text1", "text2", "text3"};
-    public static final String[] ProductName = {"Product1", "Product2", "Product3"};
-    public static final int[] price = {5, 9, 10};
+public class YourProduct extends Fragment {
     private ArrayList<ShopForShow> array = new ArrayList<>();
 
-    public Home_page_for_shop() {
+    public YourProduct() {
     }
 
     @Override
@@ -34,7 +30,7 @@ public class Home_page_for_shop extends Fragment {
 
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
         array.clear();
-        for (int i = 0; i < img.length; i++)
+        for (int i = 1; i < img.length; i++)
             array.add(new ShopForShow(img[i], price[i], ProductName[i], desc[i]));
 
         AdapterForShowProduct adapter = new AdapterForShowProduct(getActivity(), array);

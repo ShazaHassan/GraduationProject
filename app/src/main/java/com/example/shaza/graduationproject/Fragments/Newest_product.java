@@ -7,11 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.shaza.graduationproject.Adapters.AdapterForShowCampaign;
 import com.example.shaza.graduationproject.Adapters.AdapterForShowProduct;
-import com.example.shaza.graduationproject.Adapters.PageAdapterForShop;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 import com.example.shaza.graduationproject.TemplateForAdapter.ShopForShow;
 
 import java.util.ArrayList;
@@ -36,6 +33,7 @@ public class Newest_product extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
+        array.clear();
         for (int i = 0; i < img.length; i++)
             array.add(new ShopForShow(img[i], price[i], ProductName[i], desc[i]));
 
