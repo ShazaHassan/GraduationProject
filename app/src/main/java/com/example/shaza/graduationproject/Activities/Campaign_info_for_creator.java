@@ -1,9 +1,13 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,6 +45,11 @@ public class Campaign_info_for_creator extends AppCompatActivity
         pos = intent.getExtras().getInt("id");
         setItems();
         setupDrawer();
+        ImageView creatorImage = findViewById(R.id.img_camp_creator);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unkown_user);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        creatorImage.setImageDrawable(roundedBitmapDrawable);
     }
 
 

@@ -2,9 +2,13 @@ package com.example.shaza.graduationproject.Activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -64,7 +68,10 @@ public class Home_Page extends AppCompatActivity
         mail.setText("Shazahassan2020@gmail.com");
         ImageView pp = header.findViewById(R.id.profile_image_at_header);
         pp.setImageResource(R.drawable.unkown_user);
-
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unkown_user);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        pp.setImageDrawable(roundedBitmapDrawable);
         header.setOnClickListener(new View.OnClickListener() {
 
             @Override

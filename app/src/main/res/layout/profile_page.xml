@@ -17,6 +17,11 @@
             android:paddingTop="20dp"
             android:src="@drawable/unkown_user"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:foregroundGravity="center"
+            android:maxHeight="250dp"
+            android:maxWidth="250dp"
+            android:minHeight="150dp"
+            android:minWidth="150dp"
             app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
