@@ -51,6 +51,11 @@
         <item>Productivity</item>
         <item>Food</item>
     </string-array>
+    <string-array name="gender">
+        <item></item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
 
     <string-array name="category_for_job">
         <item>All types</item>

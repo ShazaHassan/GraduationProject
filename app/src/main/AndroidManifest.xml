@@ -96,15 +96,13 @@
             android:label="Your name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Template.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".Activities.Campaign_info_for_funded"
+            android:label="@string/CampaignDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Shop_info_for_creator"
+            android:label="Product Details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.example.shaza.graduationproject.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,22 +13,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shaza.graduationproject.R;
 
-public class Campaign_info_for_creator extends AppCompatActivity
+public class Campaign_info_for_funded extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private int pos = 0;
+
     private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
     private static final String[] texts = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.  "
             , "Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. "
@@ -39,14 +33,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
     private static final String[] need = {"1$", "0$", "6$"};
     private static final int[] total = {5, 3, 12};
     private static final int[] get = {4, 3, 6};
-
-    TextView campName, descCamp, daysLeft, needMoney, percentage;
-    ImageView imgCamp, editImgCamp;
-    ProgressBar progressForPercentage;
-    EditText editCampName, editDescCamp;
-    Button fund, done;
-    String newCampName, newDescCamp;
-    Context context = this;
+    private int pos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,96 +48,28 @@ public class Campaign_info_for_creator extends AppCompatActivity
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         creatorImage.setImageDrawable(roundedBitmapDrawable);
-        fund = findViewById(R.id.fund_button);
-        fund.setVisibility(View.GONE);
-        done = findViewById(R.id.done_button);
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
     }
 
-
     private void setItems() {
-        campName = findViewById(R.id.campaign_name_creator);
-        imgCamp = findViewById(R.id.campaign_image);
-        descCamp = findViewById(R.id.description_of_campaign);
-        daysLeft = findViewById(R.id.days_left_for_creator);
-        needMoney = findViewById(R.id.need_money);
-        progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
-        percentage = findViewById(R.id.percentage_for_creator);
+        TextView campName = (TextView) findViewById(R.id.campaign_name_creator);
+        ImageView imgCamp = (ImageView) findViewById(R.id.campaign_image);
+        TextView descCamp = (TextView) findViewById(R.id.description_of_campaign);
+        TextView daysLeft = (TextView) findViewById(R.id.days_left_for_creator);
+        TextView need = (TextView) findViewById(R.id.need_money);
+        ProgressBar progressForPercentage = (ProgressBar) findViewById(R.id.progress_bar_for_show_percentage);
+        TextView percentage = (TextView) findViewById(R.id.percentage_for_creator);
         campName.setText(campaignName[pos]);
         imgCamp.setImageResource(img[pos]);
         descCamp.setText(texts[pos]);
         daysLeft.setText(noOfDays[pos]);
-        needMoney.setText("need " + this.need[pos]);
+        need.setText("need " + this.need[pos]);
         int percentageCalculation = (int) ((((float) get[pos] / (float) total[pos])) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
-        editImgCamp = findViewById(R.id.edit_camp_img);
-        editCampName = findViewById(R.id.edit_campaign_name_creator);
-        editDescCamp = findViewById(R.id.edit_description_of_campaign);
 
-    }
-
-    //options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.edit_delete, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        final int id = item.getItemId();
-        if (id == R.id.edit_icon) {
-            showAndHideForEdit();
-            editCampName.setText(campName.getText());
-            editDescCamp.setText(descCamp.getText());
-            done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    newCampName = String.valueOf(editCampName.getText());
-                    newDescCamp = String.valueOf(editDescCamp.getText());
-
-                    if (newCampName.equals("")) {
-                        Toast.makeText(context, "please enter new name of camp", Toast.LENGTH_LONG).show();
-                    } else if (newDescCamp.equals("")) {
-                        Toast.makeText(context, "please enter new description of camp", Toast.LENGTH_LONG).show();
-                    } else {
-                        campName.setText(newCampName);
-                        descCamp.setText(newDescCamp);
-                        campName.setVisibility(View.VISIBLE);
-                        descCamp.setVisibility(View.VISIBLE);
-                        daysLeft.setVisibility(View.VISIBLE);
-                        needMoney.setVisibility(View.VISIBLE);
-                        progressForPercentage.setVisibility(View.VISIBLE);
-                        percentage.setVisibility(View.VISIBLE);
-                        done.setVisibility(View.GONE);
-                        editDescCamp.setVisibility(View.GONE);
-                        editCampName.setVisibility(View.INVISIBLE);
-                        editImgCamp.setVisibility(View.GONE);
-                    }
-                }
-            });
-
-        }
-
-        return true;
-    }
-
-    private void showAndHideForEdit() {
-        campName.setVisibility(View.GONE);
-        descCamp.setVisibility(View.GONE);
-        daysLeft.setVisibility(View.GONE);
-        needMoney.setVisibility(View.GONE);
-        progressForPercentage.setVisibility(View.GONE);
-        percentage.setVisibility(View.GONE);
-        done.setVisibility(View.VISIBLE);
-        editDescCamp.setVisibility(View.VISIBLE);
-        editCampName.setVisibility(View.VISIBLE);
-        editImgCamp.setVisibility(View.VISIBLE);
     }
 
     //setup toolbar and side drawer
@@ -189,7 +108,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
         } else if (id == R.id.login) {
             Intent loginPage = new Intent(this, Login.class);
             startActivity(loginPage);
-        }else if (id == R.id.help_community){
+        } else if (id == R.id.help_community) {
             Intent HelpPage = new Intent(this, HelpingCommunity.class);
             startActivity(HelpPage);
         } else if (id == R.id.sign_up) {
@@ -220,8 +139,5 @@ public class Campaign_info_for_creator extends AppCompatActivity
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
-    }
-
-    public void uploadPhotoAndVideo(View view) {
     }
 }

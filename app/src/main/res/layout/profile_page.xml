@@ -120,7 +120,7 @@
             app:layout_constraintTop_toBottomOf="@id/birthday_header" />
 
         <TextView
-            android:id="@+id/birthday_perdonal_page"
+            android:id="@+id/birthday_personal_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -133,6 +133,43 @@
             app:layout_constraintTop_toBottomOf="@id/birthday_header" />
 
         <TextView
+            android:id="@+id/gender_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:text="Gender"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintTop_toBottomOf="@id/birthday_personal_page" />
+
+        <Spinner
+            android:id="@+id/edit_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:entries="@array/gender"
+            android:inputType="date"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/gender_header" />
+
+        <TextView
+            android:id="@+id/gender_personal_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Female"
+            android:textAllCaps="false"
+            android:textColor="@color/darkBlue"
+            android:textSize="16dp"
+            app:layout_constraintTop_toBottomOf="@id/gender_header" />
+
+        <TextView
             android:id="@+id/country_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,7 +179,7 @@
             android:text="Country"
             android:textColor="@color/black"
             android:textSize="20dp"
-            app:layout_constraintTop_toBottomOf="@id/birthday_perdonal_page" />
+            app:layout_constraintTop_toBottomOf="@id/gender_personal_page" />
 
         <EditText
             android:id="@+id/edit_country"

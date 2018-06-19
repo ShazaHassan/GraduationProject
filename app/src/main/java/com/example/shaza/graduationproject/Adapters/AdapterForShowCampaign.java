@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
+import com.example.shaza.graduationproject.Activities.Campaign_info_for_funded;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 
@@ -83,7 +83,7 @@ public class AdapterForShowCampaign extends ArrayAdapter<ImgAndText> {
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailsPage = new Intent(context, Campaign_info_for_creator.class);
+                Intent detailsPage = new Intent(context, Campaign_info_for_funded.class);
                 detailsPage.putExtra("id", position);
                 context.startActivity(detailsPage);
             }

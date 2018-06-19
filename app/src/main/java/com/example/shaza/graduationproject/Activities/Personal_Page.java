@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,19 +19,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
-import com.example.shaza.graduationproject.Fragments.Profile;
 import com.example.shaza.graduationproject.R;
 
 public class Personal_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText username, email, birthday, country;
-    TextView userName, eMail, birth, coun;
+    TextView userName, eMail, birth, coun, gen;
     Button done;
+    Spinner gender;
+    String name, mail, day, c, g;
     ViewPager pager;
-    Profile profile = new Profile();
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +62,18 @@ public class Personal_Page extends AppCompatActivity
         int id = item.getItemId();
         if (pager.getCurrentItem() == 0) {
             View view = pager.getRootView();
-            username = (EditText) view.findViewById(R.id.edit_user_name);
-            username = (EditText) view.findViewById(R.id.edit_user_name);
-            email = (EditText) view.findViewById(R.id.edit_email);
-            birthday = (EditText) view.findViewById(R.id.edit_birth);
-            country = (EditText) view.findViewById(R.id.edit_country);
-            userName = (TextView) view.findViewById(R.id.user_name);
-            eMail = (TextView) view.findViewById(R.id.email_personal_page);
-            birth = (TextView) view.findViewById(R.id.birthday_perdonal_page);
-            coun = (TextView) view.findViewById(R.id.country);
-            done = (Button) view.findViewById(R.id.done_btn);
+            username = view.findViewById(R.id.edit_user_name);
+            username = view.findViewById(R.id.edit_user_name);
+            email = view.findViewById(R.id.edit_email);
+            birthday = view.findViewById(R.id.edit_birth);
+            country = view.findViewById(R.id.edit_country);
+            userName = view.findViewById(R.id.user_name);
+            eMail = view.findViewById(R.id.email_personal_page);
+            birth = view.findViewById(R.id.birthday_personal_page);
+            coun = view.findViewById(R.id.country);
+            done = view.findViewById(R.id.done_btn);
+            gender = view.findViewById(R.id.edit_gender);
+            gen = view.findViewById(R.id.gender_personal_page);
             if (id == R.id.edit_icon) {
                 username.setVisibility(View.VISIBLE);
                 username.setText(userName.getText());
@@ -85,27 +91,53 @@ public class Personal_Page extends AppCompatActivity
                 country.setText(coun.getText());
                 coun.setVisibility(View.INVISIBLE);
 
+                gender.setVisibility(View.VISIBLE);
+                gen.setVisibility(View.GONE);
+
                 done.setVisibility(View.VISIBLE);
                 done.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        username.setVisibility(View.GONE);
-                        userName.setText(String.valueOf(username.getText()));
-                        userName.setVisibility(View.VISIBLE);
 
-                        email.setVisibility(View.GONE);
-                        eMail.setText(String.valueOf(email.getText()));
-                        eMail.setVisibility(View.VISIBLE);
+                        name = String.valueOf(username.getText());
+                        mail = String.valueOf(email.getText());
+                        day = String.valueOf(birth.getText());
+                        c = String.valueOf(country.getText());
+                        g = gender.getSelectedItem().toString();
+                        if (name.equals("")) {
+                            Toast.makeText(context, "Usernmae can't be empty field", Toast.LENGTH_LONG).show();
+                        } else if (mail.equals("")) {
+                            Toast.makeText(context, "Email can't be empty field", Toast.LENGTH_LONG).show();
+                        } else if (day.equals("")) {
+                            Toast.makeText(context, "Birthday can't be empty field", Toast.LENGTH_LONG).show();
+                        } else if (g.equals("")) {
+                            Toast.makeText(context, "please select your gender", Toast.LENGTH_LONG).show();
+                        } else if (c.equals("")) {
+                            Toast.makeText(context, "Your country can't be empty field", Toast.LENGTH_LONG).show();
+                        } else {
+                            username.setVisibility(View.GONE);
+                            userName.setText(name);
+                            userName.setVisibility(View.VISIBLE);
 
-                        birthday.setVisibility(View.GONE);
-                        birth.setText(String.valueOf(birth.getText()));
-                        birth.setVisibility(View.VISIBLE);
+                            email.setVisibility(View.GONE);
+                            eMail.setText(mail);
+                            eMail.setVisibility(View.VISIBLE);
 
-                        country.setVisibility(View.GONE);
-                        coun.setText(String.valueOf(country.getText()));
-                        coun.setVisibility(View.VISIBLE);
+                            birthday.setVisibility(View.GONE);
+                            birth.setText(day);
+                            birth.setVisibility(View.VISIBLE);
 
-                        done.setVisibility(View.GONE);
+                            gender.setVisibility(View.GONE);
+                            Toast.makeText(context, g, Toast.LENGTH_LONG).show();
+                            gen.setText(g);
+                            gen.setVisibility(View.VISIBLE);
+
+                            country.setVisibility(View.GONE);
+                            coun.setText(c);
+                            coun.setVisibility(View.VISIBLE);
+
+                            done.setVisibility(View.GONE);
+                        }
                     }
                 });
 
