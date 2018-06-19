@@ -102,7 +102,11 @@
         <activity
             android:name=".Activities.Shop_info_for_creator"
             android:label="Product Details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.View_As"
+            android:label="View as details campaign"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

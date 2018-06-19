@@ -1,9 +1,14 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,15 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.shaza.graduationproject.R;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class SignUp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    EditText firstName, secondName, password, rePassword, email, country, birthday;
-    String fName, sName, pass, rePass, eMail, coun, birth;
 
+    EditText firstName, secondName, password, rePassword, email, country, birthday;
+    private static int RESULT_LOAD_IMG = 1;
+    String fName, sName, pass, rePass, eMail, coun, birth, gen;
+    Spinner gender;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +44,14 @@ public class SignUp extends AppCompatActivity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         firstName = (EditText) findViewById(R.id.first_name_text_for_sign_up);
-        secondName = (EditText) findViewById(R.id.second_name_text_for_sign_up);
+        secondName = (EditText) findViewById(R.id.last_name_text_for_sign_up);
         email = (EditText) findViewById(R.id.email_text_for_sign_up);
         password = (EditText) findViewById(R.id.password_text_for_sign_up);
         rePassword = (EditText) findViewById(R.id.rePassword_text_for_sign_up);
         country = (EditText) findViewById(R.id.country_text_for_sign_up);
-        birthday = (EditText) findViewById(R.id.birtday_text_for_sign_up);
-
+        birthday = (EditText) findViewById(R.id.birthday_text_for_sign_up);
+        gender = findViewById(R.id.gender_spinner_for_sign_up);
+        imageView = findViewById(R.id.upload_img_img_view_fpr_sign_up);
     }
 
     //set up toolbar and side drawer
@@ -116,12 +130,15 @@ public class SignUp extends AppCompatActivity
         pass = String.valueOf(password.getText());
         rePass = String.valueOf(rePassword.getText());
         birth = String.valueOf(birthday.getText());
+        gen = gender.getSelectedItem().toString();
         if (fName.equals("")) {
             Toast.makeText(this, "Enter the first name", Toast.LENGTH_LONG).show();
         } else if (sName.equals("")) {
             Toast.makeText(this, "Enter the second name", Toast.LENGTH_LONG).show();
         } else if (birth.isEmpty()) {
             Toast.makeText(this, "Enter your birthday", Toast.LENGTH_LONG).show();
+        } else if (gen.equals("")) {
+            Toast.makeText(this, "Select your gender", Toast.LENGTH_LONG).show();
         } else if (eMail.equals("")) {
             Toast.makeText(this, "Enter your mail", Toast.LENGTH_LONG).show();
         } else if (pass.equals("")) {
@@ -137,5 +154,35 @@ public class SignUp extends AppCompatActivity
             startActivity(profilePage);
         }
 
+    }
+
+    public void uploadPhotoAndVideo(View view) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), selectedImage);
+                roundedBitmapDrawable.setCircular(true);
+                imageView.setImageDrawable(roundedBitmapDrawable);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -3,8 +3,7 @@
 <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E0F2F1"
-    android:layout_margin="10dp"
+    android:background="@color/gray"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,6 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -62,7 +62,7 @@
                 android:text="Upload Photo"
                 android:textSize="18sp"
                 android:layout_margin="5dp"
-                android:onClick="uploadPhotoAndVideo"
+                android:onClick="uploadPhoto"
                 android:textColor="@color/darkBlue" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:text="Upload Video"
                 android:textSize="18sp"
                 android:layout_margin="5dp"
-                android:onClick="uploadPhotoAndVideo"
+                android:onClick="uploadVideo"
                 android:textColor="@color/darkBlue" />
 
             <TextView
@@ -158,6 +158,31 @@
                 android:hint="Describe your vision about campaign" />
 
             <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Add offers:"
+                android:textColor="@color/darkBlue"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editText15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="Add offers.."
+                android:inputType="textMultiLine"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -176,7 +201,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:paddingBottom="5dp">
 
                 <Button
                     android:layout_width="0dp"
@@ -186,7 +212,9 @@
                     android:text="View as"
                     android:textAllCaps="false"
                     android:textSize="16sp"
-                    android:background="#8C9EFF" />
+                    android:background="@color/lightBlue"
+                    android:onClick="viewAs"
+                    android:textColor="@color/white" />
 
                 <Button
                     android:layout_width="0dp"
@@ -196,7 +224,9 @@
                     android:text="Publish"
                     android:textAllCaps="false"
                     android:textSize="16sp"
-                    android:background="#82B1FF" />
+                    android:background="@color/darkBlue"
+                    android:onClick="publish"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </LinearLayout>

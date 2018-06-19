@@ -88,22 +88,22 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/darkBlue"
                         android:textSize="24sp"
-                        android:text="Second name"
+                        android:id="@+id/last_name_for_sign_up"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="20dp"
-                        android:id="@+id/second_name_for_sign_up" />
+                        android:text="Last name" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your second name"
+                        android:id="@+id/last_name_text_for_sign_up"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
-                        android:id="@+id/second_name_text_for_sign_up"
+                        android:hint="Enter your last name"
                         android:inputType="textShortMessage" />
 
                     <TextView
@@ -127,7 +127,29 @@
                         android:layout_marginEnd="10dp"
                         android:textColorHint="@color/lightBlue"
                         android:inputType="date"
-                        android:id="@+id/birtday_text_for_sign_up" />
+                        android:id="@+id/birthday_text_for_sign_up" />
+
+                    <TextView
+                        android:id="@+id/gender_for_sign_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Gender"
+                        android:textColor="@color/darkBlue"
+                        android:textSize="24sp" />
+
+                    <Spinner
+                        android:id="@+id/gender_spinner_for_sign_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:entries="@array/gender" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -221,6 +243,37 @@
                         android:textColorHint="@color/lightBlue"
                         android:id="@+id/country_text_for_sign_up"
                         android:inputType="textShortMessage" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/upload_img_for_sign_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:onClick="uploadPhotoAndVideo"
+                            android:text="Upload profile picture"
+                            android:textColor="@color/darkBlue"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/upload_img_img_view_fpr_sign_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="20dp"
+                            android:maxHeight="100dp"
+                            android:maxWidth="100dp" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <Button
