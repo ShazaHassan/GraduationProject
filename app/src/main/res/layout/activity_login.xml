@@ -138,7 +138,8 @@
                 android:textSize="18dp"
                 android:textColor="@color/darkBlue"
                 android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:onClick="Login" />
 
         </android.support.constraint.ConstraintLayout>
 

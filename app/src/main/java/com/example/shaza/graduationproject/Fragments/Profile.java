@@ -25,7 +25,7 @@ public class Profile extends android.support.v4.app.Fragment {
 
         View rootView = inflater.inflate(R.layout.profile_page, container, false);
         ImageView pp = rootView.findViewById(R.id.personal_img);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unkown_user);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         pp.setImageDrawable(roundedBitmapDrawable);

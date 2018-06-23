@@ -1,37 +1,61 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-
-import com.example.shaza.graduationproject.R;
-
-
-import com.example.shaza.graduationproject.TemplateForAdapter.QuestionList;
-import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.Adapters.Question_List_Adapters;
+import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.R;
+import com.example.shaza.graduationproject.TemplateForAdapter.QuestionList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HelpingCommunity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ListView listView;
     private Question_List_Adapters adapter;
     private ArrayList<QuestionList> list = new ArrayList<>();
+
+    private NavigationView navView;
+    private FirebaseUser user;
+    private View header;
+    private TextView name, email;
+    private Menu menu;
+    private String idDatabase;
+    private DatabaseReference userTable;
+    private FirebaseDatabase database;
+    private String userName, e_mail, gender;
+    private Users users;
+    private ImageView pp;
 
 
     @Override
@@ -65,10 +89,113 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
 
         setupDrawer();
 
+        navView = findViewById(R.id.nav_view);
+        navView.setItemIconTintList(null);
+        menu = navView.getMenu();
+        users = new Users();
+        database = FirebaseDatabase.getInstance();
+        userTable = database.getReference().child("Users");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            setHeaderDrawer();
+        } else {
+            navView.removeHeaderView(navView.getHeaderView(0));
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+        }
 
     }
 
 
+    private void setHeaderDrawer() {
+        header = navView.getHeaderView(0);
+        idDatabase = user.getUid();
+        name = header.findViewById(R.id.name_at_header);
+        email = header.findViewById(R.id.mail_at_header);
+        pp = header.findViewById(R.id.profile_image_at_header);
+        userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+                userName = users.getFirstName() + " " + users.getLastName();
+                e_mail = users.getEmail();
+                name.setText(userName);
+                email.setText(e_mail);
+
+                if (!dataSnapshot.hasChild("Profile Img")) {
+                    gender = users.getGender();
+                    Log.v("gender", gender);
+                    makeProfilePic(gender);
+                } else {
+                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
+                    new DownloadImage().execute(imageUrl);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        header.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent pp = new Intent(HelpingCommunity.this, Personal_Page.class);
+                startActivity(pp);
+            }
+        });
+        menu.findItem(R.id.login).setVisible(false);
+        menu.findItem(R.id.sign_up).setVisible(false);
+        menu.findItem(R.id.logout).setVisible(true);
+    }
+
+    private void makeProfilePic(String gender) {
+        if (gender.equals("Female")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            pp.setImageDrawable(roundedBitmapDrawable);
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            pp.setImageDrawable(roundedBitmapDrawable);
+        }
+    }
+
+    void displayImage(Bitmap bitmap) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        pp.setImageDrawable(roundedBitmapDrawable);
+    }
+
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+        private Exception exception;
+
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                return bmp;
+            } catch (Exception e) {
+                this.exception = e;
+
+                return null;
+            } finally {
+            }
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+            super.onPostExecute(bitmap);
+            displayImage(bitmap);
+        }
+    }
 
     private void setupDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);

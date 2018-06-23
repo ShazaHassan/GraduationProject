@@ -1,9 +1,12 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,27 +17,68 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.UUID;
 
 public class SignUp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    EditText firstName, secondName, password, rePassword, email, country, birthday;
+    public String imageName;
     private static int RESULT_LOAD_IMG = 1;
-    String fName, sName, pass, rePass, eMail, coun, birth, gen;
+    EditText firstName, lastName, password, rePassword, email, country, birthday;
     Spinner gender;
     ImageView imageView;
+    private String fName, lName, pass, rePass, eMail, coun, birth, gen, idDatabase;
+    private FirebaseDatabase database;
+    private DatabaseReference userTable;
+    private FirebaseAuth auth;
+    private Users user;
+    private Context context = this;
+    private StorageReference storageImage;
+    private Uri imageUri;
+    private InputStream imageStream;
+    private Bitmap selectedImage;
+    private RoundedBitmapDrawable roundedBitmapDrawable;
+    private UploadTask uploadTask;
+    private NavigationView navView;
+    private FirebaseUser userAuth;
+    private View header;
+    private TextView name, e_mail;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +87,48 @@ public class SignUp extends AppCompatActivity
         setupDrawer();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        firstName = (EditText) findViewById(R.id.first_name_text_for_sign_up);
-        secondName = (EditText) findViewById(R.id.last_name_text_for_sign_up);
-        email = (EditText) findViewById(R.id.email_text_for_sign_up);
-        password = (EditText) findViewById(R.id.password_text_for_sign_up);
-        rePassword = (EditText) findViewById(R.id.rePassword_text_for_sign_up);
-        country = (EditText) findViewById(R.id.country_text_for_sign_up);
-        birthday = (EditText) findViewById(R.id.birthday_text_for_sign_up);
-        gender = findViewById(R.id.gender_spinner_for_sign_up);
-        imageView = findViewById(R.id.upload_img_img_view_fpr_sign_up);
+        defineItems();
+
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        userTable = database.getReference().child("Users");
+        storageImage = FirebaseStorage.getInstance().getReference();
+        user = new Users();
+
+        navView = findViewById(R.id.nav_view);
+        navView.setItemIconTintList(null);
+        menu = navView.getMenu();
+
+        userAuth = FirebaseAuth.getInstance().getCurrentUser();
+//        Log.v("current user",user.toString());
+        if (userAuth != null) {
+            header = navView.getHeaderView(0);
+            name = header.findViewById(R.id.name_at_header);
+            name.setText("Shaza Hassan");
+            e_mail = header.findViewById(R.id.mail_at_header);
+            e_mail.setText("Shazahassan2020@gmail.com");
+            ImageView pp = header.findViewById(R.id.profile_image_at_header);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            pp.setImageDrawable(roundedBitmapDrawable);
+            header.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent pp = new Intent(getApplicationContext(), Personal_Page.class);
+                    startActivity(pp);
+                }
+            });
+            menu.findItem(R.id.login).setVisible(false);
+            menu.findItem(R.id.sign_up).setVisible(false);
+            menu.findItem(R.id.logout).setVisible(true);
+        } else {
+            navView.removeHeaderView(navView.getHeaderView(0));
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+        }
     }
 
     //set up toolbar and side drawer
@@ -67,8 +144,6 @@ public class SignUp extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -101,12 +176,20 @@ public class SignUp extends AppCompatActivity
 
         } else if (id == R.id.about_us) {
 
+        } else if (id == R.id.logout) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+            FirebaseAuth.getInstance().signOut();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,45 +205,220 @@ public class SignUp extends AppCompatActivity
         startActivity(expertChat);
     }
 
-    public void profilePage(View view) {
+    private void defineItems() {
+        firstName = findViewById(R.id.first_name_text_for_sign_up);
+        lastName = findViewById(R.id.last_name_text_for_sign_up);
+        email = findViewById(R.id.email_text_for_sign_up);
+        password = findViewById(R.id.password_text_for_sign_up);
+        rePassword = findViewById(R.id.rePassword_text_for_sign_up);
+        country = findViewById(R.id.country_text_for_sign_up);
+        birthday = findViewById(R.id.birthday_text_for_sign_up);
+        gender = findViewById(R.id.gender_spinner_for_sign_up);
+        imageView = findViewById(R.id.upload_img_img_view_fpr_sign_up);
+    }
+
+    private void setData() {
+        user.setFirstName(fName);
+        user.setLastName(lName);
+        user.setEmail(eMail);
+        user.setCountry(coun);
+        user.setPassword(pass);
+        user.setGender(gen);
+        user.setBirthday(birth);
+    }
+
+    private void getDataFromFields() {
         fName = String.valueOf(firstName.getText());
-        sName = String.valueOf(secondName.getText());
+        lName = String.valueOf(lastName.getText());
         eMail = String.valueOf(email.getText());
         coun = String.valueOf(country.getText());
         pass = String.valueOf(password.getText());
         rePass = String.valueOf(rePassword.getText());
         birth = String.valueOf(birthday.getText());
         gen = gender.getSelectedItem().toString();
+    }
+
+    //textView action
+    public void uploadPhoto(View view) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+    }
+
+    //button signUp action
+    public void profilePage(View view) {
+
+        getDataFromFields();
+        String errorMsg = "Required";
         if (fName.equals("")) {
-            Toast.makeText(this, "Enter the first name", Toast.LENGTH_LONG).show();
-        } else if (sName.equals("")) {
-            Toast.makeText(this, "Enter the second name", Toast.LENGTH_LONG).show();
+            firstName.setError(errorMsg);
+        } else if (lName.equals("")) {
+            lastName.setError(errorMsg);
         } else if (birth.isEmpty()) {
-            Toast.makeText(this, "Enter your birthday", Toast.LENGTH_LONG).show();
+            birthday.setError(errorMsg);
         } else if (gen.equals("")) {
             Toast.makeText(this, "Select your gender", Toast.LENGTH_LONG).show();
         } else if (eMail.equals("")) {
-            Toast.makeText(this, "Enter your mail", Toast.LENGTH_LONG).show();
+            email.setError(errorMsg);
         } else if (pass.equals("")) {
-            Toast.makeText(this, "Enter your password", Toast.LENGTH_LONG).show();
+            password.setError(errorMsg);
         } else if (rePass.equals("")) {
-            Toast.makeText(this, "Enter your repeated password", Toast.LENGTH_LONG).show();
+            rePassword.setError(errorMsg);
         } else if (coun.equals("")) {
-            Toast.makeText(this, "Enter your country", Toast.LENGTH_LONG).show();
+            country.setError(errorMsg);
         } else if (!pass.equals(rePass)) {
-            Toast.makeText(this, "Not Same Password, Please enter repeat password right", Toast.LENGTH_LONG).show();
+            rePassword.setError("Not same the password");
         } else {
-            Intent profilePage = new Intent(this, Personal_Page.class);
-            startActivity(profilePage);
+            if (!isEmailValid(eMail)) {
+                email.setError("Wrong format for mail");
+                Toast.makeText(context, "wrong", Toast.LENGTH_LONG).show();
+            } else {
+                createAccount(eMail, pass);
+            }
         }
-
     }
 
-    public void uploadPhotoAndVideo(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
+    //to create new account at authentication to can add data at data database
+    private void createAccount(String email, String password) {
+        Log.d(context.toString(), "createAccount:" + email);
+        // [START create_user_with_email]
+        final EditText m = this.email;
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(context.toString(), "createUserWithEmail:success");
+                            FirebaseUser userAuth = auth.getCurrentUser();
+                            idDatabase = userAuth.getUid();
+                            setData();
+                            userTable.child(idDatabase).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(context, "dataSaved", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            uploadImg();
+                            if (imageUri != null) {
+                                getImgUrl();
+                            } else {
+                                userTable.child(idDatabase).child("Profile Img").setValue(null);
+                                Intent profilePage = new Intent(context, Home_Page.class);
+                                startActivity(profilePage);
+                            }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            m.setError("Wrong formt can't complete to signUp");
+                            Log.w(context.toString(), "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    // [START_EXCLUDE]
+                    // [END_EXCLUDE]
 
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+                });
+        // [END create_user_with_email]
+    }
+
+    //get url to save img at database
+    private void getImgUrl() {
+        final StorageReference ref = storageImage.child("images/" + imageName);
+        uploadTask = ref.putFile(imageUri);
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                // Continue with the task to get the download URL
+                return ref.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    userTable.child(idDatabase).child("Profile Img").setValue(downloadUri.toString()).
+                            addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(context, "ImageSaved", Toast.LENGTH_LONG).show();
+                                    //downloadImg();
+                                }
+                            });
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
+    }
+
+    //method to upload img to storage
+    private void uploadImg() {
+        if (imageUri != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+            imageName = UUID.randomUUID().toString();
+            StorageReference ref = storageImage.child("images/" + imageName);
+            ref.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Intent profilePage = new Intent(context, Home_Page.class);
+                            startActivity(profilePage);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+        }
+    }
+
+    //download img from storage to show
+    private void downloadImg() {
+        Log.v("image name", imageName);
+        userTable.child(idDatabase).child("Profile Img").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.v("download image url", dataSnapshot.getValue().toString());
+                try {
+                    URL imgUrl = new URL(dataSnapshot.getValue().toString());
+                    new DownloadImage().execute(imgUrl.toString());
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //to check if the mail format is right or not
+    private boolean isEmailValid(String email) {
+        return (Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     @Override
@@ -169,20 +427,46 @@ public class SignUp extends AppCompatActivity
 
 
         if (resultCode == RESULT_OK) {
-            try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), selectedImage);
-                roundedBitmapDrawable.setCircular(true);
-                imageView.setImageDrawable(roundedBitmapDrawable);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-            }
+            imageUri = data.getData();
+            //                imageStream = getContentResolver().openInputStream(imageUri);
+//                selectedImage = BitmapFactory.decodeStream(imageStream);
+//                roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), selectedImage);
+//                roundedBitmapDrawable.setCircular(true);
+//                imageView.setImageDrawable(roundedBitmapDrawable);
+
 
         } else {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    void displayImage(Bitmap bitmap) {
+        imageView.setImageBitmap(bitmap);
+    }
+
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+        private Exception exception;
+
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                return bmp;
+            } catch (Exception e) {
+                this.exception = e;
+
+                return null;
+            } finally {
+            }
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+            super.onPostExecute(bitmap);
+            displayImage(bitmap);
         }
     }
 }

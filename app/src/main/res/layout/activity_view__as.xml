@@ -87,7 +87,7 @@
                         android:adjustViewBounds="true"
                         android:maxHeight="50dp"
                         android:maxWidth="50dp"
-                        android:src="@drawable/unkown_user" />
+                        android:src="@drawable/unknown_female_user" />
 
                     <TextView
                         android:id="@+id/creator_name_view_as"

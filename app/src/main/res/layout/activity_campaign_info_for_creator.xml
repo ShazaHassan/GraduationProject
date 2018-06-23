@@ -115,7 +115,7 @@
                         android:adjustViewBounds="true"
                         android:maxHeight="50dp"
                         android:maxWidth="50dp"
-                        android:src="@drawable/unkown_user" />
+                        android:src="@drawable/unknown_female_user" />
 
                     <TextView
                         android:id="@+id/name_camp_creator"
@@ -239,7 +239,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main" />
 
 </android.support.v4.widget.DrawerLayout>
 

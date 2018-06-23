@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:paddingTop="20dp"
-            android:src="@drawable/unkown_user"
+            android:src="@drawable/unknown_female_user"
             app:layout_constraintLeft_toLeftOf="parent"
             android:foregroundGravity="center"
             android:maxHeight="250dp"

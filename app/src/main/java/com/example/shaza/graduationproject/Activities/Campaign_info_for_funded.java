@@ -3,6 +3,7 @@ package com.example.shaza.graduationproject.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,13 +14,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.net.URL;
 
 public class Campaign_info_for_funded extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +48,18 @@ public class Campaign_info_for_funded extends AppCompatActivity
     private static final int[] get = {4, 3, 6};
     private int pos = 0;
 
+    private NavigationView navView;
+    private FirebaseUser user;
+    private View header;
+    private TextView name, email;
+    private Menu menu;
+    private String idDatabase;
+    private DatabaseReference userTable;
+    private FirebaseDatabase database;
+    private String userName, e_mail, gender;
+    private Users users;
+    private ImageView pp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,22 +69,92 @@ public class Campaign_info_for_funded extends AppCompatActivity
         setItems();
         setupDrawer();
         ImageView creatorImage = findViewById(R.id.img_camp_creator);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unkown_user);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         creatorImage.setImageDrawable(roundedBitmapDrawable);
-        NavigationView navView = findViewById(R.id.nav_view);
+
+        navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
+        menu = navView.getMenu();
+        users = new Users();
+        database = FirebaseDatabase.getInstance();
+        userTable = database.getReference().child("Users");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            setHeaderDrawer();
+        } else {
+            navView.removeHeaderView(navView.getHeaderView(0));
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+        }
     }
 
+    private void setHeaderDrawer() {
+        header = navView.getHeaderView(0);
+        idDatabase = user.getUid();
+        name = header.findViewById(R.id.name_at_header);
+        email = header.findViewById(R.id.mail_at_header);
+        pp = header.findViewById(R.id.profile_image_at_header);
+        userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+                userName = users.getFirstName() + " " + users.getLastName();
+                e_mail = users.getEmail();
+                name.setText(userName);
+                email.setText(e_mail);
+
+                if (!dataSnapshot.hasChild("Profile Img")) {
+                    gender = users.getGender();
+                    Log.v("gender", gender);
+                    makeProfilePic(gender);
+                } else {
+                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
+                    new DownloadImage().execute(imageUrl);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        header.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent pp = new Intent(Campaign_info_for_funded.this, Personal_Page.class);
+                startActivity(pp);
+            }
+        });
+        menu.findItem(R.id.login).setVisible(false);
+        menu.findItem(R.id.sign_up).setVisible(false);
+        menu.findItem(R.id.logout).setVisible(true);
+    }
+
+    private void makeProfilePic(String gender) {
+        if (gender.equals("Female")) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            pp.setImageDrawable(roundedBitmapDrawable);
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            pp.setImageDrawable(roundedBitmapDrawable);
+        }
+    }
     private void setItems() {
-        TextView campName = (TextView) findViewById(R.id.campaign_name_creator);
-        ImageView imgCamp = (ImageView) findViewById(R.id.campaign_image);
-        TextView descCamp = (TextView) findViewById(R.id.description_of_campaign);
-        TextView daysLeft = (TextView) findViewById(R.id.days_left_for_creator);
-        TextView need = (TextView) findViewById(R.id.need_money);
-        ProgressBar progressForPercentage = (ProgressBar) findViewById(R.id.progress_bar_for_show_percentage);
-        TextView percentage = (TextView) findViewById(R.id.percentage_for_creator);
+        TextView campName = findViewById(R.id.campaign_name_creator);
+        ImageView imgCamp = findViewById(R.id.campaign_image);
+        TextView descCamp = findViewById(R.id.description_of_campaign);
+        TextView daysLeft = findViewById(R.id.days_left_for_creator);
+        TextView need = findViewById(R.id.need_money);
+        ProgressBar progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
+        TextView percentage = findViewById(R.id.percentage_for_creator);
         campName.setText(campaignName[pos]);
         imgCamp.setImageResource(img[pos]);
         descCamp.setText(texts[pos]);
@@ -139,5 +234,37 @@ public class Campaign_info_for_funded extends AppCompatActivity
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
+    }
+
+    void displayImage(Bitmap bitmap) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCircular(true);
+        pp.setImageDrawable(roundedBitmapDrawable);
+    }
+
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+        private Exception exception;
+
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                return bmp;
+            } catch (Exception e) {
+                this.exception = e;
+
+                return null;
+            } finally {
+            }
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+            super.onPostExecute(bitmap);
+            displayImage(bitmap);
+        }
     }
 }

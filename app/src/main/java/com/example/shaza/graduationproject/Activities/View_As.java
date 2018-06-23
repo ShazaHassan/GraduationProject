@@ -31,7 +31,7 @@ public class View_As extends AppCompatActivity
         setContentView(R.layout.activity_view__as);
         setupDrawer();
         ImageView creatorImage = findViewById(R.id.img_camp_creator_view_as);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unkown_user);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         creatorImage.setImageDrawable(roundedBitmapDrawable);

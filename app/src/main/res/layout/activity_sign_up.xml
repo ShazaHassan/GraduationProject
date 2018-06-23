@@ -256,7 +256,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
-                            android:onClick="uploadPhotoAndVideo"
+                            android:onClick="uploadPhoto"
                             android:text="Upload profile picture"
                             android:textColor="@color/darkBlue"
                             android:textSize="20sp" />
@@ -271,8 +271,8 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
-                            android:maxHeight="100dp"
-                            android:maxWidth="100dp" />
+                            android:maxHeight="50dp"
+                            android:maxWidth="50dp" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -299,6 +299,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main" />
 
 </android.support.v4.widget.DrawerLayout>
