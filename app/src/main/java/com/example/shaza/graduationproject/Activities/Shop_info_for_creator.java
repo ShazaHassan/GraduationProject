@@ -249,6 +249,13 @@ public class Shop_info_for_creator extends AppCompatActivity
 
         } else if (id == R.id.about_us) {
 
+        } else if (id == R.id.logout) {
+            navView.removeHeaderView(navView.getHeaderView(0));
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Home_Page.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

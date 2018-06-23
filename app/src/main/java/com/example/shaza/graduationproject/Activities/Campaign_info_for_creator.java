@@ -103,6 +103,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
             menu.findItem(R.id.logout).setVisible(false);
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
+            startActivity(new Intent(this, Home_Page.class));
         }
     }
 

@@ -192,14 +192,12 @@ public class AskQuestionHelpingCommunity extends AppCompatActivity implements Na
         } else if (id == R.id.about_us) {
 
         } else if (id == R.id.logout) {
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.removeHeaderView(navigationView.getHeaderView(0));
-
-            Menu menu = navigationView.getMenu();
+            menu = navView.getMenu();
             menu.findItem(R.id.logout).setVisible(false);
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Home_Page.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

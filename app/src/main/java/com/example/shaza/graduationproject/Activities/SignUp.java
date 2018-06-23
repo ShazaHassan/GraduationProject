@@ -10,8 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,7 +24,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Database.Table.Users;
@@ -49,7 +46,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
@@ -70,15 +66,9 @@ public class SignUp extends AppCompatActivity
     private Context context = this;
     private StorageReference storageImage;
     private Uri imageUri;
-    private InputStream imageStream;
-    private Bitmap selectedImage;
-    private RoundedBitmapDrawable roundedBitmapDrawable;
     private UploadTask uploadTask;
     private NavigationView navView;
-    private FirebaseUser userAuth;
-    private View header;
-    private TextView name, e_mail;
-    private Menu menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,38 +87,6 @@ public class SignUp extends AppCompatActivity
 
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
-        menu = navView.getMenu();
-
-        userAuth = FirebaseAuth.getInstance().getCurrentUser();
-//        Log.v("current user",user.toString());
-        if (userAuth != null) {
-            header = navView.getHeaderView(0);
-            name = header.findViewById(R.id.name_at_header);
-            name.setText("Shaza Hassan");
-            e_mail = header.findViewById(R.id.mail_at_header);
-            e_mail.setText("Shazahassan2020@gmail.com");
-            ImageView pp = header.findViewById(R.id.profile_image_at_header);
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-            header.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Intent pp = new Intent(getApplicationContext(), Personal_Page.class);
-                    startActivity(pp);
-                }
-            });
-            menu.findItem(R.id.login).setVisible(false);
-            menu.findItem(R.id.sign_up).setVisible(false);
-            menu.findItem(R.id.logout).setVisible(true);
-        } else {
-            navView.removeHeaderView(navView.getHeaderView(0));
-            menu.findItem(R.id.logout).setVisible(false);
-            menu.findItem(R.id.login).setVisible(true);
-            menu.findItem(R.id.sign_up).setVisible(true);
-        }
     }
 
     //set up toolbar and side drawer

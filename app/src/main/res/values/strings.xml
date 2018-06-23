@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">El Fund</string>
+    <string name="app_name">E-Fund</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="graduation_project_name">El Fund</string>
+    <string name="graduation_project_name">E-Fund</string>
     <string-array name="category">
         <item>All projects</item>
         <item>Art</item>

@@ -177,6 +177,7 @@ public class Job extends AppCompatActivity
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Home_Page.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

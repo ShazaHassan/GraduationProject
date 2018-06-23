@@ -1,10 +1,13 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -33,6 +36,10 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +49,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.net.URL;
+import java.util.StringTokenizer;
 
 public class Personal_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +112,7 @@ public class Personal_Page extends AppCompatActivity
                 userNameHeader = users.getFirstName() + " " + users.getLastName();
                 e_mailHeader = users.getEmail();
                 nameHeader.setText(userNameHeader);
-                email.setText(e_mailHeader);
+                emailHeader.setText(e_mailHeader);
 
                 if (!dataSnapshot.hasChild("Profile Img")) {
                     genderHeader = users.getGender();
@@ -192,8 +200,9 @@ public class Personal_Page extends AppCompatActivity
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(Personal_Page.this, Home_Page.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -212,88 +221,86 @@ public class Personal_Page extends AppCompatActivity
         int id = item.getItemId();
         if (pager.getCurrentItem() == 0) {
             View view = pager.getRootView();
-            username = view.findViewById(R.id.edit_user_name);
-            username = view.findViewById(R.id.edit_user_name);
-            email = view.findViewById(R.id.edit_email);
-            birthday = view.findViewById(R.id.edit_birth);
-            country = view.findViewById(R.id.edit_country);
-            userName = view.findViewById(R.id.user_name);
-            eMail = view.findViewById(R.id.email_personal_page);
-            birth = view.findViewById(R.id.birthday_personal_page);
-            coun = view.findViewById(R.id.country);
-            done = view.findViewById(R.id.done_btn);
-            gender = view.findViewById(R.id.edit_gender);
-            gen = view.findViewById(R.id.gender_personal_page);
+            getItems(view);
             if (id == R.id.edit_icon) {
-                username.setVisibility(View.VISIBLE);
-                username.setText(userName.getText());
-                userName.setVisibility(View.INVISIBLE);
-
-                email.setVisibility(View.VISIBLE);
-                email.setText(eMail.getText());
-                eMail.setVisibility(View.INVISIBLE);
-
-                birthday.setVisibility(View.VISIBLE);
-                birthday.setText(birth.getText());
-                birth.setVisibility(View.INVISIBLE);
-
-                country.setVisibility(View.VISIBLE);
-                country.setText(coun.getText());
-                coun.setVisibility(View.INVISIBLE);
-
-                gender.setVisibility(View.VISIBLE);
-                gen.setVisibility(View.GONE);
-
-                done.setVisibility(View.VISIBLE);
+                showItemsForEdit();
                 done.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         name = String.valueOf(username.getText());
-                        mail = String.valueOf(email.getText());
                         day = String.valueOf(birth.getText());
                         c = String.valueOf(country.getText());
                         g = gender.getSelectedItem().toString();
+                        StringTokenizer s = new StringTokenizer(name);
                         if (name.equals("")) {
-                            Toast.makeText(context, "Usernmae can't be empty field", Toast.LENGTH_LONG).show();
-                        } else if (mail.equals("")) {
-                            Toast.makeText(context, "Email can't be empty field", Toast.LENGTH_LONG).show();
+                            username.setError("Username can't be empty field");
                         } else if (day.equals("")) {
-                            Toast.makeText(context, "Birthday can't be empty field", Toast.LENGTH_LONG).show();
+                            birthday.setError("Birthday can't be empty field");
                         } else if (g.equals("")) {
                             Toast.makeText(context, "please select your gender", Toast.LENGTH_LONG).show();
                         } else if (c.equals("")) {
-                            Toast.makeText(context, "Your country can't be empty field", Toast.LENGTH_LONG).show();
+                            country.setError("Your country can't be empty field");
                         } else {
-                            username.setVisibility(View.GONE);
-                            userName.setText(name);
-                            userName.setVisibility(View.VISIBLE);
-
-                            email.setVisibility(View.GONE);
-                            eMail.setText(mail);
-                            eMail.setVisibility(View.VISIBLE);
-
-                            birthday.setVisibility(View.GONE);
-                            birth.setText(day);
-                            birth.setVisibility(View.VISIBLE);
-
-                            gender.setVisibility(View.GONE);
-                            Toast.makeText(context, g, Toast.LENGTH_LONG).show();
-                            gen.setText(g);
-                            gen.setVisibility(View.VISIBLE);
-
-                            country.setVisibility(View.GONE);
-                            coun.setText(c);
-                            coun.setVisibility(View.VISIBLE);
-
-                            done.setVisibility(View.GONE);
+                            hideItemsForEdit();
+                            userTable.child(idDatabase).child("firstName").setValue(s.nextToken());
+                            userTable.child(idDatabase).child("lastName").setValue(s.nextToken("").trim());
+                            userTable.child(idDatabase).child("birthday").setValue(day);
+                            userTable.child(idDatabase).child("gender").setValue(g);
+                            userTable.child(idDatabase).child("country").setValue(c);
                         }
                     }
                 });
 
             }
         } else if (id == R.id.delete_icon) {
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(context);
+            }
+            builder.setTitle("Delete entry")
+                    .setMessage("Are you sure you want to delete this entry?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            userTable.child(idDatabase).removeValue();
+                            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                            // Get auth credentials from the user for re-authentication. The example below shows
+                            // email and password credentials but there are multiple possible providers,
+                            // such as GoogleAuthProvider or FacebookAuthProvider.
+                            AuthCredential credential = EmailAuthProvider
+                                    .getCredential("user@example.com", "password1234");
+
+                            // Prompt the user to re-provide their sign-in credentials
+                            user.reauthenticate(credential)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            user.delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Log.v("user delete", "User account deleted.");
+                                                            }
+                                                        }
+                                                    });
+
+                                        }
+                                    });
+
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
         return true;
     }
@@ -321,6 +328,61 @@ public class Personal_Page extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void getItems(View view) {
+        username = view.findViewById(R.id.edit_user_name);
+        username = view.findViewById(R.id.edit_user_name);
+        email = view.findViewById(R.id.edit_email);
+        birthday = view.findViewById(R.id.edit_birth);
+        country = view.findViewById(R.id.edit_country);
+        userName = view.findViewById(R.id.user_name);
+        eMail = view.findViewById(R.id.email_personal_page);
+        birth = view.findViewById(R.id.birthday_personal_page);
+        coun = view.findViewById(R.id.country);
+        done = view.findViewById(R.id.done_btn);
+        gender = view.findViewById(R.id.edit_gender);
+        gen = view.findViewById(R.id.gender_personal_page);
+    }
+
+    private void showItemsForEdit() {
+        username.setVisibility(View.VISIBLE);
+        username.setText(userName.getText());
+        userName.setVisibility(View.INVISIBLE);
+
+        birthday.setVisibility(View.VISIBLE);
+        birthday.setText(birth.getText());
+        birth.setVisibility(View.INVISIBLE);
+
+        country.setVisibility(View.VISIBLE);
+        country.setText(coun.getText());
+        coun.setVisibility(View.INVISIBLE);
+
+        gender.setVisibility(View.VISIBLE);
+        gen.setVisibility(View.INVISIBLE);
+        done.setVisibility(View.VISIBLE);
+
+    }
+
+    private void hideItemsForEdit() {
+        username.setVisibility(View.INVISIBLE);
+        userName.setText(name);
+        userName.setVisibility(View.VISIBLE);
+
+        birthday.setVisibility(View.INVISIBLE);
+        birth.setText(day);
+        birth.setVisibility(View.INVISIBLE);
+
+        gender.setVisibility(View.INVISIBLE);
+        Toast.makeText(context, g, Toast.LENGTH_LONG).show();
+        gen.setText(g);
+        gen.setVisibility(View.VISIBLE);
+
+        country.setVisibility(View.INVISIBLE);
+        coun.setText(c);
+        coun.setVisibility(View.VISIBLE);
+
+        done.setVisibility(View.GONE);
     }
 
     class DownloadImage extends AsyncTask<String, Void, Bitmap> {
