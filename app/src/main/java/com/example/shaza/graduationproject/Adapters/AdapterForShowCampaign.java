@@ -53,7 +53,7 @@ public class AdapterForShowCampaign extends ArrayAdapter<ImgAndText> {
                     R.layout.campaign_short_view, parent, false);
         }
         ImgAndText imgAndText = getItem(position);
-        ImageView myImage = (ImageView) listItemView
+        ImageView myImage = listItemView
                 .findViewById(R.id.image_of_campaign_in_reward_home_page);
         myImage.setImageResource(imgAndText.getImg());
 
@@ -71,8 +71,11 @@ public class AdapterForShowCampaign extends ArrayAdapter<ImgAndText> {
         TextView need = listItemView.findViewById(R.id.need);
         need.setText("Need " + imgAndText.getNeed());
 
+        TextView cat = listItemView.findViewById(R.id.campaign_category_short_view);
+        cat.setText(imgAndText.getCategory());
+
         int percentage = (int) (((float) imgAndText.getGet() / (float) imgAndText.getTotal()) * 100);
-        ProgressBar showPercentage = (ProgressBar) listItemView.
+        ProgressBar showPercentage = listItemView.
                 findViewById(R.id.progress_bar_for_reward_campaign_home_page);
         showPercentage.setMax(100);
         showPercentage.setProgress(percentage);

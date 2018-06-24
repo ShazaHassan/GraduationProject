@@ -36,17 +36,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
@@ -58,7 +54,7 @@ public class SignUp extends AppCompatActivity
     EditText firstName, lastName, password, rePassword, email, country, birthday;
     Spinner gender;
     ImageView imageView;
-    private String fName, lName, pass, rePass, eMail, coun, birth, gen, idDatabase;
+    private String fName, lName, pass, rePass, eMail, coun, birth, gen, idDatabase, imageURL;
     private FirebaseDatabase database;
     private DatabaseReference userTable;
     private FirebaseAuth auth;
@@ -257,7 +253,7 @@ public class SignUp extends AppCompatActivity
                                     Toast.makeText(context, "dataSaved", Toast.LENGTH_LONG).show();
                                 }
                             });
-                            uploadImg();
+//                            uploadImg();
                             if (imageUri != null) {
                                 getImgUrl();
                             } else {
@@ -282,57 +278,45 @@ public class SignUp extends AppCompatActivity
 
     //get url to save img at database
     private void getImgUrl() {
-        final StorageReference ref = storageImage.child("images/" + imageName);
-        uploadTask = ref.putFile(imageUri);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-                // Continue with the task to get the download URL
-                return ref.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    userTable.child(idDatabase).child("Profile Img").setValue(downloadUri.toString()).
-                            addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(context, "ImageSaved", Toast.LENGTH_LONG).show();
-                                    //downloadImg();
-                                }
-                            });
-                } else {
-                    // Handle failures
-                    // ...
-                }
-            }
-        });
-    }
-
-    //method to upload img to storage
-    private void uploadImg() {
+//        final StorageReference ref = storageImage.child("images/" + imageName);
+//        uploadTask = ref.putFile(imageUri);
+//
+//        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//            @Override
+//            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                if (!task.isSuccessful()) {
+//                    throw task.getException();
+//                }
+//                // Continue with the task to get the download URL
+//                return ref.getDownloadUrl();
+//            }
+//        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                if (task.isSuccessful()) {
+//                    Uri downloadUri = task.getResult();
+//                    userTable.child(idDatabase).child("Profile Img").setValue(downloadUri.toString()).
+//                            addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Toast.makeText(context, "ImageSaved", Toast.LENGTH_LONG).show();
+//                                    //downloadImg();
+//                                }
+//                            });
+//                } else {
+//                    // Handle failures
+//                    // ...
+//                }
+//            }
+//        });
         if (imageUri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             imageName = UUID.randomUUID().toString();
-            StorageReference ref = storageImage.child("images/" + imageName);
-            ref.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
-                            Intent profilePage = new Intent(context, Home_Page.class);
-                            startActivity(profilePage);
-                        }
-                    })
+            final StorageReference ref = storageImage.child("images/" + imageName);
+            uploadTask = ref.putFile(imageUri);
+            Task<Uri> urlTask = uploadTask
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -346,33 +330,75 @@ public class SignUp extends AppCompatActivity
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");
+
+                        }
+                    }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            // Continue with the task to get the download URL
+                            return ref.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                Uri downloadUri = task.getResult();
+                                userTable.child(idDatabase).child("Profile Img").setValue(downloadUri.toString()).
+                                        addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(context, "ImageSaved", Toast.LENGTH_LONG).show();
+                                    //downloadImg();
+                                }
+                            });
+                            } else {
+                                // Handle failures
+                                // ...
+                            }
                         }
                     });
         }
     }
 
-    //download img from storage to show
-    private void downloadImg() {
-        Log.v("image name", imageName);
-        userTable.child(idDatabase).child("Profile Img").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.v("download image url", dataSnapshot.getValue().toString());
-                try {
-                    URL imgUrl = new URL(dataSnapshot.getValue().toString());
-                    new DownloadImage().execute(imgUrl.toString());
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+    //method to upload img to storage
+//    private void uploadImg() {
+//        if (imageUri != null) {
+//            final ProgressDialog progressDialog = new ProgressDialog(this);
+//            progressDialog.setTitle("Uploading...");
+//            progressDialog.show();
+//            imageName = UUID.randomUUID().toString();
+//            final StorageReference ref = storageImage.child("images/" + imageName);
+//            ref.putFile(imageUri)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
+//                            Intent profilePage = new Intent(context, Home_Page.class);
+//                            startActivity(profilePage);
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+//                                    .getTotalByteCount());
+//                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+//                        }
+//                    });
+//        }
+//    }
 
     //to check if the mail format is right or not
     private boolean isEmailValid(String email) {

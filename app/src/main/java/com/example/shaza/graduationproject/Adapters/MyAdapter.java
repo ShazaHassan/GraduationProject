@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
-import com.example.shaza.graduationproject.Activities.Home_Page;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 
@@ -71,6 +70,9 @@ public class MyAdapter extends PagerAdapter {
         TextView campaignName = myImageLayout.findViewById(R.id.campaign_name);
         campaignName.setTextColor(context.getResources().getColor(color));
         campaignName.setText(add.getCampaignName());
+
+        TextView category = myImageLayout.findViewById(R.id.campaign_category_short_view);
+        category.setText(add.getCategory());
 
         TextView daysLeft = myImageLayout.findViewById(R.id.days_left);
         daysLeft.setTextColor(context.getResources().getColor(color));

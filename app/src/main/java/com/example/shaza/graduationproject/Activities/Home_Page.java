@@ -54,6 +54,7 @@ public class Home_Page extends AppCompatActivity
     private static final String[] need = {"1$", "0$", "6$"};
     private static final int[] total = {5, 3, 12};
     private static final int[] get = {4, 3, 6};
+    private static final String[] category = {"Cat1", "Cat2", "Cat3"};
     private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
     private NavigationView navView;
     private FirebaseUser user;
@@ -164,7 +165,7 @@ public class Home_Page extends AppCompatActivity
     //setup view pager for reward campaign for slide campaign
     private void initRewardCampSuccess() {
         for (int i = 0; i < img.length; i++)
-            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
 
         mPager = (ViewPager) findViewById(R.id.pager_reward_success);
         adapter1 = new MyAdapter(Home_Page.this, array);

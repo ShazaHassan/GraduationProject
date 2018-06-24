@@ -23,6 +23,7 @@ public class NewestCampaign extends Fragment {
     public static final String[] need = {"1$", "0$", "6$"};
     public static final int[] total = {5, 3, 12};
     public static final int[] get = {4, 3, 6};
+    public static final String[] category = {"Cat1", "Cat2", "Cat3"};
     private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
 
     public NewestCampaign() {
@@ -35,7 +36,7 @@ public class NewestCampaign extends Fragment {
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
         array.clear();
         for (int i = 0; i < img.length; i++)
-            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
         AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.yellow);
         ListView listView = rootView.findViewById(R.id.list);
         listView.setAdapter(adapter);

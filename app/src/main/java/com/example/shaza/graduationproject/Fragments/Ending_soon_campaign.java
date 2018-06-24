@@ -1,16 +1,12 @@
 package com.example.shaza.graduationproject.Fragments;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
 import com.example.shaza.graduationproject.Adapters.AdapterForShowCampaign;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
@@ -27,6 +23,7 @@ public class Ending_soon_campaign extends Fragment {
     private static final String[] need = {"1$", "0$", "6$"};
     private static final int[] total = {5, 3, 12};
     private static final int[] get = {4, 3, 6};
+    private static final String[] category = {"Cat1", "Cat2", "Cat3"};
     private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
 
     public Ending_soon_campaign() {
@@ -39,7 +36,7 @@ public class Ending_soon_campaign extends Fragment {
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
 
         for (int i = 0; i < img.length; i++)
-            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
         AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.gray);
         ListView listView = rootView.findViewById(R.id.list);
         listView.setAdapter(adapter);

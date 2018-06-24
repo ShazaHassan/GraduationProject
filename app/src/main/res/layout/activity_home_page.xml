@@ -6,8 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -203,7 +202,8 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_marginEnd="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/white" />
                             </RelativeLayout>
 
                             <View
@@ -256,7 +256,8 @@
                                     android:textSize="20sp"
                                     android:onClick="goToEquityCampaign"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/white" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -330,7 +331,8 @@
                                     android:textSize="20sp"
                                     android:onClick="goToRewardCampaign"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/darkBlue" />
                             </RelativeLayout>
 
                             <View
@@ -383,7 +385,8 @@
                                     android:textSize="20sp"
                                     android:onClick="goToEquityCampaign"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/darkBlue" />
                             </RelativeLayout>
                         </LinearLayout>
                     </RelativeLayout>
@@ -456,7 +459,8 @@
                                     android:textSize="20sp"
                                     android:onClick="goToRewardCampaign"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/white" />
                             </RelativeLayout>
 
                             <View
@@ -509,7 +513,8 @@
                                     android:textSize="20sp"
                                     android:onClick="goToEquityCampaign"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:textColor="@color/white" />
                             </RelativeLayout>
                         </LinearLayout>
                     </RelativeLayout>
