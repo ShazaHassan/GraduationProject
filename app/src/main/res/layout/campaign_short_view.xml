@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:id="@+id/short_view_to_show_camp">
+    android:id="@+id/short_view_to_show_camp"
+    android:padding="10dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -54,8 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progress_bar_for_reward_campaign_home_page"
         android:id="@+id/percentage"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
         android:text="20%"
@@ -65,14 +65,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/description_for_reward_campaign_home_page"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="Need $"
         android:id="@+id/need"
         android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/days_left"
+        android:layout_toRightOf="@+id/days_left"
         android:textColor="#fff" />
 
     <TextView

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -28,6 +29,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class New_campaign_reward extends AppCompatActivity {
@@ -36,7 +40,7 @@ public class New_campaign_reward extends AppCompatActivity {
     private static int RESULT_LOAD_Video = 2;
 
     private EditText campaignName, campaignDuration, campaignMoney, campaignHeighlight, campaignVision, campaignOffers, campaignTeam;
-    private String campName, campDuration, campMoney, campCategory, campHeighlight, campVision, campOffers, campTeam;
+    private String campName, campDuration, campMoney, campCategory, campHeighlight, campVision, campOffers, campTeam, sDate, daysLeft, eDate;
     private Spinner campaignCategory;
 
     private DatabaseReference userTable, rewardCampaignTable;
@@ -47,6 +51,10 @@ public class New_campaign_reward extends AppCompatActivity {
     private String imageName, videoName, imageURL;
     private StorageReference storageImage, storageVideo;
     private UploadTask uploadTask;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private Date startDate, endDate;
+    private Calendar c = Calendar.getInstance();
 
     private Context context = this;
 
@@ -117,12 +125,16 @@ public class New_campaign_reward extends AppCompatActivity {
     private void setDataForDB() {
         campaign.setName(campName);
         campaign.setCampaign_Image(imageURL);
-        campaign.setDuration(campDuration);
+        campaign.setDuration(daysLeft);
         campaign.setHeighlight(campHeighlight);
         campaign.setHelperTeam(campTeam);
         campaign.setNeededMoney(campMoney);
         campaign.setOffers(campOffers);
         campaign.setVision(campVision);
+        campaign.setIDCreator(idUserDB);
+        campaign.setCategory(campCategory);
+        campaign.setFundedMoney("0");
+        campaign.setEndDate(eDate);
     }
 
     public void uploadPhoto(View view) {
@@ -204,6 +216,23 @@ public class New_campaign_reward extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 Uri downloadUri = task.getResult();
                                 imageURL = downloadUri.toString();
+                                startDate = Calendar.getInstance().getTime();
+                                Log.v("date", startDate.toString());
+                                sDate = dateFormat.format(startDate);
+                                c.setTime(startDate);
+                                Log.v("date", sDate);
+                                int d = Calendar.DATE;
+                                c.add(d, Integer.parseInt(campDuration));
+                                Log.v("date", c.getTime().toString());
+                                endDate = c.getTime();
+                                eDate = dateFormat.format(endDate);
+                                long diff = endDate.getTime() - startDate.getTime();
+                                long seconds = diff / 1000;
+                                long minutes = seconds / 60;
+                                long hours = minutes / 60;
+                                long days = hours / 24;
+                                Log.v("date", Long.toString(days));
+                                daysLeft = Long.toString(days);
                                 setDataForDB();
                                 idCampDB = rewardCampaignTable.push().getKey();
                                 userTable.child(idUserDB).child("Campaigns").child(idCampDB).setValue(new CampaignType("Reward", idCampDB));
@@ -211,6 +240,7 @@ public class New_campaign_reward extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(context, "Campaign success create", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(context, Home_Page.class));
                                     }
                                 });
 

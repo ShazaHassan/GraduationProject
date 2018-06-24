@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.example.shaza.graduationproject.Adapters.AdapterForShowCampaign;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 
@@ -34,12 +32,12 @@ public class NewestCampaign extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
-        array.clear();
-        for (int i = 0; i < img.length; i++)
-            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
-        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.yellow);
-        ListView listView = rootView.findViewById(R.id.list);
-        listView.setAdapter(adapter);
+//        array.clear();
+//        for (int i = 0; i < img.length; i++)
+//            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
+//        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.yellow);
+//        ListView listView = rootView.findViewById(R.id.list);
+//        listView.setAdapter(adapter);
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override

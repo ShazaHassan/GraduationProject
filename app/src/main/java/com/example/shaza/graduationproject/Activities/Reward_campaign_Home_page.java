@@ -195,12 +195,12 @@ public class Reward_campaign_Home_page extends AppCompatActivity
 
     //viewPager set for create tabs
     private void setupViewPager() {
-        ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewCampaigns);
+        ViewPager pager = findViewById(R.id.pagesForViewCampaigns);
         //adapter
         PageAdapterForCampaign pageAdapter = new PageAdapterForCampaign(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
         //tab
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewCampaigns);
+        TabLayout tabLayout = findViewById(R.id.tabForViewCampaigns);
         tabLayout.setupWithViewPager(pager);
     }
 

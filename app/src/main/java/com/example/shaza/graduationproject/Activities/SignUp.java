@@ -256,6 +256,7 @@ public class SignUp extends AppCompatActivity
 //                            uploadImg();
                             if (imageUri != null) {
                                 getImgUrl();
+
                             } else {
                                 userTable.child(idDatabase).child("Profile Img").setValue(null);
                                 Intent profilePage = new Intent(context, Home_Page.class);
@@ -352,6 +353,8 @@ public class SignUp extends AppCompatActivity
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(context, "ImageSaved", Toast.LENGTH_LONG).show();
+                                    Intent profilePage = new Intent(context, Home_Page.class);
+                                    startActivity(profilePage);
                                     //downloadImg();
                                 }
                             });
