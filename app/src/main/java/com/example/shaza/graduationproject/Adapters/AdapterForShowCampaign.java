@@ -18,8 +18,12 @@ import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,11 +38,13 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
     ArrayList<RewardCampaign> imgAndTexts = new ArrayList<>();
     private Context context;
     private int colorResource;
-    ImageView myImage;
     private Date startDate, currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private String sDate, cDate, eDate;
     private Calendar c = Calendar.getInstance();
+    Holder holder = null;
+    private ImageLoader mImageLoader;
+
 
     public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> imgAndTexts) {
         super(context, 0, imgAndTexts);
@@ -52,6 +58,7 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
         this.imgAndTexts = imgAndTexts;
         this.context = context;
         this.colorResource = colorResource;
+        mImageLoader = new ImageLoader(context);
     }
 
     @NonNull
@@ -59,10 +66,24 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         // Check if an existing view is being reused, otherwise inflate the view
+
         View listItemView = convertView;
+
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.campaign_short_view, parent, false);
+            holder = new Holder();
+            holder.campaignName = listItemView.findViewById(R.id.campaign_name);
+            holder.campImg = listItemView.findViewById(R.id.image_of_campaign_in_reward_home_page);
+            holder.campaignDesc = listItemView.findViewById(R.id.description_for_reward_campaign_home_page);
+            holder.category = listItemView.findViewById(R.id.campaign_category_short_view);
+            holder.daysLeft = listItemView.findViewById(R.id.days_left);
+            holder.percentageBar = listItemView.findViewById(R.id.progress_bar_for_reward_campaign_home_page);
+            holder.percentageText = listItemView.findViewById(R.id.percentage);
+            holder.neededMoney = listItemView.findViewById(R.id.need);
+            listItemView.setTag(holder);
+        } else {
+            holder = (Holder) listItemView.getTag();
         }
         RewardCampaign imgAndText = getItem(position);
         currentDate = Calendar.getInstance().getTime();
@@ -86,40 +107,29 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
         Log.v("date", Long.toString(days));
 
 
-        myImage = listItemView
-                .findViewById(R.id.image_of_campaign_in_reward_home_page);
+        holder.campaignName.setText(imgAndText.getName());
+
         String imgURI = imgAndText.getCampaign_Image();
-        new DownloadImage().execute(imgURI);
+        Picasso.get().load(imgURI).into(holder.campImg);
 
 
-        TextView description = listItemView
-                .findViewById(R.id.description_for_reward_campaign_home_page);
-        description.setMinLines(2);
-        description.setText("Heighlight of campaign is : " + imgAndText.getHeighlight() + "\n" +
+        holder.campaignDesc.setMinLines(2);
+        holder.campaignDesc.setText("Heighlight of campaign is : " + imgAndText.getHeighlight() + "\n" +
                 "Vision of this campaign : " + imgAndText.getVision() + "\n" +
                 "Offers for funded : " + imgAndText.getOffers() + "\n" +
                 "Team helps in campaign : " + imgAndText.getHelperTeam());
 
-        TextView campaignName = listItemView.findViewById(R.id.campaign_name);
-        campaignName.setText(imgAndText.getName());
+        holder.daysLeft.setText(Long.toString(days) + " Days left");
 
-        TextView daysLeft = listItemView.findViewById(R.id.days_left);
-        daysLeft.setText(Long.toString(days) + " Days left");
+        holder.neededMoney.setText("Need: " + (Integer.parseInt(imgAndText.getNeededMoney()) - Integer.parseInt(imgAndText.getFundedMoney()) + " $"));
 
-        TextView need = listItemView.findViewById(R.id.need);
-        need.setText("Need: " + (Integer.parseInt(imgAndText.getNeededMoney()) - Integer.parseInt(imgAndText.getFundedMoney()) + " $"));
-
-        TextView cat = listItemView.findViewById(R.id.campaign_category_short_view);
-        cat.setText(imgAndText.getCategory());
+        holder.category.setText(imgAndText.getCategory());
 
         int percentage = (int) ((Float.parseFloat(imgAndText.getFundedMoney()) / Float.parseFloat(imgAndText.getNeededMoney())) * 100);
-        ProgressBar showPercentage = listItemView.
-                findViewById(R.id.progress_bar_for_reward_campaign_home_page);
-        showPercentage.setMax(100);
-        showPercentage.setProgress(percentage);
+        holder.percentageBar.setMax(100);
+        holder.percentageBar.setProgress(percentage);
 
-        TextView percentageView = (TextView) listItemView.findViewById(R.id.percentage);
-        percentageView.setText(percentage + "%");
+        holder.percentageText.setText(percentage + "%");
 
 //        listItemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -136,32 +146,58 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
     }
 
     void displayImage(Bitmap bitmap) {
-        myImage.setImageBitmap(bitmap);
+        holder.campImg.setImageBitmap(bitmap);
+    }
+
+    static class Holder {
+        TextView campaignName, campaignDesc, daysLeft, neededMoney, category, percentageText;
+        ImageView campImg;
+        ProgressBar percentageBar;
     }
 
     class DownloadImage extends AsyncTask<String, Void, Bitmap> {
 
         private Exception exception;
+        private String uri;
+        private Holder holder;
 
+        public DownloadImage(String uri, Holder holder) {
+            this.uri = uri;
+            this.holder = holder;
+        }
         protected Bitmap doInBackground(String... urls) {
             try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                URL url = new URL(this.uri);
+                URLConnection connect = url.openConnection();
+                connect.connect();
 
+                InputStream is = connect.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                Bitmap bmp = BitmapFactory.decodeStream(bis);
+                bis.close();
+                is.close();
                 return bmp;
             } catch (Exception e) {
                 this.exception = e;
 
                 return null;
-            } finally {
             }
         }
 
         protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
+            if (uri.equals(holder.campImg.getTag())) {
+                displayImage(bitmap);
+            } else {
+                // View was updated in the meantime, ignore the image
+            }
+        }
+    }
+
+    public class ImageLoader {
+        public ImageLoader(Context context) {
+        }
+
+        public void displayImage(String url, ImageView imageView) {
         }
     }
 }

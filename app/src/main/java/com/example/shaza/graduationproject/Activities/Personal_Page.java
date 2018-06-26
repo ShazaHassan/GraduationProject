@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,6 +35,7 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -47,8 +47,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.StringTokenizer;
 
 public class Personal_Page extends AppCompatActivity
@@ -120,7 +120,7 @@ public class Personal_Page extends AppCompatActivity
                     makeProfilePic(genderHeader);
                 } else {
                     String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    new DownloadImage().execute(imageUrl);
+                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
                 }
             }
 
@@ -383,32 +383,6 @@ public class Personal_Page extends AppCompatActivity
         coun.setVisibility(View.VISIBLE);
 
         done.setVisibility(View.GONE);
-    }
-
-    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        private Exception exception;
-
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                return bmp;
-            } catch (Exception e) {
-                this.exception = e;
-
-                return null;
-            } finally {
-            }
-        }
-
-        protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
-        }
     }
 
     @Override

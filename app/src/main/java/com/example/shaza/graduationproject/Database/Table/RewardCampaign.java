@@ -1,7 +1,8 @@
 package com.example.shaza.graduationproject.Database.Table;
 
 public class RewardCampaign {
-    private String Name, Duration, NeededMoney, Heighlight, Vision, Offers, HelperTeam, Campaign_Image, IDCreator, Category, FundedMoney, endDate;
+    private String Name, Duration, NeededMoney, Heighlight, Vision, Offers, HelperTeam, Campaign_Image, IDCreator, Category, FundedMoney,
+            endDate, startDate;
 
 
     public RewardCampaign(String name, String duration, String neededMoney, String heighlight, String vision, String offers,
@@ -17,6 +18,14 @@ public class RewardCampaign {
     }
 
     public RewardCampaign() {
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public String getEndDate() {

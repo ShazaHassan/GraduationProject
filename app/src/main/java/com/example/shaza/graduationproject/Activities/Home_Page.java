@@ -3,7 +3,6 @@ package com.example.shaza.graduationproject.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import com.example.shaza.graduationproject.Adapters.MyAdapter;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +34,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Home_Page extends AppCompatActivity
@@ -118,7 +118,7 @@ public class Home_Page extends AppCompatActivity
                     makeProfilePic(gender);
                 } else {
                     String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    new DownloadImage().execute(imageUrl);
+                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
                 }
             }
 
@@ -174,26 +174,6 @@ public class Home_Page extends AppCompatActivity
         indicator.setViewPager(mPager);
         adapter1.notifyDataSetChanged();
 
-//        // Auto start of viewpager
-//        final Handler handler = new Handler();
-//        final Runnable Update = new Runnable() {
-//            public void run() {
-//                if (currentPage == array.size()) {
-//                    currentPage = 0;
-//                }
-//                else{
-//                    mPager.setCurrentItem(currentPage++, true);
-//                }
-//
-//            }
-//        };
-//        /*Timer swipeTimer = new Timer();
-//        swipeTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(Update);
-//            }
-//        }, 4500, 4500);*/
     }
 
     private void initEquityCampSuccess() {
@@ -347,32 +327,6 @@ public class Home_Page extends AppCompatActivity
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         pp.setImageDrawable(roundedBitmapDrawable);
-    }
-
-    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        private Exception exception;
-
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                return bmp;
-            } catch (Exception e) {
-                this.exception = e;
-
-                return null;
-            } finally {
-            }
-        }
-
-        protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
-        }
     }
 
 }

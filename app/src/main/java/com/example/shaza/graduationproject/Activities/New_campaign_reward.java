@@ -135,6 +135,7 @@ public class New_campaign_reward extends AppCompatActivity {
         campaign.setCategory(campCategory);
         campaign.setFundedMoney("0");
         campaign.setEndDate(eDate);
+        campaign.setStartDate(sDate);
     }
 
     public void uploadPhoto(View view) {

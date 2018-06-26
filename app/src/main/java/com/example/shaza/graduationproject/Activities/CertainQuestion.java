@@ -3,7 +3,6 @@ package com.example.shaza.graduationproject.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import com.example.shaza.graduationproject.Adapters.Answer_List_Adapter;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
+import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.example.shaza.graduationproject.TemplateForAdapter.AnswerList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,8 +34,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class CertainQuestion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -116,7 +116,7 @@ public class CertainQuestion extends AppCompatActivity implements NavigationView
                     makeProfilePic(gender);
                 } else {
                     String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    new DownloadImage().execute(imageUrl);
+                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
                 }
             }
 
@@ -228,38 +228,6 @@ public class CertainQuestion extends AppCompatActivity implements NavigationView
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
-    }
-
-    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        private Exception exception;
-
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                return bmp;
-            } catch (Exception e) {
-                this.exception = e;
-
-                return null;
-            } finally {
-            }
-        }
-
-        protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
-        }
     }
 
 }
