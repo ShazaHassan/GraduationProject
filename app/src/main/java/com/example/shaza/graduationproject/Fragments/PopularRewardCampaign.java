@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
@@ -26,12 +25,11 @@ import java.util.ArrayList;
 public class PopularRewardCampaign extends Fragment {
 
     View rootView;
-    private ArrayList<RewardCampaign> catCampaigns = new ArrayList<>(), campaigns = new ArrayList<>();
+    private ArrayList<RewardCampaign> campaigns = new ArrayList<>();
     private DatabaseReference rewardTable;
     private TextView noCampsTextView;
     private ListView listView;
     private AdapterForShowRewardCampaign adapter;
-    private Spinner cat;
 
     public PopularRewardCampaign() {
     }
@@ -42,7 +40,6 @@ public class PopularRewardCampaign extends Fragment {
         rootView = inflater.inflate(R.layout.list_campaign, container, false);
         noCampsTextView = rootView.findViewById(R.id.no_camp_text_view);
         listView = rootView.findViewById(R.id.list);
-        cat = getActivity().findViewById(R.id.category_spinner);
         Log.v("popular", "get camp");
         rewardTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
         rewardTable.orderByKey().addValueEventListener(new ValueEventListener() {
