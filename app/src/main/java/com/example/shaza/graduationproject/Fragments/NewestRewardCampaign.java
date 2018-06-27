@@ -34,10 +34,10 @@ public class NewestRewardCampaign extends Fragment {
     private TextView noCampsTextView;
     private ListView listView;
     private AdapterForShowRewardCampaign adapter;
-    private Date currentDate, startDate;
+    private Date currentDate, startDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-    private String cDate, sDate;
-    private Calendar c = Calendar.getInstance();
+    private String cDate, sDate, eDate;
+    private Calendar c = Calendar.getInstance(), e = Calendar.getInstance();
     private long diff, seconds, minutes, hours, days;
 
     public NewestRewardCampaign() {
@@ -60,22 +60,36 @@ public class NewestRewardCampaign extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     campaign = snapshot.getValue(RewardCampaign.class);
                     sDate = campaign.getStartDate();
+                    eDate = campaign.getEndDate();
                     try {
                         c.setTime(dateFormat.parse(sDate));
+                        e.setTime(dateFormat.parse(eDate));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    startDate = c.getTime();
+                    endDate = e.getTime();
                     currentDate = Calendar.getInstance().getTime();
-                    diff = currentDate.getTime() - startDate.getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
                     seconds = diff / 1000;
                     minutes = seconds / 60;
                     hours = minutes / 60;
                     days = hours / 24;
                     Log.v("day", Long.toString(days));
-                    if (days < 8) {
-                        campaigns.add(campaign);
+                    if (days > 0) {
+
+                        startDate = c.getTime();
+                        currentDate = Calendar.getInstance().getTime();
+                        diff = currentDate.getTime() - startDate.getTime();
+                        seconds = diff / 1000;
+                        minutes = seconds / 60;
+                        hours = minutes / 60;
+                        days = hours / 24;
+                        Log.v("day", Long.toString(days));
+                        if (days < 8) {
+                            campaigns.add(campaign);
+                        }
                     }
+
                     Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 if (campaigns.size() != 0) {

@@ -20,7 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PopularRewardCampaign extends Fragment {
 
@@ -30,6 +34,13 @@ public class PopularRewardCampaign extends Fragment {
     private TextView noCampsTextView;
     private ListView listView;
     private AdapterForShowRewardCampaign adapter;
+
+    private Date currentDate, endDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private String eDate;
+    private Calendar c = Calendar.getInstance();
+    private long diff, seconds, minutes, hours, days;
+    private RewardCampaign campaign;
 
     public PopularRewardCampaign() {
     }
@@ -48,7 +59,24 @@ public class PopularRewardCampaign extends Fragment {
                 Log.v("popular", "search for camp");
                 campaigns.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    campaigns.add(snapshot.getValue(RewardCampaign.class));
+                    campaign = snapshot.getValue(RewardCampaign.class);
+                    eDate = campaign.getEndDate();
+                    try {
+                        c.setTime(dateFormat.parse(eDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    endDate = c.getTime();
+                    currentDate = Calendar.getInstance().getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    Log.v("day", Long.toString(days));
+                    if (days > 0) {
+                        campaigns.add(campaign);
+                    }
                     Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 Log.v("popular", String.valueOf(campaigns.size()));

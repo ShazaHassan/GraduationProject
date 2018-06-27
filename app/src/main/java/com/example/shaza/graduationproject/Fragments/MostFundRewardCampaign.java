@@ -19,7 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MostFundRewardCampaign extends Fragment {
 
@@ -31,6 +35,12 @@ public class MostFundRewardCampaign extends Fragment {
     private ListView listView;
     private AdapterForShowRewardCampaign adapter;
     private long noOfFunded;
+
+    private String cDate, eDate;
+    private Calendar c = Calendar.getInstance(), e = Calendar.getInstance();
+    private long diff, seconds, minutes, hours, days;
+    private Date currentDate, endDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
     public MostFundRewardCampaign() {
     }
@@ -52,11 +62,27 @@ public class MostFundRewardCampaign extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     campaign = snapshot.getValue(RewardCampaign.class);
                     noOfFunded = campaign.getNoOfFunded();
-
-                    if (noOfFunded >= 5) {
-                        campaigns.add(campaign);
+                    eDate = campaign.getEndDate();
+                    try {
+                        e.setTime(dateFormat.parse(eDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                    Log.v("popular", dataSnapshot.getChildren().toString());
+                    endDate = e.getTime();
+                    currentDate = Calendar.getInstance().getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    Log.v("day", Long.toString(days));
+                    if (days > 0) {
+
+                        if (noOfFunded >= 5) {
+                            campaigns.add(campaign);
+                        }
+                        Log.v("popular", dataSnapshot.getChildren().toString());
+                    }
                 }
                 if (campaigns.size() != 0) {
                     Log.v("popular", "camps");

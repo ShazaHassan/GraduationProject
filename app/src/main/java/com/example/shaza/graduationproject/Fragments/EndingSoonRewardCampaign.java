@@ -74,7 +74,7 @@ public class EndingSoonRewardCampaign extends Fragment {
                     hours = minutes / 60;
                     days = hours / 24;
                     Log.v("day", Long.toString(days));
-                    if (days < 8) {
+                    if (days < 8 && days > 0) {
                         campaigns.add(campaign);
                     }
                     Log.v("popular", dataSnapshot.getChildren().toString());

@@ -94,7 +94,7 @@
             android:theme="@style/AppTheme.spinner" />
         <activity
             android:name=".Activities.Personal_Page"
-            android:label="Your name"
+            android:label="Profile Page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.Campaign_info_for_funded"
@@ -112,6 +112,14 @@
             android:name=".Activities.FundedPage"
             android:label="Payment Process"
             android:theme="@style/AppTheme.CustomThem" />
+        <activity
+            android:name=".Activities.YourRewardCampaign"
+            android:label="Your Reward Campaign"
+            android:parentActivityName=".Activities.Personal_Page" />
+        <activity
+            android:name=".Activities.YourFundRewardCampaign"
+            android:label="Your Funded Reward Camp"
+            android:parentActivityName=".Activities.Personal_Page" />
     </application>
 
 </manifest>

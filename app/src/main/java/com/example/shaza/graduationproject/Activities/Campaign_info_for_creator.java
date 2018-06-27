@@ -46,8 +46,8 @@ import java.util.Date;
 public class Campaign_info_for_creator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName;
-    ImageView imgCamp, editImgCamp;
+    private TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, category;
+    private ImageView imgCamp, editImgCamp;
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private long diff, seconds, minutes, hours, days;
@@ -87,6 +87,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
         needMoney = findViewById(R.id.need_money);
         progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
         percentage = findViewById(R.id.percentage_for_creator);
+        category = findViewById(R.id.category_details_page);
         editImgCamp = findViewById(R.id.edit_camp_img);
         editCampName = findViewById(R.id.edit_campaign_name_creator);
         editDescCamp = findViewById(R.id.edit_description_of_campaign);
@@ -187,10 +188,11 @@ public class Campaign_info_for_creator extends AppCompatActivity
         calculateDaysLeft(campaign);
         daysLeft.setText(Long.toString(days) + " Days left");
         needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
-        int percentageCalculation = (int) (campaign.getFundedMoney() / campaign.getNeededMoney()) * 100;
+        int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
+        category.setText(campaign.getCategory());
         userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -345,6 +347,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Home_Page.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

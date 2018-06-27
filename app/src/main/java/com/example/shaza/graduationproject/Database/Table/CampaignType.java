@@ -1,26 +1,29 @@
 package com.example.shaza.graduationproject.Database.Table;
 
 public class CampaignType {
-    private String Type, ID;
+    private String type, id;
 
-    public CampaignType(String type, String ID) {
-        Type = type;
-        this.ID = ID;
+    public CampaignType() {
+    }
+
+    public CampaignType(String type, String id) {
+        this.type = type;
+        this.id = id;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public String getID() {
-        return ID;
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(String id) {
+        this.id = id;
     }
 }

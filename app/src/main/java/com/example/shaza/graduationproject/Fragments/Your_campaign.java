@@ -1,17 +1,19 @@
 package com.example.shaza.graduationproject.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.shaza.graduationproject.Activities.YourRewardCampaign;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
-
-import java.util.ArrayList;
 
 public class Your_campaign extends android.support.v4.app.Fragment {
-    private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
+
+    private View rootView;
+    private Button yourRewardCampaign;
 
     public Your_campaign() {
 
@@ -21,13 +23,14 @@ public class Your_campaign extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.list_campaign, container, false);
-//        array.clear();
-//        for (int i = 1; i < img.length; i++)
-//            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
-//        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.gray);
-//        ListView listView = rootView.findViewById(R.id.list);
-//        listView.setAdapter(adapter);
+        rootView = inflater.inflate(R.layout.choose_type_to_see_your_campaign, container, false);
+        yourRewardCampaign = rootView.findViewById(R.id.see_your_reward_camp);
+        yourRewardCampaign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), YourRewardCampaign.class));
+            }
+        });
         return rootView;
     }
 }

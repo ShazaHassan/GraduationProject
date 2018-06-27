@@ -88,7 +88,7 @@ public class FundedPage extends AppCompatActivity {
                         noOfFunded++;
                         rewardTable.child(idCampDb).child("fundedMoney").setValue(amountOfFunded);
                         rewardTable.child(idCampDb).child("noOfFunded").setValue(noOfFunded);
-                        userTable.child(idUserDb).child("FundedCampaign").child(idCampDb).setValue(new CampaignType(type, idCampDb));
+                        userTable.child(idUserDb).child("FundedCampaign").child(idCampDb).setValue(new CampaignType("Reward", idCampDb));
                         finish();
                     }
 
