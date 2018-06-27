@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
@@ -38,21 +39,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Campaign_info_for_creator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private int pos = 0;
-    private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] texts = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.  "
-            , "Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. "
-            , "Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. "};
-    private static final String[] campaignName = {"Camp1", "Camp2", "Camp3"};
-    private static final String[] noOfDays = {"2 days left", "3 days left", "1 day left"};
-    private static final String[] need = {"1$", "0$", "6$"};
-    private static final int[] total = {5, 3, 12};
-    private static final int[] get = {4, 3, 6};
 
-    TextView campName, descCamp, daysLeft, needMoney, percentage;
-    ImageView imgCamp, editImgCamp;
+    TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName;
+    ImageView imgCamp, editImgCamp, creatorImage;
+    private Date currentDate, endDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private long diff, seconds, minutes, hours, days;
+    private Calendar c = Calendar.getInstance();
     ProgressBar progressForPercentage;
     EditText editCampName, editDescCamp;
     Button fund, done;
@@ -65,25 +65,36 @@ public class Campaign_info_for_creator extends AppCompatActivity
     private TextView name, email;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable;
+    private DatabaseReference userTable, rewardTable;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+    private String idCampDB, type, cDate, eDate;
+    private RewardCampaign campaign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_info_for_creator);
         Intent intent = getIntent();
-        pos = intent.getExtras().getInt("id");
-        setItems();
+        idCampDB = intent.getExtras().getString("id");
+        type = intent.getExtras().getString("type");
         setupDrawer();
-        ImageView creatorImage = findViewById(R.id.img_camp_creator);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        creatorImage.setImageDrawable(roundedBitmapDrawable);
+
+        creatorImage = findViewById(R.id.img_camp_creator);
+        creatorName = findViewById(R.id.name_camp_creator);
+        campName = findViewById(R.id.campaign_name_creator);
+        imgCamp = findViewById(R.id.campaign_image);
+        descCamp = findViewById(R.id.description_of_campaign);
+        daysLeft = findViewById(R.id.days_left_for_creator);
+        needMoney = findViewById(R.id.need_money);
+        progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
+        percentage = findViewById(R.id.percentage_for_creator);
+        editImgCamp = findViewById(R.id.edit_camp_img);
+        editCampName = findViewById(R.id.edit_campaign_name_creator);
+        editDescCamp = findViewById(R.id.edit_description_of_campaign);
+
         fund = findViewById(R.id.fund_button);
         fund.setVisibility(View.GONE);
         done = findViewById(R.id.done_button);
@@ -94,6 +105,21 @@ public class Campaign_info_for_creator extends AppCompatActivity
         users = new Users();
         database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
+        if (type.equals("reward")) {
+            rewardTable = database.getReference().child("Reward Campaign");
+            rewardTable.child(idCampDB).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    campaign = dataSnapshot.getValue(RewardCampaign.class);
+                    setItems(campaign);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             setHeaderDrawer();
@@ -118,14 +144,12 @@ public class Campaign_info_for_creator extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
                 userName = users.getFirstName() + " " + users.getLastName();
-                e_mail = users.getEmail();
                 name.setText(userName);
-                email.setText(e_mail);
-
+                email.setText(users.getEmail());
                 if (!dataSnapshot.hasChild("Profile Img")) {
                     gender = users.getGender();
                     Log.v("gender", gender);
-                    makeProfilePic(gender);
+                    makeProfilePic(gender, pp);
                 } else {
                     String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
                     Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
@@ -150,42 +174,79 @@ public class Campaign_info_for_creator extends AppCompatActivity
         menu.findItem(R.id.logout).setVisible(true);
     }
 
-    private void makeProfilePic(String gender) {
+    private void makeProfilePic(String gender, ImageView img) {
         if (gender.equals("Female")) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
             roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
+            img.setImageDrawable(roundedBitmapDrawable);
         } else {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
             roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
+            img.setImageDrawable(roundedBitmapDrawable);
         }
     }
 
 
-    private void setItems() {
-        campName = findViewById(R.id.campaign_name_creator);
-        imgCamp = findViewById(R.id.campaign_image);
-        descCamp = findViewById(R.id.description_of_campaign);
-        daysLeft = findViewById(R.id.days_left_for_creator);
-        needMoney = findViewById(R.id.need_money);
-        progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
-        percentage = findViewById(R.id.percentage_for_creator);
-        campName.setText(campaignName[pos]);
-        imgCamp.setImageResource(img[pos]);
-        descCamp.setText(texts[pos]);
-        daysLeft.setText(noOfDays[pos]);
-        needMoney.setText("need " + this.need[pos]);
-        int percentageCalculation = (int) ((((float) get[pos] / (float) total[pos])) * 100);
+    private void setItems(RewardCampaign campaign) {
+        campName.setText(campaign.getName());
+        String imgURI = campaign.getCampaign_Image();
+        Picasso.get().load(imgURI).into(imgCamp);
+        descCamp.setText("Heighlight of campaign is : " + campaign.getHeighlight() + "\n" +
+                "Vision of this campaign : " + campaign.getVision() + "\n" +
+                "Offers for funded : " + campaign.getOffers() + "\n" +
+                "Team helps in campaign : " + campaign.getHelperTeam());
+        calculateDaysLeft(campaign);
+        daysLeft.setText(Long.toString(days) + " Days left");
+        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        int percentageCalculation = (int) (campaign.getFundedMoney() / campaign.getNeededMoney()) * 100;
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
-        editImgCamp = findViewById(R.id.edit_camp_img);
-        editCampName = findViewById(R.id.edit_campaign_name_creator);
-        editDescCamp = findViewById(R.id.edit_description_of_campaign);
+        userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+                userName = users.getFirstName() + " " + users.getLastName();
+                creatorName.setText(userName);
+                if (!dataSnapshot.hasChild("Profile Img")) {
+                    gender = users.getGender();
+                    Log.v("genderhere", gender);
+                    makeProfilePic(gender, creatorImage);
+                } else {
+                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
+                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(creatorImage);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void calculateDaysLeft(RewardCampaign rewardCampaign) {
+        currentDate = Calendar.getInstance().getTime();
+        cDate = dateFormat.format(currentDate);
+
+        Log.v("Addate", cDate);
+        c.add(Calendar.DATE, 7);
+        Log.v("Addate", c.getTime().toString());
+        eDate = rewardCampaign.getEndDate();
+        try {
+            c.setTime(dateFormat.parse(eDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        endDate = c.getTime();
+        diff = endDate.getTime() - currentDate.getTime();
+        seconds = diff / 1000;
+        minutes = seconds / 60;
+        hours = minutes / 60;
+        days = hours / 24;
+        Log.v("date", Long.toString(days));
     }
 
     //options menu

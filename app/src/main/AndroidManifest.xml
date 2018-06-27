@@ -108,6 +108,10 @@
             android:name=".Activities.View_As"
             android:label="View as details campaign"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.FundedPage"
+            android:label="Payment Process"
+            android:theme="@style/AppTheme.CustomThem" />
     </application>
 
 </manifest>

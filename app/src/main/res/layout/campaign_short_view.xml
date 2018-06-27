@@ -18,7 +18,7 @@
         android:id="@+id/image_of_campaign_in_reward_home_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/podcast_ac_new"
+        android:src="@drawable/loading"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:layout_marginTop="5dp"

@@ -1,11 +1,12 @@
 package com.example.shaza.graduationproject.Database.Table;
 
 public class RewardCampaign {
-    private String Name, Duration, NeededMoney, Heighlight, Vision, Offers, HelperTeam, Campaign_Image, IDCreator, Category, FundedMoney,
-            endDate, startDate;
+    private String Name, Duration, Heighlight, Vision, Offers, HelperTeam, Campaign_Image, IDCreator, Category,
+            endDate, startDate, IDCampaign;
+    private long noOfFunded, NeededMoney, FundedMoney;
 
 
-    public RewardCampaign(String name, String duration, String neededMoney, String heighlight, String vision, String offers,
+    public RewardCampaign(String name, String duration, long neededMoney, String heighlight, String vision, String offers,
                           String helperTeam, String campaign_Image) {
         Name = name;
         Duration = duration;
@@ -18,6 +19,22 @@ public class RewardCampaign {
     }
 
     public RewardCampaign() {
+    }
+
+    public long getNoOfFunded() {
+        return noOfFunded;
+    }
+
+    public void setNoOfFunded(long noOfFunded) {
+        this.noOfFunded = noOfFunded;
+    }
+
+    public String getIDCampaign() {
+        return IDCampaign;
+    }
+
+    public void setIDCampaign(String IDCampaign) {
+        this.IDCampaign = IDCampaign;
     }
 
     public String getStartDate() {
@@ -36,11 +53,11 @@ public class RewardCampaign {
         this.endDate = endDate;
     }
 
-    public String getFundedMoney() {
+    public long getFundedMoney() {
         return FundedMoney;
     }
 
-    public void setFundedMoney(String fundedMoney) {
+    public void setFundedMoney(long fundedMoney) {
         FundedMoney = fundedMoney;
     }
 
@@ -76,11 +93,11 @@ public class RewardCampaign {
         Duration = duration;
     }
 
-    public String getNeededMoney() {
+    public long getNeededMoney() {
         return NeededMoney;
     }
 
-    public void setNeededMoney(String neededMoney) {
+    public void setNeededMoney(long neededMoney) {
         NeededMoney = neededMoney;
     }
 

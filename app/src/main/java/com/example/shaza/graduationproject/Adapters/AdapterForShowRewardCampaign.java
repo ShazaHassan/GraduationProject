@@ -20,7 +20,6 @@ import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -29,44 +28,31 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Shaza Hassan on 24-Jan-18.
- */
-
-public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
+public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
     ArrayList<RewardCampaign> rewardCampaigns = new ArrayList<>();
-    Holder holder = null;
+    AdapterForShowCampaign.Holder holder = null;
     private Context context;
     private int colorResource;
-    private Date startDate, currentDate, endDate;
+    private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-    private String cDate, eDate, idCurrentUserDB, idCreatorUserDB;
+    private String cDate, eDate, idCurrentUserDB;
     private Calendar c = Calendar.getInstance();
     private FirebaseUser currentUser;
     private long diff, seconds, minutes, hours, days;
-    private DatabaseReference campaignTable;
 
 
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns) {
+    public AdapterForShowRewardCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns) {
         super(context, 0, rewardCampaigns);
         this.rewardCampaigns = rewardCampaigns;
         this.context = context;
         this.colorResource = R.color.white;
     }
 
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns, int colorResource) {
+    public AdapterForShowRewardCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns, int colorResource) {
         super(context, 0, rewardCampaigns);
         this.rewardCampaigns = rewardCampaigns;
         this.context = context;
         this.colorResource = colorResource;
-    }
-
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns, int colorResource, DatabaseReference campaignTable) {
-        super(context, 0, rewardCampaigns);
-        this.rewardCampaigns = rewardCampaigns;
-        this.context = context;
-        this.colorResource = colorResource;
-        this.campaignTable = campaignTable;
     }
 
     @NonNull
@@ -79,12 +65,12 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.campaign_short_view, parent, false);
-            holder = new Holder();
+            holder = new AdapterForShowCampaign.Holder();
             findItem(listItemView);
 
             listItemView.setTag(holder);
         } else {
-            holder = (Holder) listItemView.getTag();
+            holder = (AdapterForShowCampaign.Holder) listItemView.getTag();
         }
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -114,7 +100,8 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
 
         holder.category.setText(rewardCampaign.getCategory());
 
-        int percentage = (int) ((rewardCampaign.getFundedMoney()) / rewardCampaign.getNeededMoney()) * 100;
+        int percentage = (int) ((rewardCampaign.getFundedMoney() * 1.0 / rewardCampaign.getNeededMoney()) * 1.0
+                * 100);
         holder.percentageBar.setMax(100);
         holder.percentageBar.setProgress(percentage);
 
@@ -124,7 +111,8 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_funded.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", rewardCampaign.getIDCampaign());
+                    detailsPage.putExtra("type", "reward");
                     getContext().startActivity(detailsPage);
                 }
             });
@@ -133,7 +121,8 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_funded.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", rewardCampaign.getIDCampaign());
+                    detailsPage.putExtra("type", "reward");
                     getContext().startActivity(detailsPage);
                 }
             });
@@ -142,7 +131,8 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_creator.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", rewardCampaign.getIDCampaign());
+                    detailsPage.putExtra("type", "reward");
                     getContext().startActivity(detailsPage);
                 }
             });
@@ -151,6 +141,15 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
 
         View setColorBackground = listItemView.findViewById(R.id.short_view_to_show_camp);
         int color = ContextCompat.getColor(getContext(), colorResource);
+        if (colorResource == R.color.gray) {
+            int darkBlue = ContextCompat.getColor(getContext(), R.color.darkBlue);
+            holder.campaignName.setTextColor(darkBlue);
+            holder.campaignDesc.setTextColor(darkBlue);
+            holder.percentageText.setTextColor(darkBlue);
+            holder.category.setTextColor(darkBlue);
+            holder.neededMoney.setTextColor(darkBlue);
+            holder.daysLeft.setTextColor(darkBlue);
+        }
         setColorBackground.setBackgroundColor(color);
         return listItemView;
     }
@@ -193,4 +192,5 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
         ImageView campImg;
         ProgressBar percentageBar;
     }
+
 }

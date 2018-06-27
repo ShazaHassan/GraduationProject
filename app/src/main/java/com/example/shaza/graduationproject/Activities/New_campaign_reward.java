@@ -117,9 +117,7 @@ public class New_campaign_reward extends AppCompatActivity {
     }
 
     private void saveDateOnDB() {
-        //uploadImg();
-        uploadImgAndgetImgUrl();
-
+        uploadImgAndGetImgUrl();
     }
 
     private void setDataForDB() {
@@ -128,14 +126,16 @@ public class New_campaign_reward extends AppCompatActivity {
         campaign.setDuration(daysLeft);
         campaign.setHeighlight(campHeighlight);
         campaign.setHelperTeam(campTeam);
-        campaign.setNeededMoney(campMoney);
+        campaign.setNeededMoney(Long.parseLong(campMoney));
         campaign.setOffers(campOffers);
         campaign.setVision(campVision);
         campaign.setIDCreator(idUserDB);
         campaign.setCategory(campCategory);
-        campaign.setFundedMoney("0");
+        campaign.setFundedMoney(0);
         campaign.setEndDate(eDate);
         campaign.setStartDate(sDate);
+        campaign.setIDCampaign(idCampDB);
+        campaign.setNoOfFunded(0);
     }
 
     public void uploadPhoto(View view) {
@@ -177,7 +177,7 @@ public class New_campaign_reward extends AppCompatActivity {
 //        }
 //    }
 
-    private void uploadImgAndgetImgUrl() {
+    private void uploadImgAndGetImgUrl() {
         if (imageUri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
@@ -234,8 +234,9 @@ public class New_campaign_reward extends AppCompatActivity {
                                 long days = hours / 24;
                                 Log.v("date", Long.toString(days));
                                 daysLeft = Long.toString(days);
-                                setDataForDB();
+
                                 idCampDB = rewardCampaignTable.push().getKey();
+                                setDataForDB();
                                 userTable.child(idUserDB).child("Campaigns").child(idCampDB).setValue(new CampaignType("Reward", idCampDB));
                                 rewardCampaignTable.child(idCampDB).setValue(campaign).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

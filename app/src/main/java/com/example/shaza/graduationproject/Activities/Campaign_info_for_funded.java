@@ -17,10 +17,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
@@ -33,51 +36,83 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Campaign_info_for_funded extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] texts = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.  "
-            , "Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. "
-            , "Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. "};
-    private static final String[] campaignName = {"Camp1", "Camp2", "Camp3"};
-    private static final String[] noOfDays = {"2 days left", "3 days left", "1 day left"};
-    private static final String[] need = {"1$", "0$", "6$"};
-    private static final int[] total = {5, 3, 12};
-    private static final int[] get = {4, 3, 6};
-    private int pos = 0;
+    TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, cat;
+    ImageView imgCamp, editImgCamp, creatorImage;
+    ProgressBar progressForPercentage;
+    EditText editCampName, editDescCamp;
 
     private NavigationView navView;
     private FirebaseUser user;
     private View header;
     private TextView name, email;
     private Menu menu;
-    private String idDatabase;
-    private DatabaseReference userTable;
+    private String idUserDB, cDate, eDate;
+    private DatabaseReference userTable, rewardTable;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+    private String idCampDB, type;
+
+    private RewardCampaign campaign;
+
+    private Date currentDate, endDate;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private long diff, seconds, minutes, hours, days;
+    private Calendar c = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_info_for_creator);
         Intent intent = getIntent();
-        pos = intent.getExtras().getInt("id");
-        setItems();
+        database = FirebaseDatabase.getInstance();
+        idCampDB = intent.getExtras().getString("id");
+        type = intent.getExtras().getString("type");
+        creatorImage = findViewById(R.id.img_camp_creator);
+        creatorName = findViewById(R.id.name_camp_creator);
+        campName = findViewById(R.id.campaign_name_creator);
+        imgCamp = findViewById(R.id.campaign_image);
+        descCamp = findViewById(R.id.description_of_campaign);
+        daysLeft = findViewById(R.id.days_left_for_creator);
+        needMoney = findViewById(R.id.need_money);
+        cat = findViewById(R.id.category_details_page);
+        progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
+        percentage = findViewById(R.id.percentage_for_creator);
+        editImgCamp = findViewById(R.id.edit_camp_img);
+        editCampName = findViewById(R.id.edit_campaign_name_creator);
+        editDescCamp = findViewById(R.id.edit_description_of_campaign);
+
+        if (type.equals("reward")) {
+            rewardTable = database.getReference().child("Reward Campaign");
+            rewardTable.child(idCampDB).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    campaign = dataSnapshot.getValue(RewardCampaign.class);
+                    setItems(campaign);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         setupDrawer();
-        ImageView creatorImage = findViewById(R.id.img_camp_creator);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        creatorImage.setImageDrawable(roundedBitmapDrawable);
+
 
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
         users = new Users();
-        database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -87,17 +122,16 @@ public class Campaign_info_for_funded extends AppCompatActivity
             menu.findItem(R.id.logout).setVisible(false);
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
-            startActivity(new Intent(this, Home_Page.class));
         }
     }
 
     private void setHeaderDrawer() {
         header = navView.getHeaderView(0);
-        idDatabase = user.getUid();
+        idUserDB = user.getUid();
         name = header.findViewById(R.id.name_at_header);
         email = header.findViewById(R.id.mail_at_header);
         pp = header.findViewById(R.id.profile_image_at_header);
-        userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
+        userTable.child(idUserDB).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
@@ -109,7 +143,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 if (!dataSnapshot.hasChild("Profile Img")) {
                     gender = users.getGender();
                     Log.v("gender", gender);
-                    makeProfilePic(gender);
+                    makeProfilePic(gender, pp);
                 } else {
                     String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
                     Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
@@ -134,39 +168,82 @@ public class Campaign_info_for_funded extends AppCompatActivity
         menu.findItem(R.id.logout).setVisible(true);
     }
 
-    private void makeProfilePic(String gender) {
+    private void makeProfilePic(String gender, ImageView image) {
         if (gender.equals("Female")) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
             roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
+            image.setImageDrawable(roundedBitmapDrawable);
         } else {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
             roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
+            image.setImageDrawable(roundedBitmapDrawable);
         }
     }
-    private void setItems() {
-        TextView campName = findViewById(R.id.campaign_name_creator);
-        ImageView imgCamp = findViewById(R.id.campaign_image);
-        TextView descCamp = findViewById(R.id.description_of_campaign);
-        TextView daysLeft = findViewById(R.id.days_left_for_creator);
-        TextView need = findViewById(R.id.need_money);
-        ProgressBar progressForPercentage = findViewById(R.id.progress_bar_for_show_percentage);
-        TextView percentage = findViewById(R.id.percentage_for_creator);
-        campName.setText(campaignName[pos]);
-        imgCamp.setImageResource(img[pos]);
-        descCamp.setText(texts[pos]);
-        daysLeft.setText(noOfDays[pos]);
-        need.setText("need " + this.need[pos]);
-        int percentageCalculation = (int) ((((float) get[pos] / (float) total[pos])) * 100);
+
+    private void setItems(RewardCampaign campaign) {
+        campName.setText(campaign.getName());
+        String imgURI = campaign.getCampaign_Image();
+        Picasso.get().load(imgURI).into(imgCamp);
+        descCamp.setText("Heighlight of campaign is : " + campaign.getHeighlight() + "\n" +
+                "Vision of this campaign : " + campaign.getVision() + "\n" +
+                "Offers for funded : " + campaign.getOffers() + "\n" +
+                "Team helps in campaign : " + campaign.getHelperTeam());
+        calculateDaysLeft(campaign);
+        daysLeft.setText(Long.toString(days) + " Days left");
+        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
+        Log.v("precentage", Integer.toString(percentageCalculation));
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
+        cat.setText(campaign.getCategory());
+        userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+                userName = users.getFirstName() + " " + users.getLastName();
+                creatorName.setText(userName);
 
+                if (!dataSnapshot.hasChild("Profile Img")) {
+                    gender = users.getGender();
+                    Log.v("gender", gender);
+                    makeProfilePic(gender, creatorImage);
+                } else {
+                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
+                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(creatorImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
+    private void calculateDaysLeft(RewardCampaign rewardCampaign) {
+        currentDate = Calendar.getInstance().getTime();
+        cDate = dateFormat.format(currentDate);
+
+        Log.v("Addate", cDate);
+        c.add(Calendar.DATE, 7);
+        Log.v("Addate", c.getTime().toString());
+        eDate = rewardCampaign.getEndDate();
+        try {
+            c.setTime(dateFormat.parse(eDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        endDate = c.getTime();
+        diff = endDate.getTime() - currentDate.getTime();
+        seconds = diff / 1000;
+        minutes = seconds / 60;
+        hours = minutes / 60;
+        days = hours / 24;
+        Log.v("date", Long.toString(days));
+    }
     //setup toolbar and side drawer
     private void setupDrawer() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -214,6 +291,13 @@ public class Campaign_info_for_funded extends AppCompatActivity
 
         } else if (id == R.id.about_us) {
 
+        } else if (id == R.id.logout) {
+            navView.removeHeaderView(navView.getHeaderView(0));
+            menu.findItem(R.id.logout).setVisible(false);
+            menu.findItem(R.id.login).setVisible(true);
+            menu.findItem(R.id.sign_up).setVisible(true);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Home_Page.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -222,7 +306,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -240,5 +324,17 @@ public class Campaign_info_for_funded extends AppCompatActivity
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         roundedBitmapDrawable.setCircular(true);
         pp.setImageDrawable(roundedBitmapDrawable);
+    }
+
+    public void PaymentProcess(View view) {
+        if (user != null) {
+            Intent paymentProcess = new Intent(this, FundedPage.class);
+            paymentProcess.putExtra("id", idCampDB);
+            paymentProcess.putExtra("type", type);
+            startActivity(paymentProcess);
+        } else {
+            Toast.makeText(this, "You must login first", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Login.class));
+        }
     }
 }

@@ -5,34 +5,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.shaza.graduationproject.Fragments.Ending_soon_campaign;
-import com.example.shaza.graduationproject.Fragments.MostFundCampaign;
-import com.example.shaza.graduationproject.Fragments.NewestCampaign;
-import com.example.shaza.graduationproject.Fragments.PopularCampaign;
+import com.example.shaza.graduationproject.Fragments.EndingSoonRewardCampaign;
+import com.example.shaza.graduationproject.Fragments.MostFundRewardCampaign;
+import com.example.shaza.graduationproject.Fragments.NewestRewardCampaign;
+import com.example.shaza.graduationproject.Fragments.PopularRewardCampaign;
 import com.example.shaza.graduationproject.R;
 
-/**
- * Created by Shaza Hassan on 24-Jan-18.
- */
-
-public class PageAdapterForCampaign extends FragmentPagerAdapter {
-
+public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
     private Context context;
-    public PageAdapterForCampaign(Context context, FragmentManager fragmentManager) {
+
+    public PageAdapterForRewardCampaign(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
         this.context = context;
     }
 
+
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new PopularCampaign();
+            return new PopularRewardCampaign();
         } else if (position == 1) {
-            return new NewestCampaign();
+            return new NewestRewardCampaign();
         } else if (position == 2) {
-            return new Ending_soon_campaign();
+            return new EndingSoonRewardCampaign();
         } else {
-            return new MostFundCampaign();
+            return new MostFundRewardCampaign();
         }
 
     }

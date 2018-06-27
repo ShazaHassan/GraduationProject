@@ -21,9 +21,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
+import com.example.shaza.graduationproject.Adapters.PageAdapterForRewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
 import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
@@ -45,11 +46,12 @@ public class Reward_campaign_Home_page extends AppCompatActivity
     private TextView name, email;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable;
+    private DatabaseReference userTable, rewardTable;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+    private Spinner categorySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,8 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         setContentView(R.layout.activity_reward_campaign__home_page);
         setupDrawer();
         setupViewPager();
-
+        categorySpinner = findViewById(R.id.category_spinner);
+        String cat = categorySpinner.getSelectedItem().toString();
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
@@ -196,7 +199,7 @@ public class Reward_campaign_Home_page extends AppCompatActivity
     private void setupViewPager() {
         ViewPager pager = findViewById(R.id.pagesForViewCampaigns);
         //adapter
-        PageAdapterForCampaign pageAdapter = new PageAdapterForCampaign(this, getSupportFragmentManager());
+        PageAdapterForRewardCampaign pageAdapter = new PageAdapterForRewardCampaign(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
         //tab
         TabLayout tabLayout = findViewById(R.id.tabForViewCampaigns);

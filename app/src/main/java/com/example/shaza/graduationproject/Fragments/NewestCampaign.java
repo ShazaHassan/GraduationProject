@@ -32,21 +32,6 @@ public class NewestCampaign extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.list_campaign, container, false);
-//        array.clear();
-//        for (int i = 0; i < img.length; i++)
-//            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
-//        AdapterForShowCampaign adapter = new AdapterForShowCampaign(getActivity(), array, R.color.yellow);
-//        ListView listView = rootView.findViewById(R.id.list);
-//        listView.setAdapter(adapter);
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getActivity(), Campaign_info_for_creator.class);
-//                i.putExtra("id", position);
-//                getActivity().startActivity(i);
-//            }
-//        });
 
         return rootView;
     }

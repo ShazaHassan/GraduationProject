@@ -80,9 +80,9 @@ public class SignUp extends AppCompatActivity
         userTable = database.getReference().child("Users");
         storageImage = FirebaseStorage.getInstance().getReference();
         user = new Users();
-
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
+        navView.removeHeaderView(navView.getHeaderView(0));
     }
 
     //set up toolbar and side drawer
