@@ -4,15 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -27,15 +23,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -47,16 +39,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.StringTokenizer;
 
 public class Personal_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText username, email, birthday, country;
-    TextView userName, eMail, birth, coun, gen;
+    TextView userName, eMail, birth, coun;
     Button done;
-    Spinner gender;
     String name, mail, day, c, g;
     ViewPager pager;
     Context context = this;
@@ -69,9 +59,8 @@ public class Personal_Page extends AppCompatActivity
     private String idDatabase;
     private DatabaseReference userTable;
     private FirebaseDatabase database;
-    private String userNameHeader, e_mailHeader, genderHeader;
+    private String userNameHeader, e_mailHeader;
     private Users users;
-    private ImageView pp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,24 +93,14 @@ public class Personal_Page extends AppCompatActivity
         idDatabase = user.getUid();
         nameHeader = header.findViewById(R.id.name_at_header);
         emailHeader = header.findViewById(R.id.mail_at_header);
-        pp = header.findViewById(R.id.profile_image_at_header);
         userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
                 userNameHeader = users.getFirstName() + " " + users.getLastName();
-                e_mailHeader = users.getEmail();
+                e_mailHeader = user.getEmail();
                 nameHeader.setText(userNameHeader);
                 emailHeader.setText(e_mailHeader);
-
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    genderHeader = users.getGender();
-                    Log.v("gender", genderHeader);
-                    makeProfilePic(genderHeader);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
-                }
             }
 
             @Override
@@ -140,26 +119,6 @@ public class Personal_Page extends AppCompatActivity
         menu.findItem(R.id.login).setVisible(false);
         menu.findItem(R.id.sign_up).setVisible(false);
         menu.findItem(R.id.logout).setVisible(true);
-    }
-
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
-    }
-
-    private void makeProfilePic(String gender) {
-        if (gender.equals("Female")) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        }
     }
 
     @Override
@@ -231,14 +190,11 @@ public class Personal_Page extends AppCompatActivity
                         name = String.valueOf(username.getText());
                         day = String.valueOf(birth.getText());
                         c = String.valueOf(country.getText());
-                        g = gender.getSelectedItem().toString();
                         StringTokenizer s = new StringTokenizer(name);
                         if (name.equals("")) {
                             username.setError("Username can't be empty field");
                         } else if (day.equals("")) {
                             birthday.setError("Birthday can't be empty field");
-                        } else if (g.equals("")) {
-                            Toast.makeText(context, "please select your gender", Toast.LENGTH_LONG).show();
                         } else if (c.equals("")) {
                             country.setError("Your country can't be empty field");
                         } else {
@@ -341,8 +297,6 @@ public class Personal_Page extends AppCompatActivity
         birth = view.findViewById(R.id.birthday_personal_page);
         coun = view.findViewById(R.id.country);
         done = view.findViewById(R.id.done_btn);
-        gender = view.findViewById(R.id.edit_gender);
-        gen = view.findViewById(R.id.gender_personal_page);
     }
 
     private void showItemsForEdit() {
@@ -358,8 +312,6 @@ public class Personal_Page extends AppCompatActivity
         country.setText(coun.getText());
         coun.setVisibility(View.INVISIBLE);
 
-        gender.setVisibility(View.VISIBLE);
-        gen.setVisibility(View.INVISIBLE);
         done.setVisibility(View.VISIBLE);
 
     }
@@ -372,11 +324,6 @@ public class Personal_Page extends AppCompatActivity
         birthday.setVisibility(View.INVISIBLE);
         birth.setText(day);
         birth.setVisibility(View.INVISIBLE);
-
-        gender.setVisibility(View.INVISIBLE);
-        Toast.makeText(context, g, Toast.LENGTH_LONG).show();
-        gen.setText(g);
-        gen.setVisibility(View.VISIBLE);
 
         country.setVisibility(View.INVISIBLE);
         coun.setText(c);

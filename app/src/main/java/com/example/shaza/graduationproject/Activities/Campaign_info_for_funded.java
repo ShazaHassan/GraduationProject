@@ -1,13 +1,9 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,7 +22,6 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +40,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, cat;
-    ImageView imgCamp, editImgCamp, creatorImage;
+    ImageView imgCamp, editImgCamp;
     ProgressBar progressForPercentage;
     EditText editCampName, editDescCamp;
 
@@ -77,7 +72,6 @@ public class Campaign_info_for_funded extends AppCompatActivity
         database = FirebaseDatabase.getInstance();
         idCampDB = intent.getExtras().getString("id");
         type = intent.getExtras().getString("type");
-        creatorImage = findViewById(R.id.img_camp_creator);
         creatorName = findViewById(R.id.name_camp_creator);
         campName = findViewById(R.id.campaign_name_creator);
         imgCamp = findViewById(R.id.campaign_image);
@@ -130,24 +124,14 @@ public class Campaign_info_for_funded extends AppCompatActivity
         idUserDB = user.getUid();
         name = header.findViewById(R.id.name_at_header);
         email = header.findViewById(R.id.mail_at_header);
-        pp = header.findViewById(R.id.profile_image_at_header);
         userTable.child(idUserDB).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
                 userName = users.getFirstName() + " " + users.getLastName();
-                e_mail = users.getEmail();
+                e_mail = user.getEmail();
                 name.setText(userName);
                 email.setText(e_mail);
-
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    gender = users.getGender();
-                    Log.v("gender", gender);
-                    makeProfilePic(gender, pp);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
-                }
             }
 
             @Override
@@ -166,20 +150,6 @@ public class Campaign_info_for_funded extends AppCompatActivity
         menu.findItem(R.id.login).setVisible(false);
         menu.findItem(R.id.sign_up).setVisible(false);
         menu.findItem(R.id.logout).setVisible(true);
-    }
-
-    private void makeProfilePic(String gender, ImageView image) {
-        if (gender.equals("Female")) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            image.setImageDrawable(roundedBitmapDrawable);
-        } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            image.setImageDrawable(roundedBitmapDrawable);
-        }
     }
 
     private void setItems(RewardCampaign campaign) {
@@ -206,14 +176,6 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 userName = users.getFirstName() + " " + users.getLastName();
                 creatorName.setText(userName);
 
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    gender = users.getGender();
-                    Log.v("gender", gender);
-                    makeProfilePic(gender, creatorImage);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(creatorImage);
-                }
             }
 
             @Override
@@ -318,12 +280,6 @@ public class Campaign_info_for_funded extends AppCompatActivity
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
-    }
-
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
     }
 
     public void PaymentProcess(View view) {

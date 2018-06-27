@@ -2,20 +2,14 @@ package com.example.shaza.graduationproject.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,15 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.URL;
-
 public class Profile extends android.support.v4.app.Fragment {
 
 
     private FirebaseUser currentUser;
     private String idDB, oldPass, newPass, repeatPass;
-    private ImageView pp;
-    private TextView userName, email, gender, birthday, country, resetPassword;
+    private TextView userName, email, birthday, country, resetPassword;
     private DatabaseReference userTable;
     private Users user;
     private AuthCredential authCredential;
@@ -55,10 +46,8 @@ public class Profile extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.profile_page, container, false);
-        pp = rootView.findViewById(R.id.personal_img);
         userName = rootView.findViewById(R.id.user_name);
         email = rootView.findViewById(R.id.email_personal_page);
-        gender = rootView.findViewById(R.id.gender_personal_page);
         birthday = rootView.findViewById(R.id.birthday_personal_page);
         country = rootView.findViewById(R.id.country);
         resetPassword = rootView.findViewById(R.id.edit_password);
@@ -66,10 +55,6 @@ public class Profile extends android.support.v4.app.Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         idDB = currentUser.getUid();
         getDataFromDB();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,19 +70,10 @@ public class Profile extends android.support.v4.app.Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(Users.class);
                 userName.setText(user.getFirstName() + " " + user.getLastName());
-                email.setText(user.getEmail());
-                gender.setText(user.getGender());
+                email.setText(currentUser.getEmail());
                 birthday.setText(user.getBirthday());
                 country.setText(user.getCountry());
 
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    String gender = user.getGender();
-                    Log.v("gender", gender);
-                    makeProfilePic(gender);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    new DownloadImage().execute(imageUrl);
-                }
             }
 
             @Override
@@ -107,28 +83,9 @@ public class Profile extends android.support.v4.app.Fragment {
         });
     }
 
-    private void makeProfilePic(String gender) {
-        if (gender.equals("Female")) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        }
-    }
-
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
-    }
 
     private void resetpassword(String oldPass, final String newPass) {
-        authCredential = EmailAuthProvider.getCredential(user.getEmail(), oldPass);
+        authCredential = EmailAuthProvider.getCredential(currentUser.getEmail(), oldPass);
         currentUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -208,31 +165,5 @@ public class Profile extends android.support.v4.app.Fragment {
         });
 
         builder.show();
-    }
-
-    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        private Exception exception;
-
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                return bmp;
-            } catch (Exception e) {
-                this.exception = e;
-
-                return null;
-            } finally {
-            }
-        }
-
-        protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
-        }
     }
 }

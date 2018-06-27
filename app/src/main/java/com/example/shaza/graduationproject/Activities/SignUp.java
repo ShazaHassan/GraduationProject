@@ -3,10 +3,7 @@ package com.example.shaza.graduationproject.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -43,7 +40,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URL;
 import java.util.UUID;
 
 public class SignUp extends AppCompatActivity
@@ -54,7 +50,7 @@ public class SignUp extends AppCompatActivity
     EditText firstName, lastName, password, rePassword, email, country, birthday;
     Spinner gender;
     ImageView imageView;
-    private String fName, lName, pass, rePass, eMail, coun, birth, gen, idDatabase, imageURL;
+    private String fName, lName, pass, rePass, eMail, coun, birth, idDatabase;
     private FirebaseDatabase database;
     private DatabaseReference userTable;
     private FirebaseAuth auth;
@@ -167,17 +163,12 @@ public class SignUp extends AppCompatActivity
         rePassword = findViewById(R.id.rePassword_text_for_sign_up);
         country = findViewById(R.id.country_text_for_sign_up);
         birthday = findViewById(R.id.birthday_text_for_sign_up);
-        gender = findViewById(R.id.gender_spinner_for_sign_up);
-        imageView = findViewById(R.id.upload_img_img_view_fpr_sign_up);
     }
 
     private void setData() {
         user.setFirstName(fName);
         user.setLastName(lName);
-        user.setEmail(eMail);
         user.setCountry(coun);
-        user.setPassword(pass);
-        user.setGender(gen);
         user.setBirthday(birth);
     }
 
@@ -189,14 +180,6 @@ public class SignUp extends AppCompatActivity
         pass = String.valueOf(password.getText());
         rePass = String.valueOf(rePassword.getText());
         birth = String.valueOf(birthday.getText());
-        gen = gender.getSelectedItem().toString();
-    }
-
-    //textView action
-    public void uploadPhoto(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
     }
 
     //button signUp action
@@ -210,8 +193,6 @@ public class SignUp extends AppCompatActivity
             lastName.setError(errorMsg);
         } else if (birth.isEmpty()) {
             birthday.setError(errorMsg);
-        } else if (gen.equals("")) {
-            Toast.makeText(this, "Select your gender", Toast.LENGTH_LONG).show();
         } else if (eMail.equals("")) {
             email.setError(errorMsg);
         } else if (pass.equals("")) {
@@ -253,15 +234,8 @@ public class SignUp extends AppCompatActivity
                                     Toast.makeText(context, "dataSaved", Toast.LENGTH_LONG).show();
                                 }
                             });
-//                            uploadImg();
-                            if (imageUri != null) {
-                                getImgUrl();
-
-                            } else {
-                                userTable.child(idDatabase).child("Profile Img").setValue(null);
                                 Intent profilePage = new Intent(context, Home_Page.class);
                                 startActivity(profilePage);
-                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             m.setError("Wrong formt can't complete to signUp");
@@ -415,45 +389,8 @@ public class SignUp extends AppCompatActivity
 
         if (resultCode == RESULT_OK) {
             imageUri = data.getData();
-            //                imageStream = getContentResolver().openInputStream(imageUri);
-//                selectedImage = BitmapFactory.decodeStream(imageStream);
-//                roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), selectedImage);
-//                roundedBitmapDrawable.setCircular(true);
-//                imageView.setImageDrawable(roundedBitmapDrawable);
-
-
         } else {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    void displayImage(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
-    }
-
-    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        private Exception exception;
-
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                URL url = new URL(urls[0]);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-                return bmp;
-            } catch (Exception e) {
-                this.exception = e;
-
-                return null;
-            } finally {
-            }
-        }
-
-        protected void onPostExecute(Bitmap bitmap) {
-            // TODO: check this.exception
-            // TODO: do something with the feed
-            super.onPostExecute(bitmap);
-            displayImage(bitmap);
         }
     }
 }

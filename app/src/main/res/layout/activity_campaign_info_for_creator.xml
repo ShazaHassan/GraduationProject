@@ -105,18 +105,6 @@
                         android:src="@drawable/camera1"
                         android:visibility="gone" />
 
-                    <ImageView
-                        android:id="@+id/img_camp_creator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/campaign_image"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:adjustViewBounds="true"
-                        android:maxHeight="50dp"
-                        android:maxWidth="50dp"
-                        android:src="@drawable/unknown_female_user" />
 
                     <TextView
                         android:id="@+id/name_camp_creator"
@@ -126,8 +114,6 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
-                        android:layout_toEndOf="@id/img_camp_creator"
-                        android:layout_toRightOf="@id/img_camp_creator"
                         android:text="Shaza Hassan"
                         android:textColor="@color/darkBlue"
                         android:textSize="18sp" />
@@ -135,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/description_of_campaign"
-                        android:layout_below="@id/img_camp_creator"
+                        android:layout_below="@id/name_camp_creator"
                         android:layout_margin="10dp"
                         android:textSize="20sp"
                         android:minLines="1"
@@ -147,7 +133,7 @@
                         android:id="@+id/edit_description_of_campaign"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/img_camp_creator"
+                        android:layout_below="@id/name_camp_creator"
                         android:layout_marginBottom="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginStart="10dp"

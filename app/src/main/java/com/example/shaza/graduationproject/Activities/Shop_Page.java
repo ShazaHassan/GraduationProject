@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForShop;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class Shop_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,24 +77,14 @@ public class Shop_Page extends AppCompatActivity
         idDatabase = user.getUid();
         name = header.findViewById(R.id.name_at_header);
         email = header.findViewById(R.id.mail_at_header);
-        pp = header.findViewById(R.id.profile_image_at_header);
         userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
                 userName = users.getFirstName() + " " + users.getLastName();
-                e_mail = users.getEmail();
+                e_mail = user.getEmail();
                 name.setText(userName);
                 email.setText(e_mail);
-
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    gender = users.getGender();
-                    Log.v("gender", gender);
-                    makeProfilePic(gender);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
-                }
             }
 
             @Override

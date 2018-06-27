@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.RoundImageByPicasso.CircleTransform;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +47,7 @@ public class Campaign_info_for_creator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName;
-    ImageView imgCamp, editImgCamp, creatorImage;
+    ImageView imgCamp, editImgCamp;
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private long diff, seconds, minutes, hours, days;
@@ -67,9 +66,8 @@ public class Campaign_info_for_creator extends AppCompatActivity
     private String idDatabase;
     private DatabaseReference userTable, rewardTable;
     private FirebaseDatabase database;
-    private String userName, e_mail, gender;
+    private String userName;
     private Users users;
-    private ImageView pp;
     private String idCampDB, type, cDate, eDate;
     private RewardCampaign campaign;
 
@@ -81,8 +79,6 @@ public class Campaign_info_for_creator extends AppCompatActivity
         idCampDB = intent.getExtras().getString("id");
         type = intent.getExtras().getString("type");
         setupDrawer();
-
-        creatorImage = findViewById(R.id.img_camp_creator);
         creatorName = findViewById(R.id.name_camp_creator);
         campName = findViewById(R.id.campaign_name_creator);
         imgCamp = findViewById(R.id.campaign_image);
@@ -138,22 +134,13 @@ public class Campaign_info_for_creator extends AppCompatActivity
         idDatabase = user.getUid();
         name = header.findViewById(R.id.name_at_header);
         email = header.findViewById(R.id.mail_at_header);
-        pp = header.findViewById(R.id.profile_image_at_header);
         userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users = dataSnapshot.getValue(Users.class);
                 userName = users.getFirstName() + " " + users.getLastName();
                 name.setText(userName);
-                email.setText(users.getEmail());
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    gender = users.getGender();
-                    Log.v("gender", gender);
-                    makeProfilePic(gender, pp);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(pp);
-                }
+                email.setText(user.getEmail());
             }
 
             @Override
@@ -210,14 +197,6 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 users = dataSnapshot.getValue(Users.class);
                 userName = users.getFirstName() + " " + users.getLastName();
                 creatorName.setText(userName);
-                if (!dataSnapshot.hasChild("Profile Img")) {
-                    gender = users.getGender();
-                    Log.v("genderhere", gender);
-                    makeProfilePic(gender, creatorImage);
-                } else {
-                    String imageUrl = dataSnapshot.child("Profile Img").getValue().toString();
-                    Picasso.get().load(imageUrl).transform(new CircleTransform()).into(creatorImage);
-                }
             }
 
             @Override
@@ -390,9 +369,4 @@ public class Campaign_info_for_creator extends AppCompatActivity
     public void uploadPhotoAndVideo(View view) {
     }
 
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
-    }
 }
