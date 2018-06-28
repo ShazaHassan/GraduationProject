@@ -120,6 +120,9 @@
             android:name=".Activities.YourFundRewardCampaign"
             android:label="Your Funded Reward Camp"
             android:parentActivityName=".Activities.Personal_Page" />
+        <activity
+            android:name=".Activities.CategoryPageForReward"
+            android:parentActivityName=".Activities.Reward_campaign_Home_page" />
     </application>
 
 </manifest>

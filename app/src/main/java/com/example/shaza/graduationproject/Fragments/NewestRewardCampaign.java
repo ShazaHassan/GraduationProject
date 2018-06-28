@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
@@ -28,17 +29,21 @@ import java.util.Date;
 public class NewestRewardCampaign extends Fragment {
 
     View rootView;
-    private ArrayList<RewardCampaign> campaigns = new ArrayList<>();
+    private ArrayList<RewardCampaign> campaigns = new ArrayList<>(), campCat = new ArrayList<>(),
+            rearrange = new ArrayList<>(), rearrangeCat = new ArrayList<>();
     private DatabaseReference rewardTable;
     private RewardCampaign campaign;
     private TextView noCampsTextView;
     private ListView listView;
-    private AdapterForShowRewardCampaign adapter;
+    private AdapterForShowRewardCampaign adapter, adapterCat;
     private Date currentDate, startDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private String cDate, sDate, eDate;
     private Calendar c = Calendar.getInstance(), e = Calendar.getInstance();
     private long diff, seconds, minutes, hours, days;
+    private Spinner category, s;
+    private int color = R.color.yellow;
+
 
     public NewestRewardCampaign() {
     }
@@ -93,10 +98,13 @@ public class NewestRewardCampaign extends Fragment {
                     Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 if (campaigns.size() != 0) {
+                    for (int i = 0; i < campaigns.size(); i++) {
+                        rearrange.add(campaigns.get(campaigns.size() - 1 - i));
+                    }
                     Log.v("popular", "camps");
                     noCampsTextView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    adapter = new AdapterForShowRewardCampaign(getActivity(), campaigns, R.color.yellow);
+                    adapter = new AdapterForShowRewardCampaign(getActivity(), rearrange, color);
                     listView.setAdapter(adapter);
                 } else {
                     Log.v("popular", "no camp");
@@ -110,6 +118,7 @@ public class NewestRewardCampaign extends Fragment {
 
             }
         });
+
         return rootView;
     }
 }

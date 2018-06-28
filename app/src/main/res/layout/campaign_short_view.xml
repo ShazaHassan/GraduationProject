@@ -25,6 +25,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:minHeight="100dp"
+        android:maxHeight="200dp"
         android:layout_below="@id/campaign_name" />
 
     <TextView

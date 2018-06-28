@@ -2,17 +2,17 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activities.Home_Page"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.Home_Page">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Template.Main_Template"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".Template.Main_Template">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -38,18 +38,20 @@
                 android:id="@+id/fab"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="@dimen/fab_margin"
                 android:adjustViewBounds="true"
                 android:background="@drawable/chat"
+                android:onClick="openExpertChat"
                 android:src="@drawable/chat"
-                android:onClick="openExpertChat" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:id="@+id/parent_scroll"
+                android:fillViewport="true"
+                android:nestedScrollingEnabled="true">
 
                 <LinearLayout
                     android:id="@+id/home_page"
@@ -58,28 +60,28 @@
                     android:orientation="vertical">
                     <!--quotaView-->
                     <RelativeLayout
+                        android:id="@+id/first_item"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/first_item">
+                        android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/quota_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/about_us_edited"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitXY" />
+                            android:scaleType="fitXY"
+                            android:src="@drawable/about_us_edited" />
 
                         <TextView
+                            android:id="@+id/quota_text_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="If you think about some startup or have some one."
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:textColor="#fff"
-                            android:id="@+id/quota_text_1"
+                            android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:layout_marginTop="5dp" />
+                            android:text="If you think about some startup or have some one."
+                            android:textColor="#fff"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                         <!--<TextView-->
                         <!--android:layout_width="wrap_content"-->
@@ -94,45 +96,46 @@
                         <!--android:id="@+id/quota_text_2" />-->
 
                         <TextView
+                            android:id="@+id/quota_text_3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_below="@+id/quota_text_1"
+                            android:gravity="center"
                             android:text="If you need to invest, need product or need jop."
-                            android:textSize="22sp"
                             android:textColor="#fff"
-                            android:textStyle="bold"
-                            android:id="@+id/quota_text_3" />
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/quota_text_4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/quota_text_3"
+                            android:layout_marginBottom="10dp"
                             android:gravity="center"
-                            android:textColor="#cfcfcf"
-                            android:id="@+id/quota_text_4"
-                            android:textStyle="bold"
                             android:text="It easy to get all with special offers."
+                            android:textColor="#cfcfcf"
                             android:textSize="18sp"
-                            android:layout_marginBottom="10dp" />
+                            android:textStyle="bold" />
 
                         <Button
+                            android:id="@+id/about_us_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/darkBlue"
-                            android:id="@+id/about_us_home"
+                            android:layout_below="@id/quota_text_4"
                             android:layout_margin="10dp"
-                            android:padding="10dp"
+                            android:background="@color/darkBlue"
                             android:gravity="center"
+                            android:padding="10dp"
                             android:text="More about us.."
-                            android:textColor="#cfcfcf"
                             android:textAllCaps="false"
-                            android:textSize="16sp"
-                            android:layout_below="@id/quota_text_4" />
+                            android:textColor="#cfcfcf"
+                            android:textSize="16sp" />
 
 
                     </RelativeLayout>
                     <!--SuccessCamp-->
+
                     <RelativeLayout
                         android:id="@+id/second_item_in_home_page"
                         android:layout_width="match_parent"
@@ -144,124 +147,120 @@
                             android:id="@+id/success_camp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="Successful Campaign"
-                            android:textSize="24sp"
                             android:textColor="#fff"
-                            android:layout_marginLeft="10dp" />
+                            android:textSize="24sp" />
+
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:id="@+id/show_success_camp"
-                            android:layout_below="@+id/success_camp">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/success_camp"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Reward Campaign"
                                     android:id="@+id/Reward_campaign"
-                                    android:textSize="20sp"
-                                    android:textColor="#fff"
-                                    android:layout_marginLeft="5dp" />
-
-                                <android.support.v4.view.ViewPager
-                                    android:id="@+id/pager_reward_success"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="420dp"
-                                    android:layout_below="@+id/Reward_campaign" />
-
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_reward_success"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_reward_success"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false" />
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Reward Campaign"
+                                    android:textAlignment="center"
+                                    android:textColor="#fff"
+                                    android:textSize="20sp" />
+
+                                <ListView
+                                    android:id="@+id/list_reward_success"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@id/Reward_campaign"
+                                    android:nestedScrollingEnabled="true" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/no_camp_re_su"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToRewardCampaign"
-                                    android:layout_below="@id/indicator_reward_success"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_alignParentRight="true"
-                                    android:textColor="@color/white" />
+                                    android:layout_below="@id/list_reward_success"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="22sp" />
+
                             </RelativeLayout>
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@id/list_reward_success"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="end"
+                                android:onClick="goToRewardCampaign"
+                                android:text="More"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/gray"
-                                android:layout_marginTop="5dp" />
-
+                                android:layout_height="2dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/gray" />
                             <RelativeLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_height="450dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Equity campaign"
                                     android:id="@+id/equity_camp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Equity campaign"
+                                    android:textAlignment="center"
                                     android:textSize="20sp"
-                                    android:textColor="#fff"
-                                    android:layout_marginLeft="5dp" />
+                                    android:textColor="#fff" />
 
-                                <android.support.v4.view.ViewPager
-                                    android:id="@+id/pager_equity_success"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="420dp"
-                                    android:layout_below="@+id/equity_camp" />
-
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_equity_success"
+                                <ListView
+                                    android:id="@+id/list_equity_success"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_equity_success"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_below="@+id/equity_camp"
+                                    android:nestedScrollingEnabled="true" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/indicator_equity_success"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToEquityCampaign"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:textColor="@color/white" />
                             </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@+id/list_equity_success"
+                                android:layout_gravity="end"
+                                android:onClick="goToEquityCampaign"
+                                android:text="More"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
                         </LinearLayout>
 
                     </RelativeLayout>
+
                     <!--EndingSoon-->
                     <RelativeLayout
                         android:id="@+id/third_item_in_home_page"
@@ -274,119 +273,107 @@
                             android:id="@+id/ending_soon_camp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="Ending soon"
-                            android:textSize="24sp"
                             android:textColor="@color/darkBlue"
-                            android:layout_marginLeft="10dp" />
+                            android:textSize="24sp" />
 
                         <LinearLayout
+                            android:id="@+id/show_ending_camp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:id="@+id/show_ending_camp"
-                            android:layout_below="@+id/ending_soon_camp">
+                            android:layout_below="@+id/ending_soon_camp"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Reward Campaign"
                                     android:id="@+id/Reward_campaign_ending"
-                                    android:textSize="20sp"
-                                    android:textColor="@color/darkBlue"
-                                    android:layout_marginLeft="5dp" />
-
-                                <android.support.v4.view.ViewPager
-                                    android:id="@+id/pager_reward_ending"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="420dp"
-                                    android:layout_below="@+id/Reward_campaign_ending" />
-
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_reward_ending"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_reward_ending"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Reward Campaign"
+                                    android:textAlignment="center"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/darkBlue" />
+
+                                <ListView
+                                    android:id="@+id/list_reward_ending"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="420dp"
+                                    android:layout_below="@id/Reward_campaign_ending"
+                                    android:nestedScrollingEnabled="true" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/no_camp_re_en"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/indicator_reward_ending"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToRewardCampaign"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:textColor="@color/darkBlue" />
+                                    android:layout_width="match_parent"
+                                    android:layout_below="@id/list_reward_ending"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/darkBlue"
+                                    android:textSize="22sp" />
+
+
                             </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_margin="5dp"
+                                android:onClick="goToRewardCampaign"
+                                android:text="More"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/darkBlue"
+                                android:textSize="20sp" />
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/darkBlue"
-                                android:layout_marginTop="5dp" />
+                                android:layout_height="2dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/darkBlue" />
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/equity_camp_ending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
                                     android:text="Equity campaign"
-                                    android:id="@+id/equity_camp_ending"
-                                    android:textSize="20sp"
                                     android:textColor="@color/darkBlue"
-                                    android:layout_marginLeft="5dp" />
+                                    android:textSize="20sp" />
 
-                                <android.support.v4.view.ViewPager
+                                <ListView
                                     android:id="@+id/pager_equity_ending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="420dp"
-                                    android:layout_below="@+id/equity_camp_ending" />
-
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_equity_ending"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_equity_ending"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_below="@id/equity_camp_ending" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/indicator_equity_ending"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToEquityCampaign"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentRight="true"
-                                    android:textColor="@color/darkBlue" />
+                                    android:onClick="goToEquityCampaign"
+                                    android:text="More"
+                                    android:textColor="@color/darkBlue"
+                                    android:textSize="20sp" />
                             </RelativeLayout>
                         </LinearLayout>
                     </RelativeLayout>
@@ -402,354 +389,338 @@
                             android:id="@+id/newest_camp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="Newest Campaign"
-                            android:textSize="24sp"
                             android:textColor="#fff"
-                            android:layout_marginLeft="10dp" />
+                            android:textAlignment="center"
+                            android:textSize="24sp" />
 
                         <LinearLayout
+                            android:id="@+id/show_newest_camp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:id="@+id/show_newest_camp"
-                            android:layout_below="@+id/newest_camp">
+                            android:layout_below="@+id/newest_camp"
+                            android:orientation="vertical">
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Reward Campaign"
                                     android:id="@+id/Reward_campaign_newest"
-                                    android:textSize="20sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Reward Campaign"
                                     android:textColor="#fff"
-                                    android:layout_marginLeft="5dp" />
+                                    android:textAlignment="center"
+                                    android:textSize="20sp" />
 
-                                <android.support.v4.view.ViewPager
-                                    android:id="@+id/pager_reward_newest"
+                                <ListView
+                                    android:id="@+id/list_reward_newest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="420dp"
-                                    android:layout_below="@+id/Reward_campaign_newest" />
-
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_reward_newest"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_reward_newest"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false"
-                                    android:layout_marginBottom="5dp" />
+                                    android:layout_below="@+id/Reward_campaign_newest"
+                                    android:nestedScrollingEnabled="true" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/no_camp_re_ne"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/indicator_reward_newest"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToRewardCampaign"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:textColor="@color/white" />
+                                    android:layout_width="match_parent"
+                                    android:layout_below="@id/list_reward_newest"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="22sp" />
                             </RelativeLayout>
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:onClick="goToRewardCampaign"
+                                android:text="More"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/gray"
-                                android:layout_marginTop="5dp" />
+                                android:layout_height="2dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/gray" />
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp">
+                                android:layout_weight="1">
 
                                 <TextView
+                                    android:id="@+id/equity_camp_newest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
                                     android:text="Equity campaign"
-                                    android:id="@+id/equity_camp_newest"
-                                    android:textSize="20sp"
                                     android:textColor="#fff"
-                                    android:layout_marginLeft="5dp" />
+                                    android:textSize="20sp" />
 
-                                <android.support.v4.view.ViewPager
+                                <ListView
                                     android:id="@+id/pager_equity_newest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="420dp"
-                                    android:layout_below="@+id/equity_camp_newest" />
+                                    android:layout_below="@+id/equity_camp_newest"
+                                    android:nestedScrollingEnabled="true" />
 
-                                <com.viewpagerindicator.CirclePageIndicator
-                                    android:id="@+id/indicator_equity_newest"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:pointerIcon="arrow"
-                                    android:layout_below="@id/pager_equity_newest"
-                                    android:layout_centerInParent="true"
-                                    android:layout_centerVertical="false"
-                                    app:centered="true"
-                                    app:fillColor="#1ebad6"
-                                    app:pageColor="#c752"
-                                    app:snap="false"
-                                    android:layout_marginBottom="5dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/indicator_equity_newest"
-                                    android:text="More"
-                                    android:textSize="20sp"
-                                    android:onClick="goToEquityCampaign"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:textColor="@color/white" />
                             </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="goToEquityCampaign"
+                                android:text="More"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
                         </LinearLayout>
                     </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/gray">
+                        android:background="@color/gray"
+                        android:orientation="vertical">
                         <!--HelpingCommunity-->
                         <RelativeLayout
+                            android:id="@+id/fifth_item_in_page"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/fifth_item_in_page"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp">
+                            android:layout_marginTop="10dp">
 
                             <ImageView
+                                android:id="@+id/img_helping_community"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/community_modified"
-                                android:id="@+id/img_helping_community"
-                                android:scaleType="fitXY" />
+                                android:scaleType="fitXY"
+                                android:src="@drawable/community_modified" />
 
                             <TextView
+                                android:id="@+id/help_community_home_page"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="Helping Community"
                                 android:textColor="#000"
                                 android:textSize="24sp"
-                                android:text="Helping Community"
-                                android:id="@+id/help_community_home_page"
                                 android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_centerInParent="true">
+                                android:layout_centerInParent="true"
+                                android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/help_community_description"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@id/help_community_home_page"
+                                    android:gravity="center"
                                     android:text="You have good experience with our app."
                                     android:textColor="#000"
-                                    android:gravity="center"
                                     android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    android:id="@+id/help_community_description"
-                                    android:layout_below="@id/help_community_home_page" />
+                                    android:textStyle="bold" />
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
                                     android:id="@+id/help_community_description1"
-                                    android:text="You need to know experience of other."
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000"
-                                    android:layout_below="@id/help_community_description"
-                                    android:gravity="center" />
-
-                                <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@id/help_community_description"
                                     android:gravity="center"
-                                    android:id="@+id/help_community_description2"
+                                    android:text="You need to know experience of other."
                                     android:textColor="#000"
-                                    android:textStyle="bold"
-                                    android:textSize="16sp"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/help_community_description2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/help_community_description1"
+                                    android:gravity="center"
                                     android:text="You can share yours experiences here."
-                                    android:layout_below="@+id/help_community_description1" />
+                                    android:textColor="#000"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
 
                             <Button
+                                android:id="@+id/more_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="#000"
+                                android:layout_alignBottom="@id/img_helping_community"
+                                android:layout_centerHorizontal="true"
                                 android:layout_margin="5dp"
-                                android:textSize="18sp"
                                 android:layout_marginBottom="10dp"
+                                android:background="#000"
+                                android:onClick="goToHelpCommunity"
+                                android:text="More"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
-                                android:text="More"
-                                android:id="@+id/more_button"
-                                android:layout_centerHorizontal="true"
-                                android:layout_alignBottom="@id/img_helping_community"
-                                android:onClick="goToHelpCommunity" />
+                                android:textSize="18sp" />
                         </RelativeLayout>
                         <!--ShopAndJob-->
                         <RelativeLayout
+                            android:id="@+id/sixth_item_in_page"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/sixth_item_in_page"
-                            android:layout_marginBottom="5dp"
                             android:layout_margin="10dp"
+                            android:layout_marginBottom="5dp"
                             app:layout_constraintTop_toBottomOf="@id/fifth_item_in_page">
                             <!--job-->
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
                                 android:id="@+id/img_job_home_page"
-                                android:src="@drawable/job_2_edited"
-                                android:adjustViewBounds="true"
-                                android:scaleType="fitXY" />
-
-                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_alignParentLeft="true"
-                                android:textSize="22sp"
-                                android:textColor="#000"
-                                android:textStyle="bold"
-                                android:text="You need job, but you can't find."
-                                android:gravity="center"
-                                android:layout_above="@+id/job_title1"
-                                android:id="@+id/job_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_alignParentLeft="true"
-                                android:textSize="22sp"
-                                android:textColor="#000"
-                                android:textStyle="bold"
-                                android:id="@+id/job_title1"
-                                android:gravity="center"
-                                android:text="You have startup, but you can't find employee."
-                                android:layout_above="@+id/job_desc1" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_alignParentLeft="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="#000"
-                                android:id="@+id/job_desc1"
-                                android:gravity="center"
-                                android:text="If your campain has successed in our website, we may help you to find employee."
-                                android:layout_above="@+id/see_all_job" />
-
-                            <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="See all"
-                                android:textColor="@color/white"
-                                android:background="#000"
-                                android:textSize="18sp"
-                                android:textAllCaps="false"
-                                android:layout_alignBottom="@+id/img_job_home_page"
-                                android:id="@+id/see_all_job"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
-                                android:onClick="goToJobPage" />
-                            <!--Shop-->
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp"
                                 android:adjustViewBounds="true"
                                 android:scaleType="fitXY"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginTop="10dp"
-                                android:id="@+id/img_shop_home_page"
-                                android:src="@drawable/shopping_1_modified"
-                                android:layout_below="@+id/img_job_home_page" />
+                                android:src="@drawable/job_2_edited" />
 
                             <TextView
+                                android:id="@+id/job_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_above="@+id/job_title1"
+                                android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_alignParentLeft="true"
-                                android:textSize="22sp"
-                                android:textColor="#000"
-                                android:textStyle="bold"
-                                android:text="Enjoy shopping."
                                 android:gravity="center"
-                                android:layout_above="@+id/shop_title1"
-                                android:id="@+id/shop_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_alignParentLeft="true"
-                                android:textSize="22sp"
+                                android:text="You need job, but you can't find."
                                 android:textColor="#000"
-                                android:textStyle="bold"
-                                android:id="@+id/shop_title1"
-                                android:gravity="center"
-                                android:text="We may help you in marketing."
-                                android:layout_above="@+id/shop_desc" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/job_title1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
+                                android:layout_above="@+id/job_desc1"
                                 android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="You have startup, but you can't find employee."
+                                android:textColor="#000"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/job_desc1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/see_all_job"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="If your campain has successed in our website, we may help you to find employee."
+                                android:textColor="#000"
                                 android:textSize="16sp"
-                                android:textColor="#000"
-                                android:textStyle="bold"
-                                android:id="@+id/shop_desc"
-                                android:gravity="center"
-                                android:text="If your campaign has succeeded in our App, you can publish your product."
-                                android:layout_above="@+id/see_all_shop" />
+                                android:textStyle="bold" />
 
                             <Button
+                                android:id="@+id/see_all_job"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="See all"
-                                android:textColor="@color/white"
-                                android:background="#000"
-                                android:textSize="16sp"
-                                android:textAllCaps="false"
-                                android:layout_alignBottom="@+id/img_shop_home_page"
-                                android:id="@+id/see_all_shop"
+                                android:layout_alignBottom="@+id/img_job_home_page"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginTop="5dp"
-                                android:onClick="goToShop" />
+                                android:background="#000"
+                                android:onClick="goToJobPage"
+                                android:text="See all"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+                            <!--Shop-->
+                            <ImageView
+                                android:id="@+id/img_shop_home_page"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/img_job_home_page"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/shopping_1_modified" />
+
+                            <TextView
+                                android:id="@+id/shop_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/shop_title1"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="Enjoy shopping."
+                                android:textColor="#000"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/shop_title1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/shop_desc"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="We may help you in marketing."
+                                android:textColor="#000"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/shop_desc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/see_all_shop"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="If your campaign has succeeded in our App, you can publish your product."
+                                android:textColor="#000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/see_all_shop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@+id/img_shop_home_page"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:background="#000"
+                                android:onClick="goToShop"
+                                android:text="See all"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -761,12 +732,12 @@
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
-        app:menu="@menu/item_in_drawer"
-        android:fitsSystemWindows="true"
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main" />
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/item_in_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

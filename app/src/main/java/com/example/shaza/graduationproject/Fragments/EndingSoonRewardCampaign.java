@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
@@ -28,18 +29,21 @@ import java.util.Date;
 public class EndingSoonRewardCampaign extends Fragment {
 
     View rootView;
-    private ArrayList<RewardCampaign> campaigns = new ArrayList<>();
+    private ArrayList<RewardCampaign> campaigns = new ArrayList<>(), campCat = new ArrayList<>(),
+            rearrange = new ArrayList<>(), rearrangeCat = new ArrayList<>();
     private DatabaseReference rewardTable;
     private RewardCampaign campaign;
     private TextView noCampsTextView;
     private ListView listView;
-    private AdapterForShowRewardCampaign adapter;
+    private AdapterForShowRewardCampaign adapter, adapterCat;
 
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private String eDate;
     private Calendar c = Calendar.getInstance();
     private long diff, seconds, minutes, hours, days;
+    private int color = R.color.gray;
+    private Spinner category, f;
 
     public EndingSoonRewardCampaign() {
     }
@@ -51,12 +55,10 @@ public class EndingSoonRewardCampaign extends Fragment {
         rootView = inflater.inflate(R.layout.list_campaign, container, false);
         noCampsTextView = rootView.findViewById(R.id.no_camp_text_view);
         listView = rootView.findViewById(R.id.list);
-        Log.v("popular", "get camp");
         rewardTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
         rewardTable.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.v("popular", "search for camp");
                 campaigns.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     campaign = snapshot.getValue(RewardCampaign.class);
@@ -77,16 +79,16 @@ public class EndingSoonRewardCampaign extends Fragment {
                     if (days < 8 && days > 0) {
                         campaigns.add(campaign);
                     }
-                    Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 if (campaigns.size() != 0) {
-                    Log.v("popular", "camps");
                     noCampsTextView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    adapter = new AdapterForShowRewardCampaign(getActivity(), campaigns, R.color.gray);
+                    for (int i = 0; i < campaigns.size(); i++) {
+                        rearrange.add(campaigns.get(campaigns.size() - 1 - i));
+                    }
+                    adapter = new AdapterForShowRewardCampaign(getActivity(), rearrange, R.color.gray);
                     listView.setAdapter(adapter);
                 } else {
-                    Log.v("popular", "no camp");
                     listView.setVisibility(View.GONE);
                     noCampsTextView.setVisibility(View.VISIBLE);
                 }
@@ -100,4 +102,6 @@ public class EndingSoonRewardCampaign extends Fragment {
 
         return rootView;
     }
+
+
 }

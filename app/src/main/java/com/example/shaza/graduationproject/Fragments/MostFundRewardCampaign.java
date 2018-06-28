@@ -28,12 +28,13 @@ import java.util.Date;
 public class MostFundRewardCampaign extends Fragment {
 
     View rootView;
-    private ArrayList<RewardCampaign> campaigns = new ArrayList<>();
+    private ArrayList<RewardCampaign> campaigns = new ArrayList<>(), campCat = new ArrayList<>(),
+            rearrange = new ArrayList<>(), rearrangeCat = new ArrayList<>();
     private DatabaseReference rewardTable;
     private RewardCampaign campaign;
     private TextView noCampsTextView;
     private ListView listView;
-    private AdapterForShowRewardCampaign adapter;
+    private AdapterForShowRewardCampaign adapter, adapterCat;
     private long noOfFunded;
 
     private String cDate, eDate;
@@ -41,6 +42,8 @@ public class MostFundRewardCampaign extends Fragment {
     private long diff, seconds, minutes, hours, days;
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private int color = R.color.darkBlue;
+
 
     public MostFundRewardCampaign() {
     }
@@ -52,12 +55,10 @@ public class MostFundRewardCampaign extends Fragment {
         rootView = inflater.inflate(R.layout.list_campaign, container, false);
         noCampsTextView = rootView.findViewById(R.id.no_camp_text_view);
         listView = rootView.findViewById(R.id.list);
-        Log.v("popular", "get camp");
         rewardTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
         rewardTable.orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.v("popular", "search for camp");
                 campaigns.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     campaign = snapshot.getValue(RewardCampaign.class);
@@ -81,17 +82,17 @@ public class MostFundRewardCampaign extends Fragment {
                         if (noOfFunded >= 5) {
                             campaigns.add(campaign);
                         }
-                        Log.v("popular", dataSnapshot.getChildren().toString());
                     }
                 }
                 if (campaigns.size() != 0) {
-                    Log.v("popular", "camps");
                     noCampsTextView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    adapter = new AdapterForShowRewardCampaign(getActivity(), campaigns, R.color.darkBlue);
+                    for (int i = 0; i < campaigns.size(); i++) {
+                        rearrange.add(campaigns.get(campaigns.size() - 1 - i));
+                    }
+                    adapter = new AdapterForShowRewardCampaign(getActivity(), rearrange, color);
                     listView.setAdapter(adapter);
                 } else {
-                    Log.v("popular", "no camp");
                     listView.setVisibility(View.GONE);
                     noCampsTextView.setVisibility(View.VISIBLE);
                 }

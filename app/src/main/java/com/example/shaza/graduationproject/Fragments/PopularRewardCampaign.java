@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
@@ -29,11 +30,11 @@ import java.util.Date;
 public class PopularRewardCampaign extends Fragment {
 
     View rootView;
-    private ArrayList<RewardCampaign> campaigns = new ArrayList<>();
+    private ArrayList<RewardCampaign> campaigns = new ArrayList<>(), campCat = new ArrayList<>();
     private DatabaseReference rewardTable;
     private TextView noCampsTextView;
     private ListView listView;
-    private AdapterForShowRewardCampaign adapter;
+    private AdapterForShowRewardCampaign adapter, adapterCat;
 
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -41,7 +42,7 @@ public class PopularRewardCampaign extends Fragment {
     private Calendar c = Calendar.getInstance();
     private long diff, seconds, minutes, hours, days;
     private RewardCampaign campaign;
-
+    private Spinner category, z;
     public PopularRewardCampaign() {
     }
 
@@ -100,4 +101,5 @@ public class PopularRewardCampaign extends Fragment {
         });
         return rootView;
     }
+
 }

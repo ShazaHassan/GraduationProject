@@ -9,22 +9,23 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Adapters.MyAdapter;
+import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
+import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.ImgAndText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,57 +33,65 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.viewpagerindicator.CirclePageIndicator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Home_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MyAdapter adapter1, adapter2;
-    private ViewPager mPager, mPager1;
-    private static int currentPage = 0;
-    private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] texts = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.  "
-            , "Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. "
-            , "Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. "};
-    private static final String[] campaignName = {"Camp1", "Camp2", "Camp3"};
-    private static final String[] noOfDays = {"2 days left", "3 days left", "1 day left"};
-    private static final String[] need = {"1$", "0$", "6$"};
-    private static final int[] total = {5, 3, 12};
-    private static final int[] get = {4, 3, 6};
-    private static final String[] category = {"Cat1", "Cat2", "Cat3"};
-    private ArrayList<ImgAndText> array = new ArrayList<ImgAndText>();
+
+    private ListView rewardSuccess, rewardEnding, rewardNewest;
     private NavigationView navView;
     private FirebaseUser user;
     private View header;
-    private TextView name, email;
+    private TextView name, email, noCampReSu, noCampReEn, noCampReNe;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable;
+    private DatabaseReference userTable, rewardTable;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+
+    private AdapterForShowRewardCampaign successCamp, endingCamp, newestCamp;
+    private RewardCampaign endingReCampaign, successReCampaign, newestReCampaign;
+    private ArrayList<RewardCampaign> endingCampaigns = new ArrayList<>(), endingShowCamps = new ArrayList<>(),
+            successCampaigns = new ArrayList<>(), successShowCamps = new ArrayList<>(),
+            newestCampaigns = new ArrayList<>(), newestShowCamps = new ArrayList<>();
+    private Date startDate, endDate, currentDate;
+    private SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+    private Calendar c = Calendar.getInstance(), e = Calendar.getInstance();
+    private String eDate, sDate, cDate;
+    private long diff, seconds, minutes, hours, days;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         setupDrawer();
-        initRewardCampSuccess();
-        initEquityCampSuccess();
-        initRewardCampEnding();
-        initEquityCampEnding();
-        initRewardCampNewest();
-        initEquityCampNewest();
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
         users = new Users();
+        noCampReSu = findViewById(R.id.no_camp_re_su);
+        noCampReEn = findViewById(R.id.no_camp_re_en);
+        noCampReNe = findViewById(R.id.no_camp_re_ne);
         database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
+        rewardTable = database.getReference().child("Reward Campaign");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        initRewardCampSuccess();
+        initRewardCampEnding();
+        initRewardCampNewest();
+
+//        initEquityCampSuccess();
+//        initEquityCampEnding();
+//        initEquityCampNewest();
         if (user != null) {
             setHeaderDrawer();
         } else {
@@ -151,62 +160,207 @@ public class Home_Page extends AppCompatActivity
 
     //setup view pager for reward campaign for slide campaign
     private void initRewardCampSuccess() {
-        for (int i = 0; i < img.length; i++)
-            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i], category[i]));
 
-        mPager = (ViewPager) findViewById(R.id.pager_reward_success);
-        adapter1 = new MyAdapter(Home_Page.this, array);
-        mPager.setAdapter(adapter1);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_success);
-        indicator.setViewPager(mPager);
-        adapter1.notifyDataSetChanged();
+        rewardSuccess = findViewById(R.id.list_reward_success);
+        rewardTable.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                successCampaigns.clear();
 
-    }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    successReCampaign = snapshot.getValue(RewardCampaign.class);
+                    eDate = successReCampaign.getEndDate();
+                    try {
+                        c.setTime(format.parse(eDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    currentDate = Calendar.getInstance().getTime();
+                    endDate = c.getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    if (days > 0 && (successReCampaign.getNeededMoney() <= successReCampaign.getFundedMoney())) {
+                        successCampaigns.add(successReCampaign);
+                    }
 
-    private void initEquityCampSuccess() {
-//        for (int i = 0; i < img.length; i++)
-//            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+                }
+                if (successCampaigns.size() > 0 && successCampaigns.size() <= 3) {
+                    successCamp = new AdapterForShowRewardCampaign(Home_Page.this, successCampaigns, R.color.darkBlue);
+                    rewardSuccess.setAdapter(successCamp);
+                    noCampReSu.setVisibility(View.GONE);
+                } else if (successCampaigns.size() > 3) {
+                    successShowCamps.clear();
+                    for (int i = 0; i < 3; i++) {
+                        successShowCamps.add(successCampaigns.get(i));
+                    }
+                    successCamp = new AdapterForShowRewardCampaign(Home_Page.this, successShowCamps, R.color.darkBlue);
+                    rewardSuccess.setAdapter(successCamp);
+                    noCampReSu.setVisibility(View.GONE);
 
-        mPager = (ViewPager) findViewById(R.id.pager_equity_success);
-        adapter1 = new MyAdapter(Home_Page.this, array);
-        mPager.setAdapter(adapter1);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_success);
-        indicator.setViewPager(mPager);
-        adapter1.notifyDataSetChanged();
-    }
+                } else {
+                    rewardSuccess.setVisibility(View.GONE);
+                }
 
-    //setup view pager for equity campaign for slide campaign
-    private void initEquityCampEnding() {
-        mPager1 = (ViewPager) findViewById(R.id.pager_equity_ending);
-        adapter2 = new MyAdapter(Home_Page.this, array, R.color.darkBlue);
-        mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_ending);
-        indicator.setViewPager(mPager1);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void initRewardCampEnding() {
-        mPager1 = (ViewPager) findViewById(R.id.pager_reward_ending);
-        adapter2 = new MyAdapter(Home_Page.this, array, R.color.darkBlue);
-        mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_ending);
-        indicator.setViewPager(mPager1);
+        rewardEnding = findViewById(R.id.list_reward_ending);
+        rewardTable.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                endingCampaigns.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    endingReCampaign = snapshot.getValue(RewardCampaign.class);
+                    eDate = endingReCampaign.getEndDate();
+                    try {
+                        c.setTime(format.parse(eDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    currentDate = Calendar.getInstance().getTime();
+                    endDate = c.getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    Log.v("day", Long.toString(days));
+                    if (days > 0) {
+                        endingCampaigns.add(endingReCampaign);
+                    }
+                }
+
+                if (endingCampaigns.size() > 0 && endingCampaigns.size() <= 3) {
+                    endingCamp = new AdapterForShowRewardCampaign(Home_Page.this, endingCampaigns, R.color.gray);
+                    rewardEnding.setAdapter(endingCamp);
+                    noCampReEn.setVisibility(View.GONE);
+                } else if (endingCampaigns.size() > 3) {
+                    endingShowCamps.clear();
+                    for (int i = 0; i < 3; i++) {
+                        endingShowCamps.add(endingCampaigns.get(i));
+                    }
+                    endingCamp = new AdapterForShowRewardCampaign(Home_Page.this, endingShowCamps, R.color.gray);
+                    rewardEnding.setAdapter(endingCamp);
+                    noCampReEn.setVisibility(View.GONE);
+
+                } else {
+                    rewardEnding.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initRewardCampNewest() {
-        mPager1 = (ViewPager) findViewById(R.id.pager_reward_newest);
-        adapter2 = new MyAdapter(Home_Page.this, array);
-        mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_reward_newest);
-        indicator.setViewPager(mPager1);
+        rewardNewest = findViewById(R.id.list_reward_newest);
+        rewardTable.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                newestCampaigns.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    newestReCampaign = snapshot.getValue(RewardCampaign.class);
+                    sDate = newestReCampaign.getStartDate();
+                    eDate = newestReCampaign.getEndDate();
+                    try {
+                        c.setTime(format.parse(sDate));
+                        e.setTime(format.parse(eDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    currentDate = Calendar.getInstance().getTime();
+                    startDate = c.getTime();
+                    endDate = e.getTime();
+                    diff = endDate.getTime() - currentDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    if (days > 0) {
+                        diff = currentDate.getTime() - startDate.getTime();
+                        seconds = diff / 1000;
+                        minutes = seconds / 60;
+                        hours = minutes / 60;
+                        days = hours / 24;
+                        if (days < 8) {
+                            newestCampaigns.add(newestReCampaign);
+                        }
+                    }
+                }
+
+                if (newestCampaigns.size() > 0 && newestCampaigns.size() <= 3) {
+                    for (int i = 0; i < 3; i++) {
+                        newestShowCamps.add(newestCampaigns.get(i));
+                    }
+                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
+                    rewardNewest.setAdapter(newestCamp);
+                    noCampReNe.setVisibility(View.GONE);
+                } else if (newestCampaigns.size() > 3) {
+                    newestShowCamps.clear();
+                    for (int i = 0; i < 3; i++) {
+                        newestShowCamps.add(newestCampaigns.get(i));
+                    }
+                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
+                    rewardNewest.setAdapter(newestCamp);
+                    noCampReNe.setVisibility(View.GONE);
+
+                } else {
+                    rewardNewest.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    private void initEquityCampNewest() {
-        mPager1 = (ViewPager) findViewById(R.id.pager_equity_newest);
-        adapter2 = new MyAdapter(Home_Page.this, array);
-        mPager1.setAdapter(adapter2);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_newest);
-        indicator.setViewPager(mPager1);
-    }
+//    private void initEquityCampSuccess() {
+////        for (int i = 0; i < img.length; i++)
+////            array.add(new ImgAndText(img[i], texts[i], campaignName[i], noOfDays[i], need[i], total[i], get[i]));
+//
+////        mPager = (ViewPager) findViewById(R.id.pager_equity_success);
+////        adapter1 = new MyAdapter(Home_Page.this, array);
+////        mPager.setAdapter(adapter1);
+////        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_success);
+////        indicator.setViewPager(mPager);
+////        adapter1.notifyDataSetChanged();
+//    }
+
+    //setup view pager for equity campaign for slide campaign
+//    private void initEquityCampEnding() {
+////        mPager1 = (ViewPager) findViewById(R.id.pager_equity_ending);
+////        adapter2 = new MyAdapter(Home_Page.this, array, R.color.darkBlue);
+////        mPager1.setAdapter(adapter2);
+////        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_ending);
+////        indicator.setViewPager(mPager1);
+//    }
+//
+//    private void initEquityCampNewest() {
+////        mPager1 = (ViewPager) findViewById(R.id.pager_equity_newest);
+////        adapter2 = new MyAdapter(Home_Page.this, array);
+////        mPager1.setAdapter(adapter2);
+////        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator_equity_newest);
+////        indicator.setViewPager(mPager1);
+//    }
 
     //set up toolbar and side drawer
     private void setupDrawer() {
@@ -247,11 +401,10 @@ public class Home_Page extends AppCompatActivity
         } else if (id == R.id.sign_up) {
             Intent signUpPage = new Intent(this, SignUp.class);
             startActivity(signUpPage);
-        } else if (id == R.id.help_community){
+        } else if (id == R.id.help_community) {
             Intent HelpPage = new Intent(this, HelpingCommunity.class);
             startActivity(HelpPage);
-        }
-        else if (id == R.id.help) {
+        } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
 
@@ -275,9 +428,12 @@ public class Home_Page extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            finish();
         }
+        //close app
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 
     public void goToRewardCampaign(View view) {
@@ -309,6 +465,5 @@ public class Home_Page extends AppCompatActivity
         Intent jobPage = new Intent(this, Job.class);
         startActivity(jobPage);
     }
-
 
 }

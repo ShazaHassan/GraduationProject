@@ -21,6 +21,10 @@ public class RewardCampaign {
     public RewardCampaign() {
     }
 
+    public RewardCampaign(String heighlight) {
+        Heighlight = heighlight;
+    }
+
     public long getNoOfFunded() {
         return noOfFunded;
     }
