@@ -322,6 +322,7 @@ public class Home_Page extends AppCompatActivity
                     }
                     newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
                     rewardNewest.setAdapter(newestCamp);
+                    rewardNewest.setVisibility(View.VISIBLE);
                     noCampReNe.setVisibility(View.GONE);
                 } else if (newestCampaigns.size() > 3) {
                     newestShowCamps.clear();
@@ -330,6 +331,7 @@ public class Home_Page extends AppCompatActivity
                     }
                     newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
                     rewardNewest.setAdapter(newestCamp);
+                    rewardNewest.setVisibility(View.VISIBLE);
                     noCampReNe.setVisibility(View.GONE);
 
                 } else {
@@ -468,7 +470,9 @@ public class Home_Page extends AppCompatActivity
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     newestEqCampaign = snapshot.getValue(EquityCampaign.class);
                     eDate = newestEqCampaign.getEndDate();
+                    sDate = newestEqCampaign.getStartDate();
                     try {
+                        e.setTime(format.parse(sDate));
                         c.setTime(format.parse(eDate));
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -476,6 +480,7 @@ public class Home_Page extends AppCompatActivity
                     currentDate = Calendar.getInstance().getTime();
                     endDate = c.getTime();
                     diff = endDate.getTime() - currentDate.getTime();
+                    startDate = e.getTime();
                     seconds = diff / 1000;
                     minutes = seconds / 60;
                     hours = minutes / 60;
@@ -492,10 +497,12 @@ public class Home_Page extends AppCompatActivity
                     }
 
                 }
+
                 if (newestEqCampaigns.size() > 0 && newestEqCampaigns.size() <= 3) {
                     newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, newestEqCampaigns, R.color.yellow);
                     equityNewest.setAdapter(newestEqCamp);
                     noCampEqNe.setVisibility(View.GONE);
+                    equityNewest.setVisibility(View.VISIBLE);
                 } else if (newestEqCampaigns.size() > 3) {
                     successEqShowCamps.clear();
                     for (int i = 0; i < 3; i++) {
@@ -504,7 +511,7 @@ public class Home_Page extends AppCompatActivity
                     newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, newestEqShowCamps, R.color.yellow);
                     equityNewest.setAdapter(newestEqCamp);
                     noCampEqNe.setVisibility(View.GONE);
-
+                    equityNewest.setVisibility(View.VISIBLE);
                 } else {
                     equityNewest.setVisibility(View.GONE);
                 }
