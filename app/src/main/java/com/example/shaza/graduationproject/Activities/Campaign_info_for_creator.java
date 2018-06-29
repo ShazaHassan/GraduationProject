@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
@@ -64,12 +65,13 @@ public class Campaign_info_for_creator extends AppCompatActivity
     private TextView name, email;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable, rewardTable;
+    private DatabaseReference userTable, rewardTable, equityTable;
     private FirebaseDatabase database;
     private String userName;
     private Users users;
     private String idCampDB, type, cDate, eDate;
     private RewardCampaign campaign;
+    private EquityCampaign equityCampaign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,20 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     campaign = dataSnapshot.getValue(RewardCampaign.class);
                     setItems(campaign);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        } else if (type.equals("equity")) {
+            equityTable = database.getReference().child("Equity Campaign");
+            equityTable.child(idCampDB).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    equityCampaign = dataSnapshot.getValue(EquityCampaign.class);
+                    setItems(equityCampaign);
                 }
 
                 @Override
@@ -208,6 +224,41 @@ public class Campaign_info_for_creator extends AppCompatActivity
         });
     }
 
+    private void setItems(EquityCampaign campaign) {
+        campName.setText(campaign.getName());
+        String imgURI = campaign.getImgName();
+        Picasso.get().load(imgURI).into(imgCamp);
+        descCamp.setText("Heighlight of campaign is : " + equityCampaign.getHighlight() + "\n" +
+                "Executive team: " + equityCampaign.getTeam() + "\n" +
+                "Summary about company: " + equityCampaign.getSummary() + "\n" +
+                "Processed and Timeline: " + equityCampaign.getTimeline() + "\n" +
+                "Market Analysis: " + equityCampaign.getMarket() + "\n" +
+                "Investment terms: " + equityCampaign.getInvestTerms() + "\n" +
+                "Investor Discussion: " + equityCampaign.getInvestDiscussion() + "\n" +
+                "Add offer: " + equityCampaign.getOffers());
+        calculateDaysLeft(campaign);
+        daysLeft.setText(Long.toString(days) + " Days left");
+        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
+        progressForPercentage.setMax(100);
+        progressForPercentage.setProgress(percentageCalculation);
+        percentage.setText(percentageCalculation + "%");
+        category.setText(campaign.getCategory());
+        userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users = dataSnapshot.getValue(Users.class);
+                userName = users.getFirstName() + " " + users.getLastName();
+                creatorName.setText(userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void calculateDaysLeft(RewardCampaign rewardCampaign) {
         currentDate = Calendar.getInstance().getTime();
         cDate = dateFormat.format(currentDate);
@@ -216,6 +267,28 @@ public class Campaign_info_for_creator extends AppCompatActivity
         c.add(Calendar.DATE, 7);
         Log.v("Addate", c.getTime().toString());
         eDate = rewardCampaign.getEndDate();
+        try {
+            c.setTime(dateFormat.parse(eDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        endDate = c.getTime();
+        diff = endDate.getTime() - currentDate.getTime();
+        seconds = diff / 1000;
+        minutes = seconds / 60;
+        hours = minutes / 60;
+        days = hours / 24;
+        Log.v("date", Long.toString(days));
+    }
+
+    private void calculateDaysLeft(EquityCampaign campaign) {
+        currentDate = Calendar.getInstance().getTime();
+        cDate = dateFormat.format(currentDate);
+
+        Log.v("Addate", cDate);
+        c.add(Calendar.DATE, 7);
+        Log.v("Addate", c.getTime().toString());
+        eDate = campaign.getEndDate();
         try {
             c.setTime(dateFormat.parse(eDate));
         } catch (ParseException e) {

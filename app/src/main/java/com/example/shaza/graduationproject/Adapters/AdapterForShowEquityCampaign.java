@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Activities.Campaign_info_for_creator;
 import com.example.shaza.graduationproject.Activities.Campaign_info_for_funded;
-import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
+import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +33,8 @@ import java.util.Date;
  * Created by Shaza Hassan on 24-Jan-18.
  */
 
-public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
-    ArrayList<RewardCampaign> rewardCampaigns = new ArrayList<>();
+public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
+    ArrayList<EquityCampaign> equityCampaigns = new ArrayList<>();
     Holder holder = null;
     private Context context;
     private int colorResource;
@@ -47,23 +47,23 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
     private DatabaseReference campaignTable;
 
 
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns) {
-        super(context, 0, rewardCampaigns);
-        this.rewardCampaigns = rewardCampaigns;
+    public AdapterForShowEquityCampaign(Context context, ArrayList<EquityCampaign> equityCampaigns) {
+        super(context, 0, equityCampaigns);
+        this.equityCampaigns = equityCampaigns;
         this.context = context;
         this.colorResource = R.color.white;
     }
 
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns, int colorResource) {
-        super(context, 0, rewardCampaigns);
-        this.rewardCampaigns = rewardCampaigns;
+    public AdapterForShowEquityCampaign(Context context, ArrayList<EquityCampaign> equityCampaigns, int colorResource) {
+        super(context, 0, equityCampaigns);
+        this.equityCampaigns = equityCampaigns;
         this.context = context;
         this.colorResource = colorResource;
     }
 
-    public AdapterForShowCampaign(Context context, ArrayList<RewardCampaign> rewardCampaigns, int colorResource, DatabaseReference campaignTable) {
-        super(context, 0, rewardCampaigns);
-        this.rewardCampaigns = rewardCampaigns;
+    public AdapterForShowEquityCampaign(Context context, ArrayList<EquityCampaign> equityCampaigns, int colorResource, DatabaseReference campaignTable) {
+        super(context, 0, equityCampaigns);
+        this.equityCampaigns = equityCampaigns;
         this.context = context;
         this.colorResource = colorResource;
         this.campaignTable = campaignTable;
@@ -93,28 +93,32 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
             idCurrentUserDB = null;
         }
 
-        final RewardCampaign rewardCampaign = getItem(position);
+        final EquityCampaign equityCampaign = getItem(position);
 
-        calculateDaysLeft(rewardCampaign);
+        calculateDaysLeft(equityCampaign);
 
-        holder.campaignName.setText(rewardCampaign.getName());
+        holder.campaignName.setText(equityCampaign.getName());
 
-        String imgURI = rewardCampaign.getCampaign_Image();
+        String imgURI = equityCampaign.getImgName();
         Picasso.get().load(imgURI).into(holder.campImg);
 
         holder.campaignDesc.setMinLines(3);
-        holder.campaignDesc.setText("Heighlight of campaign is : " + rewardCampaign.getHeighlight() + "\n" +
-                "Vision of this campaign : " + rewardCampaign.getVision() + "\n" +
-                "Offers for funded : " + rewardCampaign.getOffers() + "\n" +
-                "Team helps in campaign : " + rewardCampaign.getHelperTeam());
+        holder.campaignDesc.setText("Heighlight of campaign is : " + equityCampaign.getHighlight() + "\n" +
+                "Executive team: " + equityCampaign.getTeam() + "\n" +
+                "Summary about company: " + equityCampaign.getSummary() + "\n" +
+                "Processed and Timeline: " + equityCampaign.getTimeline() + "\n" +
+                "Market Analysis: " + equityCampaign.getMarket() + "\n" +
+                "Investment terms: " + equityCampaign.getInvestTerms() + "\n" +
+                "Investor Discussion: " + equityCampaign.getInvestDiscussion() + "\n" +
+                "Add offer: " + equityCampaign.getOffers());
 
         holder.daysLeft.setText(Long.toString(days) + " Days left");
 
-        holder.neededMoney.setText("Need: " + (rewardCampaign.getNeededMoney() - rewardCampaign.getFundedMoney()) + " $");
+        holder.neededMoney.setText("Need: " + (equityCampaign.getNeededMoney() - equityCampaign.getFundedMoney()) + " $");
 
-        holder.category.setText(rewardCampaign.getCategory());
+        holder.category.setText(equityCampaign.getCategory());
 
-        int percentage = (int) ((rewardCampaign.getFundedMoney()) / rewardCampaign.getNeededMoney()) * 100;
+        int percentage = (int) (((equityCampaign.getFundedMoney() * 1.0) / (equityCampaign.getNeededMoney() * 1.0)) * 100);
         holder.percentageBar.setMax(100);
         holder.percentageBar.setProgress(percentage);
 
@@ -124,25 +128,28 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_funded.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", equityCampaign.getIDCamp());
+                    detailsPage.putExtra("type", "equity");
                     getContext().startActivity(detailsPage);
                 }
             });
-        } else if (!idCurrentUserDB.equals(rewardCampaign.getIDCreator())) {
+        } else if (!idCurrentUserDB.equals(equityCampaign.getIDCreator())) {
             listItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_funded.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", equityCampaign.getIDCamp());
+                    detailsPage.putExtra("type", "equity");
                     getContext().startActivity(detailsPage);
                 }
             });
-        } else if (idCurrentUserDB.equals(rewardCampaign.getIDCreator())) {
+        } else if (idCurrentUserDB.equals(equityCampaign.getIDCreator())) {
             listItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent detailsPage = new Intent(getContext(), Campaign_info_for_creator.class);
-                    detailsPage.putExtra("id", position);
+                    detailsPage.putExtra("id", equityCampaign.getIDCamp());
+                    detailsPage.putExtra("type", "equity");
                     getContext().startActivity(detailsPage);
                 }
             });
@@ -166,7 +173,7 @@ public class AdapterForShowCampaign extends ArrayAdapter<RewardCampaign> {
         holder.neededMoney = listItemView.findViewById(R.id.need);
     }
 
-    private void calculateDaysLeft(RewardCampaign rewardCampaign) {
+    private void calculateDaysLeft(EquityCampaign rewardCampaign) {
         currentDate = Calendar.getInstance().getTime();
         cDate = dateFormat.format(currentDate);
 

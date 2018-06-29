@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.shaza.graduationproject.Database.Table.CampaignType;
+import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +29,10 @@ public class FundedPage extends AppCompatActivity {
 
     private String idCampDb, type, idUserDb;
     private FirebaseUser currentUser;
-    private DatabaseReference rewardTable, userTable;
+    private DatabaseReference rewardTable, userTable, equityTable;
     private EditText amountOfMoney;
     private RewardCampaign rewardCampaign;
-
+    private EquityCampaign equityCampaign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,8 @@ public class FundedPage extends AppCompatActivity {
         amountOfMoney = findViewById(R.id.amount_of_money_for_payment);
         if (type.equals("reward")) {
             rewardTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
+        } else if (type.equals("equity")) {
+            equityTable = FirebaseDatabase.getInstance().getReference().child("Equity Campaign");
         }
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -89,6 +92,27 @@ public class FundedPage extends AppCompatActivity {
                         rewardTable.child(idCampDb).child("fundedMoney").setValue(amountOfFunded);
                         rewardTable.child(idCampDb).child("noOfFunded").setValue(noOfFunded);
                         userTable.child(idUserDb).child("FundedCampaign").child(idCampDb).setValue(new CampaignType("Reward", idCampDb));
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            } else if (type.equals("equity")) {
+                equityTable.child(idCampDb).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        equityCampaign = dataSnapshot.getValue(EquityCampaign.class);
+                        long amountOfFunded = equityCampaign.getFundedMoney();
+                        long noOfFunded = equityCampaign.getNoOfFunded();
+                        long amount = Long.parseLong(amountOfMoney.getText().toString());
+                        amountOfFunded = amountOfFunded + amount;
+                        noOfFunded++;
+                        equityTable.child(idCampDb).child("fundedMoney").setValue(amountOfFunded);
+                        equityTable.child(idCampDb).child("noOfFunded").setValue(noOfFunded);
+                        userTable.child(idUserDb).child("FundedCampaign").child(idCampDb).setValue(new CampaignType("Equity", idCampDb));
                         finish();
                     }
 

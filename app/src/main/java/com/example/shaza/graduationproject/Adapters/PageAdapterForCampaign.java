@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.shaza.graduationproject.Fragments.Ending_soon_campaign;
-import com.example.shaza.graduationproject.Fragments.MostFundCampaign;
-import com.example.shaza.graduationproject.Fragments.NewestCampaign;
-import com.example.shaza.graduationproject.Fragments.PopularCampaign;
+import com.example.shaza.graduationproject.Fragments.EndingSoonEquityCampaign;
+import com.example.shaza.graduationproject.Fragments.MostFundEquityCampaign;
+import com.example.shaza.graduationproject.Fragments.NewestEquityCampaign;
+import com.example.shaza.graduationproject.Fragments.PopularEquityCampaign;
 import com.example.shaza.graduationproject.R;
 
 /**
@@ -26,13 +26,13 @@ public class PageAdapterForCampaign extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new PopularCampaign();
+            return new PopularEquityCampaign();
         } else if (position == 1) {
-            return new NewestCampaign();
+            return new NewestEquityCampaign();
         } else if (position == 2) {
-            return new Ending_soon_campaign();
+            return new EndingSoonEquityCampaign();
         } else {
-            return new MostFundCampaign();
+            return new MostFundEquityCampaign();
         }
 
     }

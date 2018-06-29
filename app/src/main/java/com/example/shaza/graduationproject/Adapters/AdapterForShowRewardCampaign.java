@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
     ArrayList<RewardCampaign> rewardCampaigns = new ArrayList<>();
-    AdapterForShowCampaign.Holder holder = null;
+    AdapterForShowEquityCampaign.Holder holder = null;
     private Context context;
     private int colorResource;
     private Date currentDate, endDate;
@@ -65,12 +65,12 @@ public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.campaign_short_view, parent, false);
-            holder = new AdapterForShowCampaign.Holder();
+            holder = new AdapterForShowEquityCampaign.Holder();
             findItem(listItemView);
 
             listItemView.setTag(holder);
         } else {
-            holder = (AdapterForShowCampaign.Holder) listItemView.getTag();
+            holder = (AdapterForShowEquityCampaign.Holder) listItemView.getTag();
         }
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
