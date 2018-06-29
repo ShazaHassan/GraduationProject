@@ -146,7 +146,7 @@ public class New_Campaign_Equity extends AppCompatActivity {
         String errorMSG = "Can't Be Empty Field";
         if (campaignName.equals("")) {
             campName.setError(errorMSG);
-        } else if (campaignCategory.equals("Select Category")) {
+        } else if (campaignCategory.equals("Select category")) {
             Toast.makeText(this, "Select Category", Toast.LENGTH_LONG).show();
         } else if (campaignDuration.equals("")) {
             campDuration.setError(errorMSG);
@@ -271,7 +271,9 @@ public class New_Campaign_Equity extends AppCompatActivity {
         equityCampaign.setSummary(campaignSummary);
         equityCampaign.setTimeline(campaignTimeline);
         equityCampaign.setOffers(campaignOffers);
+        equityCampaign.setTeam(campaignTeam);
         equityCampaign.setImgName(imageURL);
+        equityCampaign.setCategory(campaignCategory);
     }
 
     @Override

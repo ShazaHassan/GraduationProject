@@ -1,8 +1,26 @@
 package com.example.shaza.graduationproject.Database.Table;
 
 public class EquityCampaign {
-    private String Name, ImgName, duration, IDCamp, IDCreator, Offers, Timeline, Highlight, Summary, Market, InvestTerms, InvestDiscussion, StartDate, EndDate;
+    private String Name, ImgName, duration, IDCamp, IDCreator,
+            Offers, Timeline, Highlight, Summary, Market,
+            InvestTerms, InvestDiscussion, StartDate, EndDate, Team, category;
     private Long NoOfFunded, NeededMoney, FundedMoney;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getTeam() {
+        return Team;
+    }
+
+    public void setTeam(String team) {
+        Team = team;
+    }
 
     public String getName() {
         return Name;
