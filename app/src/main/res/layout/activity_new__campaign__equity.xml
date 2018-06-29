@@ -44,7 +44,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/name_of_camp_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -71,11 +71,20 @@
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/camp_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/category_for_new_campaign"
                 android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="uploadPhoto"
+                android:text="Upload Photo"
+                android:textColor="@color/darkBlue"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -89,7 +98,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText7"
+                android:id="@+id/duration_of_camp_editText"
                 android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,45 +124,36 @@
                 android:textColor="@color/darkBlue"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/editText13"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/rectangle_with_border"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:hint="Amount of money that enough for your \ncampaign" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Upload photo:"
-                android:onClick="uploadPhoto"
-                android:textColor="@color/darkBlue"
-                android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/amount_of_money_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rectangle_with_border"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:hint="Amount of money" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Upload video:"
-                android:onClick="uploadVideo"
-                android:textColor="@color/darkBlue"
-                android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/amount_of_money_editText"
+                    android:layout_toRightOf="@id/amount_of_money_editText"
+                    android:text="$"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="18sp" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView10"
@@ -167,7 +167,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText12"
+                android:id="@+id/company_highlight_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -180,6 +180,7 @@
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textSize="16sp"
+                android:hint="Add your highlight of your company"
                 android:padding="10dp" />
 
             <TextView
@@ -189,12 +190,12 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Excutive team:"
+                android:text="Executive team:"
                 android:textColor="@color/darkBlue"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText9"
+                android:id="@+id/executive_team_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -220,7 +221,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText11"
+                android:id="@+id/summary_about_company_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -246,7 +247,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText10"
+                android:id="@+id/processed_and_timeline_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -272,7 +273,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText14"
+                android:id="@+id/market_analysis_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -298,7 +299,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText17"
+                android:id="@+id/investment_terms_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -325,7 +326,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText16"
+                android:id="@+id/investor_discussion_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -352,7 +353,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText15"
+                android:id="@+id/add_offer_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
