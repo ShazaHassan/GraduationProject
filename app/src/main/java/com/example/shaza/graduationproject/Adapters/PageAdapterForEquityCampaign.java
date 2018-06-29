@@ -9,16 +9,18 @@ import com.example.shaza.graduationproject.Fragments.EndingSoonEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.MostFundEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.NewestEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.PopularEquityCampaign;
+import com.example.shaza.graduationproject.Fragments.SuccessEquityCampaign;
 import com.example.shaza.graduationproject.R;
 
 /**
  * Created by Shaza Hassan on 24-Jan-18.
  */
 
-public class PageAdapterForCampaign extends FragmentPagerAdapter {
+public class PageAdapterForEquityCampaign extends FragmentPagerAdapter {
 
     private Context context;
-    public PageAdapterForCampaign(Context context, FragmentManager fragmentManager) {
+
+    public PageAdapterForEquityCampaign(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
         this.context = context;
     }
@@ -31,15 +33,17 @@ public class PageAdapterForCampaign extends FragmentPagerAdapter {
             return new NewestEquityCampaign();
         } else if (position == 2) {
             return new EndingSoonEquityCampaign();
-        } else {
+        } else if (position == 3) {
             return new MostFundEquityCampaign();
+        } else {
+            return new SuccessEquityCampaign();
         }
 
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -50,8 +54,10 @@ public class PageAdapterForCampaign extends FragmentPagerAdapter {
             return context.getString(R.string.newest_page);
         } else if (position == 2) {
             return context.getString(R.string.ending_soon_page);
-        } else {
+        } else if (position == 3) {
             return context.getString(R.string.most_fund_page);
+        } else {
+            return "Successful Camp";
         }
 
     }

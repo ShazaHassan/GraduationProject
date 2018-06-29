@@ -123,6 +123,14 @@
         <activity
             android:name=".Activities.CategoryPageForReward"
             android:parentActivityName=".Activities.Reward_campaign_Home_page" />
+        <activity
+            android:name=".Activities.YourEquityCampaign"
+            android:label="Your Equity Campaign"
+            android:parentActivityName=".Activities.Personal_Page" />
+        <activity
+            android:name=".Activities.YourFundedEquityCampaign"
+            android:label="Your Funded Equity Camp"
+            android:parentActivityName=".Activities.Personal_Page" />
     </application>
 
 </manifest>

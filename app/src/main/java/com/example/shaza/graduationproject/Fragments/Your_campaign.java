@@ -7,13 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.shaza.graduationproject.Activities.YourEquityCampaign;
 import com.example.shaza.graduationproject.Activities.YourRewardCampaign;
 import com.example.shaza.graduationproject.R;
 
 public class Your_campaign extends android.support.v4.app.Fragment {
 
     private View rootView;
-    private Button yourRewardCampaign;
+    private Button yourRewardCampaign, yourEquitCampaign;
 
     public Your_campaign() {
 
@@ -29,6 +30,13 @@ public class Your_campaign extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), YourRewardCampaign.class));
+            }
+        });
+        yourEquitCampaign = rootView.findViewById(R.id.see_your_equity_camp);
+        yourEquitCampaign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), YourEquityCampaign.class));
             }
         });
         return rootView;

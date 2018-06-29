@@ -9,6 +9,7 @@ import com.example.shaza.graduationproject.Fragments.EndingSoonRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.MostFundRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.NewestRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.PopularRewardCampaign;
+import com.example.shaza.graduationproject.Fragments.SuccessRewardCampaign;
 import com.example.shaza.graduationproject.R;
 
 public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
@@ -28,15 +29,17 @@ public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
             return new NewestRewardCampaign();
         } else if (position == 2) {
             return new EndingSoonRewardCampaign();
-        } else {
+        } else if (position == 3) {
             return new MostFundRewardCampaign();
+        } else {
+            return new SuccessRewardCampaign();
         }
 
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -47,8 +50,10 @@ public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
             return context.getString(R.string.newest_page);
         } else if (position == 2) {
             return context.getString(R.string.ending_soon_page);
-        } else {
+        } else if (position == 3) {
             return context.getString(R.string.most_fund_page);
+        } else {
+            return "Successful Camp";
         }
 
     }

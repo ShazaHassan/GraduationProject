@@ -191,6 +191,7 @@ public class Reward_campaign_Home_page extends AppCompatActivity
         //tab
         TabLayout tabLayout = findViewById(R.id.tabForViewCampaigns);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     //Drawer set

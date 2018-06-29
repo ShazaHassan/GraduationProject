@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Adapters.PageAdapterForCampaign;
+import com.example.shaza.graduationproject.Adapters.PageAdapterForEquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -180,11 +180,12 @@ public class Equity_campaign_Home_page extends AppCompatActivity
     private void setupViewPager() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewCampaigns);
 
-        PageAdapterForCampaign pageAdapter = new PageAdapterForCampaign(this, getSupportFragmentManager());
+        PageAdapterForEquityCampaign pageAdapter = new PageAdapterForEquityCampaign(this, getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewCampaigns);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     private void setupDrawer() {

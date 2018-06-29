@@ -53,8 +53,6 @@ public class YourRewardCampaign extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Campaigns")) {
-                    noCamps.setVisibility(View.GONE);
-                    listOfRewardCamps.setVisibility(View.VISIBLE);
                     userTable.child(userID).child("Campaigns").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -68,7 +66,11 @@ public class YourRewardCampaign extends AppCompatActivity {
                                     Log.v("camid", campID);
                                 }
                             }
-                            getRewardCamps(campIDs);
+                            if (campIDs.size() > 0) {
+                                noCamps.setVisibility(View.GONE);
+                                listOfRewardCamps.setVisibility(View.VISIBLE);
+                                getRewardCamps(campIDs);
+                            }
 
                         }
 

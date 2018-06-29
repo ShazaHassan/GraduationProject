@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign;
+import com.example.shaza.graduationproject.Adapters.AdapterForShowEquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.CampaignType;
-import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
+import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,26 +22,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class YourFundRewardCampaign extends AppCompatActivity {
+public class YourEquityCampaign extends AppCompatActivity {
 
     private FirebaseUser currentUser;
-    private DatabaseReference userTable, rewardTable;
-    private ArrayList<RewardCampaign> rewardCampaigns = new ArrayList<>();
+    private DatabaseReference userTable, equityTable;
+    private ArrayList<EquityCampaign> equityCampaigns = new ArrayList<>();
     private TextView noCamps;
     private ListView listOfRewardCamps;
     private CampaignType campaignType;
-    private AdapterForShowRewardCampaign adapter;
+    private AdapterForShowEquityCampaign adapter;
     private String userID, campID, campType;
-    private RewardCampaign campaign;
+    private EquityCampaign campaign;
     private ArrayList<String> campIDs = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_your_reward_campaign);
+        setContentView(R.layout.activity_your_equity);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userTable = FirebaseDatabase.getInstance().getReference().child("Users");
-        rewardTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
+        equityTable = FirebaseDatabase.getInstance().getReference().child("Equity Campaign");
         noCamps = findViewById(R.id.no_camp_text_view);
         listOfRewardCamps = findViewById(R.id.list_to_show_reward_camp);
         userID = currentUser.getUid();
@@ -52,15 +53,15 @@ public class YourFundRewardCampaign extends AppCompatActivity {
         userTable.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("FundedCampaign")) {
-                    userTable.child(userID).child("FundedCampaign").addListenerForSingleValueEvent(new ValueEventListener() {
+                if (dataSnapshot.hasChild("Campaigns")) {
+                    userTable.child(userID).child("Campaigns").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 campaignType = snapshot.getValue(CampaignType.class);
                                 campType = campaignType.getType();
                                 Log.v("camtype", campType);
-                                if (campType.equals("Reward")) {
+                                if (campType.equals("Equity")) {
                                     campID = campaignType.getID();
                                     campIDs.add(campID);
                                     Log.v("camid", campID);
@@ -69,8 +70,9 @@ public class YourFundRewardCampaign extends AppCompatActivity {
                             if (campIDs.size() > 0) {
                                 noCamps.setVisibility(View.GONE);
                                 listOfRewardCamps.setVisibility(View.VISIBLE);
-                                getRewardCamps(campIDs);
+                                getEquityCamps(campIDs);
                             }
+
                         }
 
                         @Override
@@ -90,23 +92,23 @@ public class YourFundRewardCampaign extends AppCompatActivity {
         });
     }
 
-    private void getRewardCamps(final ArrayList<String> campIDs) {
-        rewardTable.addValueEventListener(new ValueEventListener() {
+    private void getEquityCamps(final ArrayList<String> campIDs) {
+        equityTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    campaign = snapshot.getValue(RewardCampaign.class);
+                    campaign = snapshot.getValue(EquityCampaign.class);
                     for (String id : campIDs) {
-                        if (campaign.getIDCampaign().equals(id))
-                            rewardCampaigns.add(campaign);
+                        if (campaign.getIDCamp().equals(id))
+                            equityCampaigns.add(campaign);
                     }
 
                 }
-                adapter = new AdapterForShowRewardCampaign(YourFundRewardCampaign.this, rewardCampaigns, R.color.gray);
+                adapter = new AdapterForShowEquityCampaign(YourEquityCampaign.this, equityCampaigns, R.color.gray);
                 listOfRewardCamps.setAdapter(adapter);
                 listOfRewardCamps.setVisibility(View.VISIBLE);
                 noCamps.setVisibility(View.GONE);
-                Log.v("camsizecamp", Integer.toString(rewardCampaigns.size()));
+                Log.v("camsizecampfun", Integer.toString(equityCampaigns.size()));
             }
 
             @Override

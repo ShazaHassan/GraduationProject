@@ -323,7 +323,7 @@ public class Personal_Page extends AppCompatActivity
 
         birthday.setVisibility(View.INVISIBLE);
         birth.setText(day);
-        birth.setVisibility(View.INVISIBLE);
+        birth.setVisibility(View.VISIBLE);
 
         country.setVisibility(View.INVISIBLE);
         coun.setText(c);

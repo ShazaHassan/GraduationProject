@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.shaza.graduationproject.Activities.YourFundRewardCampaign;
+import com.example.shaza.graduationproject.Activities.YourFundedEquityCampaign;
 import com.example.shaza.graduationproject.R;
 
 public class Your_funded_campaign extends android.support.v4.app.Fragment {
 
     private View rootView;
-    private Button yourRewardCampaign;
+    private Button yourRewardCampaign, yourEquityCampaign;
 
     public Your_funded_campaign() {
     }
@@ -28,6 +29,13 @@ public class Your_funded_campaign extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), YourFundRewardCampaign.class));
+            }
+        });
+        yourEquityCampaign = rootView.findViewById(R.id.see_your_equity_camp);
+        yourEquityCampaign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), YourFundedEquityCampaign.class));
             }
         });
         return rootView;
