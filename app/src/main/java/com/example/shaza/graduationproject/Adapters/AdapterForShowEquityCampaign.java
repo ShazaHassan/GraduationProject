@@ -158,6 +158,15 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
 
         View setColorBackground = listItemView.findViewById(R.id.short_view_to_show_camp);
         int color = ContextCompat.getColor(getContext(), colorResource);
+        if (colorResource == R.color.gray) {
+            int darkBlue = ContextCompat.getColor(getContext(), R.color.darkBlue);
+            holder.campaignName.setTextColor(darkBlue);
+            holder.campaignDesc.setTextColor(darkBlue);
+            holder.percentageText.setTextColor(darkBlue);
+            holder.category.setTextColor(darkBlue);
+            holder.neededMoney.setTextColor(darkBlue);
+            holder.daysLeft.setTextColor(darkBlue);
+        }
         setColorBackground.setBackgroundColor(color);
         return listItemView;
     }
