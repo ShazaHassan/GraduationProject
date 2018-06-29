@@ -50,8 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/parent_scroll"
-                android:fillViewport="true"
-                android:nestedScrollingEnabled="true">
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:id="@+id/home_page"
@@ -188,7 +187,7 @@
                                     android:id="@+id/no_camp_re_su"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/list_reward_success"
+                                    android:layout_below="@id/Reward_campaign"
                                     android:layout_marginBottom="20dp"
                                     android:layout_marginTop="20dp"
                                     android:text="No Camps To Show"
@@ -220,7 +219,7 @@
                                 android:background="@color/gray" />
                             <RelativeLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="450dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
                                 android:layout_weight="1"
@@ -235,6 +234,18 @@
                                     android:textAlignment="center"
                                     android:textSize="20sp"
                                     android:textColor="#fff" />
+
+                                <TextView
+                                    android:id="@+id/no_camp_eq_su"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/equity_camp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="22sp" />
 
                                 <ListView
                                     android:id="@+id/list_equity_success"
@@ -256,6 +267,8 @@
                                 android:text="More"
                                 android:textAlignment="textEnd"
                                 android:textColor="@color/white"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginRight="5dp"
                                 android:textSize="20sp" />
                         </LinearLayout>
 
@@ -314,7 +327,7 @@
                                     android:id="@+id/no_camp_re_en"
                                     android:layout_height="wrap_content"
                                     android:layout_width="match_parent"
-                                    android:layout_below="@id/list_reward_ending"
+                                    android:layout_below="@id/Reward_campaign_ending"
                                     android:layout_marginBottom="20dp"
                                     android:layout_marginTop="20dp"
                                     android:text="No Camps To Show"
@@ -352,29 +365,47 @@
 
                                 <TextView
                                     android:id="@+id/equity_camp_ending"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:text="Equity campaign"
                                     android:textColor="@color/darkBlue"
+                                    android:textAlignment="center"
                                     android:textSize="20sp" />
 
+                                <TextView
+                                    android:id="@+id/no_camp_eq_en"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/equity_camp_ending"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/darkBlue"
+                                    android:textSize="22sp" />
+
                                 <ListView
-                                    android:id="@+id/pager_equity_ending"
+                                    android:id="@+id/list_equity_ending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="420dp"
                                     android:layout_below="@id/equity_camp_ending" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:onClick="goToEquityCampaign"
-                                    android:text="More"
-                                    android:textColor="@color/darkBlue"
-                                    android:textSize="20sp" />
                             </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginRight="5dp"
+                                android:gravity="end"
+                                android:onClick="goToEquityCampaign"
+                                android:text="More"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/darkBlue"
+                                android:textSize="20sp" />
                         </LinearLayout>
                     </RelativeLayout>
                     <!--NewestCamp-->
@@ -431,7 +462,7 @@
                                     android:id="@+id/no_camp_re_ne"
                                     android:layout_height="wrap_content"
                                     android:layout_width="match_parent"
-                                    android:layout_below="@id/list_reward_newest"
+                                    android:layout_below="@id/Reward_campaign_newest"
                                     android:layout_marginBottom="20dp"
                                     android:layout_marginTop="20dp"
                                     android:text="No Camps To Show"
@@ -441,14 +472,19 @@
                             </RelativeLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
                                 android:onClick="goToRewardCampaign"
                                 android:text="More"
                                 android:textColor="@color/white"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginRight="5dp"
+                                android:gravity="end"
+                                android:textAlignment="textEnd"
                                 android:textSize="20sp" />
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
@@ -472,20 +508,37 @@
                                     android:textSize="20sp" />
 
                                 <ListView
-                                    android:id="@+id/pager_equity_newest"
+                                    android:id="@+id/list_equity_newest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="420dp"
                                     android:layout_below="@+id/equity_camp_newest"
                                     android:nestedScrollingEnabled="true" />
 
+
+                                <TextView
+                                    android:id="@+id/no_camp_eq_ne"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/equity_camp_newest"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="No Camps To Show"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="22sp" />
+
                             </RelativeLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:onClick="goToEquityCampaign"
                                 android:text="More"
                                 android:textColor="@color/white"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginRight="5dp"
+                                android:gravity="end"
+                                android:textAlignment="textEnd"
                                 android:textSize="20sp" />
                         </LinearLayout>
                     </RelativeLayout>
