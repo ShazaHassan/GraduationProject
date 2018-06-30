@@ -1,25 +1,20 @@
 package com.example.shaza.graduationproject.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Database.Table.CampaignType;
 import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
@@ -36,10 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-
-public class Shop_info_for_creator extends AppCompatActivity
+public class ShopInfoForBuying extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private NavigationView navView;
     private FirebaseUser user;
@@ -49,9 +42,8 @@ public class Shop_info_for_creator extends AppCompatActivity
     private String idUserDB, idProdDB, campType, idCampDB;
     private DatabaseReference userTable, productTable, campTable;
     private FirebaseDatabase database;
-    private String userName, e_mail, gender;
+    private String userName, e_mail;
     private Users users;
-    private ImageView pp;
     private Product product;
     private CampaignType type;
     private TextView productName, descProduct, priceProduct, creatorName, fromCamp, productCategory;
@@ -76,9 +68,6 @@ public class Shop_info_for_creator extends AppCompatActivity
         productTable = database.getReference().child("Product");
         user = FirebaseAuth.getInstance().getCurrentUser();
         setItems();
-        Button buy = findViewById(R.id.buy_button);
-        buy.setVisibility(View.GONE);
-
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
@@ -119,33 +108,13 @@ public class Shop_info_for_creator extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                Intent pp = new Intent(Shop_info_for_creator.this, Personal_Page.class);
+                Intent pp = new Intent(ShopInfoForBuying.this, Personal_Page.class);
                 startActivity(pp);
             }
         });
         menu.findItem(R.id.login).setVisible(false);
         menu.findItem(R.id.sign_up).setVisible(false);
         menu.findItem(R.id.logout).setVisible(true);
-    }
-
-    void displayImage(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        pp.setImageDrawable(roundedBitmapDrawable);
-    }
-
-    private void makeProfilePic(String gender) {
-        if (gender.equals("Female")) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_male_user);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-            roundedBitmapDrawable.setCircular(true);
-            pp.setImageDrawable(roundedBitmapDrawable);
-        }
     }
 
     private void setItems() {
@@ -216,15 +185,6 @@ public class Shop_info_for_creator extends AppCompatActivity
         }
     }
 
-    //options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.edit_delete, menu);
-        return true;
-    }
-
-    //setup toolbar and side drawer
     private void setupDrawer() {
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -301,7 +261,7 @@ public class Shop_info_for_creator extends AppCompatActivity
     }
 
     public void goToCampDetails(View view) {
-        Intent campDetails = new Intent(this, Campaign_info_for_creator.class);
+        Intent campDetails = new Intent(this, Campaign_info_for_funded.class);
         campDetails.putExtra("id", idCampDB);
         if (campType.equals("Reward")) {
             campDetails.putExtra("type", "reward");
@@ -309,5 +269,16 @@ public class Shop_info_for_creator extends AppCompatActivity
             campDetails.putExtra("type", "equity");
         }
         startActivity(campDetails);
+    }
+
+    public void buyPage(View view) {
+        if (user != null) {
+            Intent buyPage = new Intent(this, BuyPage.class);
+            buyPage.putExtra("id", idProdDB);
+            startActivity(buyPage);
+        } else {
+            Toast.makeText(this, "You must login first", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Login.class));
+        }
     }
 }

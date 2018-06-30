@@ -72,14 +72,16 @@ public class Campaign_info_for_creator extends AppCompatActivity
     private String idCampDB, type, cDate, eDate;
     private RewardCampaign campaign;
     private EquityCampaign equityCampaign;
-
+    private long neededMoney, fundedMoney;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_info_for_creator);
         Intent intent = getIntent();
-        idCampDB = intent.getExtras().getString("id");
-        type = intent.getExtras().getString("type");
+        if (intent != null) {
+            idCampDB = intent.getExtras().getString("id");
+            type = intent.getExtras().getString("type");
+        }
         setupDrawer();
         creatorName = findViewById(R.id.name_camp_creator);
         campName = findViewById(R.id.campaign_name_creator);
@@ -145,6 +147,16 @@ public class Campaign_info_for_creator extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                idCampDB = data.getStringExtra("id");
+                type = data.getStringExtra("type");
+            }
+        }
+    }
 
     private void setHeaderDrawer() {
         header = navView.getHeaderView(0);
@@ -203,7 +215,14 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 "Team helps in campaign : " + campaign.getHelperTeam());
         calculateDaysLeft(campaign);
         daysLeft.setText(Long.toString(days) + " Days left");
-        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        neededMoney = campaign.getNeededMoney();
+        fundedMoney = campaign.getFundedMoney();
+        if (neededMoney <= fundedMoney) {
+            needMoney.setText("Success campaign");
+
+        } else {
+            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
@@ -238,7 +257,14 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 "Add offer: " + equityCampaign.getOffers());
         calculateDaysLeft(campaign);
         daysLeft.setText(Long.toString(days) + " Days left");
-        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        neededMoney = campaign.getNeededMoney();
+        fundedMoney = campaign.getFundedMoney();
+        if (neededMoney <= fundedMoney) {
+            needMoney.setText("Success campaign");
+
+        } else {
+            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
@@ -307,7 +333,11 @@ public class Campaign_info_for_creator extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.edit_delete, menu);
+        if (fundedMoney >= neededMoney) {
+            menuInflater.inflate(R.menu.add_shop_and_job, menu);
+        } else {
+            menuInflater.inflate(R.menu.edit_delete, menu);
+        }
         return true;
     }
 
@@ -346,6 +376,12 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 }
             });
 
+        } else if (id == R.id.add_product) {
+            Intent addProduct = new Intent(this, AddProduct.class);
+            addProduct.putExtra("id", idCampDB);
+            addProduct.putExtra("type", type);
+//            startActivityForResult(addProduct, 1);
+            startActivity(addProduct);
         }
 
         return true;

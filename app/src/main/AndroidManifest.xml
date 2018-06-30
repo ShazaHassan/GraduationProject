@@ -131,6 +131,17 @@
             android:name=".Activities.YourFundedEquityCampaign"
             android:label="Your Funded Equity Camp"
             android:parentActivityName=".Activities.Personal_Page" />
+        <activity
+            android:name=".Activities.AddProduct"
+            android:label="Add Product" />
+        <activity
+            android:name=".Activities.ShopInfoForBuying"
+            android:label="Product Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.BuyPage"
+            android:label="Payment process"
+            android:theme="@style/AppTheme.CustomThem" />
     </application>
 
 </manifest>

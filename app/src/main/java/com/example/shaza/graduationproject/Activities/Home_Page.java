@@ -176,7 +176,6 @@ public class Home_Page extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 successCampaigns.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     successReCampaign = snapshot.getValue(RewardCampaign.class);
                     eDate = successReCampaign.getEndDate();
@@ -379,7 +378,7 @@ public class Home_Page extends AppCompatActivity
                     equitySuccess.setVisibility(View.VISIBLE);
                     successEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, successEqCampaigns, R.color.darkBlue);
                     equitySuccess.setAdapter(successEqCamp);
-                    noCampReSu.setVisibility(View.GONE);
+                    noCampEqSu.setVisibility(View.GONE);
                 } else if (successEqCampaigns.size() > 3) {
                     successEqShowCamps.clear();
                     for (int i = 0; i < 3; i++) {

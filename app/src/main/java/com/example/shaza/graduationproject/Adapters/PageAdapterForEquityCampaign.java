@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.shaza.graduationproject.Fragments.EndingSoonEquityCampaign;
+import com.example.shaza.graduationproject.Fragments.HomeEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.MostFundEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.NewestEquityCampaign;
-import com.example.shaza.graduationproject.Fragments.PopularEquityCampaign;
 import com.example.shaza.graduationproject.Fragments.SuccessEquityCampaign;
 import com.example.shaza.graduationproject.R;
 
@@ -28,7 +28,7 @@ public class PageAdapterForEquityCampaign extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new PopularEquityCampaign();
+            return new HomeEquityCampaign();
         } else if (position == 1) {
             return new NewestEquityCampaign();
         } else if (position == 2) {
@@ -49,7 +49,7 @@ public class PageAdapterForEquityCampaign extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.popular_page);
+            return "Home";
         } else if (position == 1) {
             return context.getString(R.string.newest_page);
         } else if (position == 2) {

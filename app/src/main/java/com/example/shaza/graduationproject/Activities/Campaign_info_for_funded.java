@@ -65,6 +65,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
     private long diff, seconds, minutes, hours, days;
     private Calendar c = Calendar.getInstance();
+    private long fundedMoney, neededMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +179,14 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 "Team helps in campaign : " + campaign.getHelperTeam());
         calculateDaysLeft(campaign);
         daysLeft.setText(Long.toString(days) + " Days left");
-        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        neededMoney = campaign.getNeededMoney();
+        fundedMoney = campaign.getFundedMoney();
+        if (neededMoney <= fundedMoney) {
+            needMoney.setText("Success campaign");
+
+        } else {
+            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         Log.v("precentage", Integer.toString(percentageCalculation));
         progressForPercentage.setMax(100);
@@ -215,7 +223,14 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 "Add offer: " + equityCampaign.getOffers());
         calculateDaysLeft(campaign);
         daysLeft.setText(Long.toString(days) + " Days left");
-        needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        neededMoney = campaign.getNeededMoney();
+        fundedMoney = campaign.getFundedMoney();
+        if (neededMoney <= fundedMoney) {
+            needMoney.setText("Success campaign");
+
+        } else {
+            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+        }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);

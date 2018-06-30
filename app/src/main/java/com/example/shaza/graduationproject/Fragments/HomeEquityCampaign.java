@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PopularEquityCampaign extends Fragment {
+public class HomeEquityCampaign extends Fragment {
 
     View rootView;
     private ArrayList<EquityCampaign> campaigns = new ArrayList<>();
@@ -40,7 +40,7 @@ public class PopularEquityCampaign extends Fragment {
     private Calendar c = Calendar.getInstance();
     private long diff, seconds, minutes, hours, days;
 
-    public PopularEquityCampaign() {
+    public HomeEquityCampaign() {
     }
 
 

@@ -2,8 +2,11 @@ package com.example.shaza.graduationproject.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +48,7 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
     private FirebaseUser currentUser;
     private long diff, seconds, minutes, hours, days;
     private DatabaseReference campaignTable;
+    private long neededMoney, fundedMoney;
 
 
     public AdapterForShowEquityCampaign(Context context, ArrayList<EquityCampaign> equityCampaigns) {
@@ -69,6 +73,7 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
         this.campaignTable = campaignTable;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -112,10 +117,20 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
                 "Investor Discussion: " + equityCampaign.getInvestDiscussion() + "\n" +
                 "Add offer: " + equityCampaign.getOffers());
 
-        holder.daysLeft.setText(Long.toString(days) + " Days left");
+        if (days <= 0) {
+            holder.daysLeft.setText("Ended Camp");
 
-        holder.neededMoney.setText("Need: " + (equityCampaign.getNeededMoney() - equityCampaign.getFundedMoney()) + " $");
+        } else {
+            holder.daysLeft.setText(Long.toString(days) + " Days left");
+        }
+        neededMoney = equityCampaign.getNeededMoney();
+        fundedMoney = equityCampaign.getFundedMoney();
+        if (neededMoney <= fundedMoney) {
+            holder.neededMoney.setText("Success campaign");
 
+        } else {
+            holder.neededMoney.setText("need " + (equityCampaign.getNeededMoney() - equityCampaign.getFundedMoney()) + " $");
+        }
         holder.category.setText(equityCampaign.getCategory());
 
         int percentage = (int) (((equityCampaign.getFundedMoney() * 1.0) / (equityCampaign.getNeededMoney() * 1.0)) * 100);
@@ -166,6 +181,8 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
             holder.category.setTextColor(darkBlue);
             holder.neededMoney.setTextColor(darkBlue);
             holder.daysLeft.setTextColor(darkBlue);
+        } else if (colorResource == R.color.lightBlue) {
+            holder.percentageBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.darkBlue)));
         }
         setColorBackground.setBackgroundColor(color);
         return listItemView;

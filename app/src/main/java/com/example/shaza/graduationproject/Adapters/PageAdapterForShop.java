@@ -29,9 +29,9 @@ public class PageAdapterForShop extends FragmentPagerAdapter {
         if (position == 0) {
             return new Home_page_for_shop();
         } else if (position == 1) {
-            return new Most_seller_product();
-        } else {
             return new Newest_product();
+        } else {
+            return new Most_seller_product();
         }
 
     }
@@ -46,9 +46,9 @@ public class PageAdapterForShop extends FragmentPagerAdapter {
         if (position == 0) {
             return context.getString(R.string.home_page_job);
         } else if (position == 1) {
-            return context.getString(R.string.most_seller);
+            return "Newest Product";
         } else {
-            return context.getString(R.string.newest_product);
+            return "Most seller";
         }
 
     }

@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.shaza.graduationproject.Fragments.EndingSoonRewardCampaign;
+import com.example.shaza.graduationproject.Fragments.HomeRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.MostFundRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.NewestRewardCampaign;
-import com.example.shaza.graduationproject.Fragments.PopularRewardCampaign;
 import com.example.shaza.graduationproject.Fragments.SuccessRewardCampaign;
 import com.example.shaza.graduationproject.R;
 
@@ -24,7 +24,7 @@ public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new PopularRewardCampaign();
+            return new HomeRewardCampaign();
         } else if (position == 1) {
             return new NewestRewardCampaign();
         } else if (position == 2) {
@@ -45,7 +45,7 @@ public class PageAdapterForRewardCampaign extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return context.getString(R.string.popular_page);
+            return "Home";
         } else if (position == 1) {
             return context.getString(R.string.newest_page);
         } else if (position == 2) {

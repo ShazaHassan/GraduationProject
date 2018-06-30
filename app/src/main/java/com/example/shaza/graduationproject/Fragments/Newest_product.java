@@ -1,17 +1,29 @@
 package com.example.shaza.graduationproject.Fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.AdapterForShowProduct;
+import com.example.shaza.graduationproject.Database.Table.Product;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.ShopForShow;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Shaza Hassan on 28-Jan-18.
@@ -19,11 +31,20 @@ import java.util.ArrayList;
 
 public class Newest_product extends Fragment {
 
-    private static final int[] img = {R.drawable.aa, R.drawable.ba148f888900f93996a2e2eabb7750a7, R.drawable.welcom_img};
-    private static final String[] desc = {"text1", "text2", "text3"};
-    private static final String[] ProductName = {"Product1", "Product2", "Product3"};
-    private static final int[] price = {5, 9, 10};
-    private ArrayList<ShopForShow> array = new ArrayList<>();
+
+    View rootView;
+    private ArrayList<Product> products = new ArrayList<>();
+    private DatabaseReference productTable;
+    private Product product;
+    private TextView noProdTextView;
+    private ListView listView;
+    private AdapterForShowProduct adapter;
+    private Date startDate, currentDate;
+    private Calendar c = Calendar.getInstance();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private long diff, seconds, minutes, hours, days;
+    private String sDate;
+
 
     public Newest_product() {
     }
@@ -32,15 +53,52 @@ public class Newest_product extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.list_campaign, container, false);
-        array.clear();
-        for (int i = 0; i < img.length; i++)
-            array.add(new ShopForShow(img[i], price[i], ProductName[i], desc[i]));
+        rootView = inflater.inflate(R.layout.list_product, container, false);
+        productTable = FirebaseDatabase.getInstance().getReference().child("Product");
+        noProdTextView = rootView.findViewById(R.id.no_prod_text_view);
+        listView = rootView.findViewById(R.id.list);
+        productTable.orderByKey().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    product = snapshot.getValue(Product.class);
+                    sDate = product.getStartDate();
+                    try {
+                        c.setTime(dateFormat.parse(sDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-        AdapterForShowProduct adapter = new AdapterForShowProduct(getActivity(), array);
-        ListView listView = rootView.findViewById(R.id.list);
+                    startDate = c.getTime();
 
-        listView.setAdapter(adapter);
+                    currentDate = Calendar.getInstance().getTime();
+                    diff = currentDate.getTime() - startDate.getTime();
+                    seconds = diff / 1000;
+                    minutes = seconds / 60;
+                    hours = minutes / 60;
+                    days = hours / 24;
+                    if (days < 8) {
+                        products.add(snapshot.getValue(Product.class));
+                    }
+                }
+                if (products.size() != 0) {
+                    Log.v("popular", "camps");
+                    noProdTextView.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                    adapter = new AdapterForShowProduct(getActivity(), products, R.color.gray);
+                    listView.setAdapter(adapter);
+                } else {
+                    Log.v("popular", "no camp");
+                    listView.setVisibility(View.GONE);
+                    noProdTextView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         return rootView;
     }
 }

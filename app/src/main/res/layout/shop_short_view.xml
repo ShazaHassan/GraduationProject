@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/border_for_shop"
+    android:id="@+id/short_view_to_show_prod"
     android:layout_margin="10dp">
 
     <TextView
@@ -11,7 +12,8 @@
         android:textSize="28sp"
         android:text="Product Name"
         android:layout_margin="5dp"
-        android:id="@+id/product_name" />
+        android:id="@+id/product_name"
+        android:textColor="@color/white" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -33,19 +35,29 @@
         android:text="description"
         android:textSize="20sp"
         android:maxLines="2"
-        android:minLines="1"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/category_of_prod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description_of_product"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description_of_product"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:id="@+id/price_of_product"
         android:layout_margin="5dp"
         android:text="price: "
         android:textSize="20sp"
-        android:id="@+id/price_of_product" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>

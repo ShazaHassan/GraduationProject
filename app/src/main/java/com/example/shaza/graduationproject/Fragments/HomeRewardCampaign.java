@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PopularRewardCampaign extends Fragment {
+public class HomeRewardCampaign extends Fragment {
 
     View rootView;
     private ArrayList<RewardCampaign> campaigns = new ArrayList<>(), campCat = new ArrayList<>();
@@ -43,7 +43,8 @@ public class PopularRewardCampaign extends Fragment {
     private long diff, seconds, minutes, hours, days;
     private RewardCampaign campaign;
     private Spinner category, z;
-    public PopularRewardCampaign() {
+
+    public HomeRewardCampaign() {
     }
 
     @Override
