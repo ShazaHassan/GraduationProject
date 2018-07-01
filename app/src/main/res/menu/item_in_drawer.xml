@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     tools:showIn="navigation_view">
     <item
-        android:title="ElFund"
+        android:title="E-Fund"
         android:id="@+id/name_of_app"
         android:icon="@drawable/logo" />
     <group android:id="@+id/part_1">

@@ -172,10 +172,50 @@ public class Equity_campaign_Home_page extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.search, menu);
+        menuInflater.inflate(R.menu.category_for_campaign, menu);
         return true;
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        String cat = "category";
+        Intent catPage = new Intent(this, CategoryPageEquity.class);
+        if (id == R.id.all_projects) {
+            catPage.putExtra(cat, "All project");
+            startActivity(catPage);
+        } else if (id == R.id.art) {
+            catPage.putExtra(cat, "Art");
+            startActivity(catPage);
+        } else if (id == R.id.craft) {
+            catPage.putExtra(cat, "Craft");
+            startActivity(catPage);
+        } else if (id == R.id.design) {
+            catPage.putExtra(cat, "Design");
+            startActivity(catPage);
+        } else if (id == R.id.fashion) {
+            catPage.putExtra(cat, "Fashion");
+            startActivity(catPage);
+        } else if (id == R.id.film_and_video) {
+            catPage.putExtra(cat, "Film and Video");
+            startActivity(catPage);
+        } else if (id == R.id.games) {
+            catPage.putExtra(cat, "Games");
+            startActivity(catPage);
+        } else if (id == R.id.health) {
+            catPage.putExtra(cat, "Health");
+            startActivity(catPage);
+        } else if (id == R.id.productivity) {
+            catPage.putExtra(cat, "Productivity");
+            startActivity(catPage);
+        } else if (id == R.id.food) {
+            catPage.putExtra(cat, "Food");
+            startActivity(catPage);
+        }
+        return true;
+    }
+
 
     private void setupViewPager() {
         ViewPager pager = (ViewPager) findViewById(R.id.pagesForViewCampaigns);

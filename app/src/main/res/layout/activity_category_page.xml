@@ -3,6 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.CategoryPageForReward">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    tools:context=".Activities.CategoryPageReward">
+
+    <TextView
+        android:id="@+id/no_camp_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Camps to show"
+        android:textAlignment="center"
+        android:textColor="@color/darkBlue"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <ListView
+        android:id="@+id/list_to_show_reward_camp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

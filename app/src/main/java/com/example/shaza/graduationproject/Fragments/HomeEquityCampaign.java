@@ -76,10 +76,7 @@ public class HomeEquityCampaign extends Fragment {
                     hours = minutes / 60;
                     days = hours / 24;
                     Log.v("day", Long.toString(days));
-                    if (days > 0) {
                         campaigns.add(campaign);
-                    }
-
                 }
                 Log.v("popular", String.valueOf(campaigns.size()));
                 if (campaigns.size() != 0) {

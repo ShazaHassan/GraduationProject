@@ -118,7 +118,7 @@ public class AdapterForShowEquityCampaign extends ArrayAdapter<EquityCampaign> {
                 "Add offer: " + equityCampaign.getOffers());
 
         if (days <= 0) {
-            holder.daysLeft.setText("Ended Camp");
+            holder.daysLeft.setText("Ended Camp at: " + equityCampaign.getEndDate());
 
         } else {
             holder.daysLeft.setText(Long.toString(days) + " Days left");

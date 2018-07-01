@@ -76,9 +76,7 @@ public class HomeRewardCampaign extends Fragment {
                     hours = minutes / 60;
                     days = hours / 24;
                     Log.v("day", Long.toString(days));
-                    if (days > 0) {
-                        campaigns.add(campaign);
-                    }
+                    campaigns.add(campaign);
                     Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 Log.v("popular", String.valueOf(campaigns.size()));

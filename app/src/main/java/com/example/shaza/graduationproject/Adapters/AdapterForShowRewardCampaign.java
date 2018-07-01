@@ -99,20 +99,21 @@ public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
                 "Offers for funded : " + rewardCampaign.getOffers() + "\n" +
                 "Team helps in campaign : " + rewardCampaign.getHelperTeam());
         if (days <= 0) {
-            holder.daysLeft.setText("Ended Camp");
+            holder.daysLeft.setText("Ended Camp at: " + rewardCampaign.getEndDate());
+            holder.neededMoney.setText("");
 
         } else {
             holder.daysLeft.setText(Long.toString(days) + " Days left");
+            if (neededMoney <= fundedMoney) {
+                holder.neededMoney.setText("Success campaign");
+
+            } else {
+                holder.neededMoney.setText("need " + (rewardCampaign.getNeededMoney() - rewardCampaign.getFundedMoney()) + " $");
+            }
         }
 
         neededMoney = rewardCampaign.getNeededMoney();
         fundedMoney = rewardCampaign.getFundedMoney();
-        if (neededMoney <= fundedMoney) {
-            holder.neededMoney.setText("Success campaign");
-
-        } else {
-            holder.neededMoney.setText("need " + (rewardCampaign.getNeededMoney() - rewardCampaign.getFundedMoney()) + " $");
-        }
         holder.category.setText(rewardCampaign.getCategory());
 
         int percentage = (int) ((rewardCampaign.getFundedMoney() * 1.0 / rewardCampaign.getNeededMoney()) * 1.0
