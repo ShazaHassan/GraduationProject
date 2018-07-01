@@ -382,6 +382,11 @@ public class Campaign_info_for_creator extends AppCompatActivity
             addProduct.putExtra("type", type);
 //            startActivityForResult(addProduct, 1);
             startActivity(addProduct);
+        } else if (id == R.id.add_career) {
+            Intent addCareer = new Intent(this, AddCareer.class);
+            addCareer.putExtra("id", idCampDB);
+            addCareer.putExtra("type", type);
+            startActivity(addCareer);
         }
 
         return true;

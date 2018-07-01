@@ -1,7 +1,6 @@
 package com.example.shaza.graduationproject.Fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
@@ -137,33 +136,33 @@ public class Profile extends android.support.v4.app.Fragment {
         builder.setView(linearLayout);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 oldPass = oldPassword.getText().toString();
                 newPass = newPassword.getText().toString();
                 repeatPass = repeatPassword.getText().toString();
-                if (oldPass.equals(newPass)) {
-                    dialog.dismiss();
+                if (oldPass.equals("")) {
+                    oldPassword.setError("Can't Be Empty Field");
+                } else if (newPass.equals("")) {
+                    newPassword.setError("Can't Be Empty Field");
+                } else if (repeatPass.equals("")) {
+                    repeatPassword.setError("Can't Be Empty Field");
+                } else if (oldPass.equals(newPass)) {
                     newPassword.setError("the new password can't be the same for old password");
-                    Toast.makeText(getContext(), "the new password can't be the same for old password", Toast.LENGTH_LONG).show();
 
                 } else if (newPass.equals(repeatPass)) {
                     resetpassword(oldPass, newPass);
-                    Toast.makeText(getContext(), "password update successfully ", Toast.LENGTH_LONG).show();
-                } else {
                     dialog.dismiss();
-                    Toast.makeText(getContext(), "the repeated password not the same for new password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "password update successfully ", Toast.LENGTH_LONG).show();
+                } else if (!newPass.equals(repeatPass)) {
+                    repeatPassword.setError("the repeated password not the same for new password");
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
     }
 }

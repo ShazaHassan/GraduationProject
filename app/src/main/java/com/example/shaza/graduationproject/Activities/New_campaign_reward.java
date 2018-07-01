@@ -111,6 +111,8 @@ public class New_campaign_reward extends AppCompatActivity {
             campaignOffers.setError("Give offers for founded people");
         } else if (campTeam.equals("")) {
             campaignTeam.setError("Describe the roles for every member of team");
+        } else if (imageUri == null) {
+            Toast.makeText(this, "Please upload img for campaign", Toast.LENGTH_LONG).show();
         } else {
             saveDateOnDB();
         }

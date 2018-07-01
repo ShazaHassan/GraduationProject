@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:padding="5dp"
+    tools:context=".Activities.AddCareer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/Company_name_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Company Name"
+            android:textColor="@color/darkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/company_name_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Company Name"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="uploadPhoto"
+            android:text="Upload logo of company"
+            android:textColor="@color/darkBlue"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/job_category"
+            style="@style/SpinnerItem.DropDownItem.normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:entries="@array/category_for_job" />
+
+        <TextView
+            android:id="@+id/desc_of_career_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Job description"
+            android:textColor="@color/darkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/desc_of_career_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Job description"
+            android:inputType="textCapSentences|textMultiLine" />
+
+        <TextView
+            android:id="@+id/link_for_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Link for company"
+            android:textColor="@color/darkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/link_for_company_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="your page on FB or LinkedIN"
+            android:inputType="textCapSentences|textMultiLine" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:onClick="publishJob"
+                android:text="Publish Job"
+                android:textAllCaps="false"
+                android:textColor="@color/lightBlue"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

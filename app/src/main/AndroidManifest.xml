@@ -142,6 +142,17 @@
             android:name=".Activities.BuyPage"
             android:label="Payment process"
             android:theme="@style/AppTheme.CustomThem" />
+        <activity
+            android:name=".Activities.AddCareer"
+            android:label="Add Career" />
+        <activity
+            android:name=".Activities.JobInfoCreator"
+            android:label="Job Details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.JobInfoForApplied"
+            android:label="Job Details"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

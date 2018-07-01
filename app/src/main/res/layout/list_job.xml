@@ -2,26 +2,29 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/no_camp_text_view"
+        android:id="@+id/no_job_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Camps to show"
+        android:text="No Jobs to show"
         android:textColor="@color/darkBlue"
         android:textSize="24sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
-    <android.support.v4.widget.NestedScrollView
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="420dp">
-
-        <include layout="@layout/campaign_short_view" />
-    </android.support.v4.widget.NestedScrollView>
-
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:dividerHeight="10dp"
+        android:drawSelectorOnTop="true"
+        android:orientation="vertical"
+        android:visibility="gone" />
 </android.support.constraint.ConstraintLayout>
