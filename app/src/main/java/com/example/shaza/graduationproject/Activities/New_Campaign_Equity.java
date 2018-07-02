@@ -3,8 +3,6 @@ package com.example.shaza.graduationproject.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,8 +29,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,16 +37,15 @@ import java.util.UUID;
 public class New_Campaign_Equity extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMG = 1;
-    private static int RESULT_LOAD_Video = 2;
 
     private EditText campName, campDuration, campAmount, campHighlight, campTeam, camSummary,
-            campTimeline, campMarket, campInvTerms, campInvDis, campOffers;
+            campTimeline, campMarket, campInvTerms, campInvDis, campOffers, linksFrom;
 
     private Spinner category;
 
     private String campaignName, campaignCategory, campaignDuration, campaignAmount, campaignHighlight,
             campaignTeam, campaignSummary, campaignTimeline, campaignMarket, campaignInvTerms,
-            campaignInvDis, campaignOffers, sDate, eDate, daysLeft;
+            campaignInvDis, campaignOffers, sDate, eDate, daysLeft, links;
 
     private Uri imageUri;
 
@@ -97,6 +92,7 @@ public class New_Campaign_Equity extends AppCompatActivity {
         campInvTerms = findViewById(R.id.investment_terms_editText);
         campInvDis = findViewById(R.id.investor_discussion_editText);
         campOffers = findViewById(R.id.add_offer_editText);
+        linksFrom = findViewById(R.id.link_for_video_editText);
     }
 
     public void openExpertChat(View view) {
@@ -109,13 +105,6 @@ public class New_Campaign_Equity extends AppCompatActivity {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
     }
-
-//    public void uploadVideo(View view) {
-//        Intent intent = new Intent();
-//        intent.setType("video/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Video"), RESULT_LOAD_Video);
-//    }
 
     public void viewAs(View view) {
         Intent viewAs = new Intent(this, View_As.class);
@@ -139,6 +128,7 @@ public class New_Campaign_Equity extends AppCompatActivity {
         campaignInvTerms = campInvTerms.getText().toString();
         campaignInvDis = campInvDis.getText().toString();
         campaignOffers = campOffers.getText().toString();
+        links = linksFrom.getText().toString();
     }
 
     private void checkEmptyOfFields() {
@@ -170,6 +160,8 @@ public class New_Campaign_Equity extends AppCompatActivity {
             campOffers.setError(errorMSG);
         } else if (imageUri == null) {
             Toast.makeText(this, "Please selectImg", Toast.LENGTH_LONG).show();
+        } else if (links.equals("")) {
+            linksFrom.setError(errorMSG);
         } else {
             uploadImgAndURL();
         }
@@ -274,6 +266,7 @@ public class New_Campaign_Equity extends AppCompatActivity {
         equityCampaign.setTeam(campaignTeam);
         equityCampaign.setImgName(imageURL);
         equityCampaign.setCategory(campaignCategory);
+        equityCampaign.setLinkForVideo(links);
     }
 
     @Override
@@ -287,20 +280,6 @@ public class New_Campaign_Equity extends AppCompatActivity {
 
             } else {
                 Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
-            }
-        } else if (reqCode == RESULT_LOAD_Video) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    final Uri videoUri = data.getData();
-                    final InputStream imageStream = getContentResolver().openInputStream(videoUri);
-                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                Toast.makeText(this, "You haven't picked video", Toast.LENGTH_LONG).show();
             }
         }
     }

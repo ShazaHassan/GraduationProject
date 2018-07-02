@@ -2,7 +2,7 @@ package com.example.shaza.graduationproject.Database.Table;
 
 public class RewardCampaign {
     private String Name, Duration, Heighlight, Vision, Offers, HelperTeam, Campaign_Image, IDCreator, Category,
-            endDate, startDate, IDCampaign;
+            endDate, startDate, IDCampaign, LinkForVideo;
     private long noOfFunded, NeededMoney, FundedMoney;
 
 
@@ -19,6 +19,14 @@ public class RewardCampaign {
     }
 
     public RewardCampaign() {
+    }
+
+    public String getLinkForVideo() {
+        return LinkForVideo;
+    }
+
+    public void setLinkForVideo(String linkForVideo) {
+        LinkForVideo = linkForVideo;
     }
 
     public RewardCampaign(String heighlight) {

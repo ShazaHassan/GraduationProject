@@ -47,7 +47,7 @@ import java.util.Date;
 public class Campaign_info_for_creator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, category;
+    private TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, category, link;
     private ImageView imgCamp, editImgCamp;
     private Date currentDate, endDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -95,6 +95,8 @@ public class Campaign_info_for_creator extends AppCompatActivity
         editImgCamp = findViewById(R.id.edit_camp_img);
         editCampName = findViewById(R.id.edit_campaign_name_creator);
         editDescCamp = findViewById(R.id.edit_description_of_campaign);
+        link = findViewById(R.id.link_for_video);
+
 
         fund = findViewById(R.id.fund_button);
         fund.setVisibility(View.GONE);
@@ -214,17 +216,24 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 "Offers for funded : " + campaign.getOffers() + "\n" +
                 "Team helps in campaign : " + campaign.getHelperTeam());
         calculateDaysLeft(campaign);
-        daysLeft.setText(Long.toString(days) + " Days left");
+        link.setText(campaign.getLinkForVideo());
         neededMoney = campaign.getNeededMoney();
         fundedMoney = campaign.getFundedMoney();
-        if (neededMoney <= fundedMoney) {
-            needMoney.setText("Success campaign");
+        if (days > 0) {
+            daysLeft.setText(Long.toString(days) + " Days left");
+            if (neededMoney <= fundedMoney) {
+                needMoney.setText("Success campaign");
 
+            } else {
+                needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            }
         } else {
-            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            daysLeft.setText("Ended camp at: " + campaign.getEndDate());
+            needMoney.setText("");
         }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
+        link.setText(campaign.getLinkForVideo());
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
         category.setText(campaign.getCategory());
@@ -256,14 +265,19 @@ public class Campaign_info_for_creator extends AppCompatActivity
                 "Investor Discussion: " + equityCampaign.getInvestDiscussion() + "\n" +
                 "Add offer: " + equityCampaign.getOffers());
         calculateDaysLeft(campaign);
-        daysLeft.setText(Long.toString(days) + " Days left");
+        link.setText(campaign.getLinkForVideo());
         neededMoney = campaign.getNeededMoney();
         fundedMoney = campaign.getFundedMoney();
-        if (neededMoney <= fundedMoney) {
-            needMoney.setText("Success campaign");
+        if (days > 0) {
+            daysLeft.setText(Long.toString(days) + " Days left");
+            if (neededMoney <= fundedMoney) {
+                needMoney.setText("Success campaign");
 
+            } else {
+                needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            }
         } else {
-            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            daysLeft.setText("Ended camp at: " + campaign.getEndDate());
         }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);

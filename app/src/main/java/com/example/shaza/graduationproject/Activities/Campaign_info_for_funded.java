@@ -40,7 +40,7 @@ import java.util.Date;
 public class Campaign_info_for_funded extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, cat;
+    TextView campName, descCamp, daysLeft, needMoney, percentage, creatorName, cat, link;
     ImageView imgCamp, editImgCamp;
     ProgressBar progressForPercentage;
     EditText editCampName, editDescCamp;
@@ -87,6 +87,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
         editImgCamp = findViewById(R.id.edit_camp_img);
         editCampName = findViewById(R.id.edit_campaign_name_creator);
         editDescCamp = findViewById(R.id.edit_description_of_campaign);
+        link = findViewById(R.id.link_for_video);
 
         if (type.equals("reward")) {
             rewardTable = database.getReference().child("Reward Campaign");
@@ -178,20 +179,27 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 "Offers for funded : " + campaign.getOffers() + "\n" +
                 "Team helps in campaign : " + campaign.getHelperTeam());
         calculateDaysLeft(campaign);
-        daysLeft.setText(Long.toString(days) + " Days left");
+        link.setText(campaign.getLinkForVideo());
         neededMoney = campaign.getNeededMoney();
         fundedMoney = campaign.getFundedMoney();
-        if (neededMoney <= fundedMoney) {
-            needMoney.setText("Success campaign");
+        if (days > 0) {
+            daysLeft.setText(Long.toString(days) + " Days left");
+            if (neededMoney <= fundedMoney) {
+                needMoney.setText("Success campaign");
 
+            } else {
+                needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            }
         } else {
-            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            daysLeft.setText("Ended camp at: " + campaign.getEndDate());
+            needMoney.setText("");
         }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         Log.v("precentage", Integer.toString(percentageCalculation));
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
+        link.setText(campaign.getLinkForVideo());
         cat.setText(campaign.getCategory());
         userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -222,19 +230,25 @@ public class Campaign_info_for_funded extends AppCompatActivity
                 "Investor Discussion: " + equityCampaign.getInvestDiscussion() + "\n" +
                 "Add offer: " + equityCampaign.getOffers());
         calculateDaysLeft(campaign);
-        daysLeft.setText(Long.toString(days) + " Days left");
+        link.setText(campaign.getLinkForVideo());
         neededMoney = campaign.getNeededMoney();
         fundedMoney = campaign.getFundedMoney();
-        if (neededMoney <= fundedMoney) {
-            needMoney.setText("Success campaign");
+        if (days > 0) {
+            daysLeft.setText(Long.toString(days) + " Days left");
+            if (neededMoney <= fundedMoney) {
+                needMoney.setText("Success campaign");
 
+            } else {
+                needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            }
         } else {
-            needMoney.setText("need " + (campaign.getNeededMoney() - campaign.getFundedMoney()) + " $");
+            daysLeft.setText("Ended camp at: " + campaign.getEndDate());
         }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
         progressForPercentage.setMax(100);
         progressForPercentage.setProgress(percentageCalculation);
         percentage.setText(percentageCalculation + "%");
+        link.setText(campaign.getLinkForVideo());
         cat.setText(campaign.getCategory());
         userTable.child(campaign.getIDCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -122,6 +122,7 @@
                         android:layout_margin="10dp"
                         android:textAlignment="center"
                         android:textColor="@color/black"
+                        android:autoLink="web"
                         android:textSize="20sp" />
 
                     <TextView

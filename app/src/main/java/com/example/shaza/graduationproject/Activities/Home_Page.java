@@ -426,7 +426,7 @@ public class Home_Page extends AppCompatActivity
                     hours = minutes / 60;
                     days = hours / 24;
                     Log.v("day", Long.toString(days));
-                    if (days > 0) {
+                    if (days > 0 & days < 8) {
                         endingEqCampaigns.add(endingEqCampaign);
                     }
                 }

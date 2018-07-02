@@ -3,8 +3,16 @@ package com.example.shaza.graduationproject.Database.Table;
 public class EquityCampaign {
     private String Name, ImgName, duration, IDCamp, IDCreator,
             Offers, Timeline, Highlight, Summary, Market,
-            InvestTerms, InvestDiscussion, StartDate, EndDate, Team, category;
+            InvestTerms, InvestDiscussion, StartDate, EndDate, Team, category, LinkForVideo;
     private Long NoOfFunded, NeededMoney, FundedMoney;
+
+    public String getLinkForVideo() {
+        return LinkForVideo;
+    }
+
+    public void setLinkForVideo(String linkForVideo) {
+        LinkForVideo = linkForVideo;
+    }
 
     public String getCategory() {
         return category;

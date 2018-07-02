@@ -120,8 +120,40 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/description_of_campaign"
+                        android:id="@+id/link_header"
                         android:layout_below="@id/name_camp_creator"
+                        android:layout_margin="5dp"
+                        android:text="Link for prototype"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkBlue"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/link_for_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/link_header"
+                        android:layout_margin="8dp"
+                        android:autoLink="web"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/desc_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/link_for_video"
+                        android:layout_margin="5dp"
+                        android:text="Description of Camp"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkBlue"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/description_of_campaign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/desc_header"
                         android:layout_margin="10dp"
                         android:textSize="20sp"
                         android:minLines="1"

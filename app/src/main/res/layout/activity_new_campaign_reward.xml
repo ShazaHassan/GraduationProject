@@ -34,7 +34,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:ems="10"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:text="Campaign name"
                 android:textColor="@color/darkBlue" />
 
@@ -45,7 +47,8 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:hint="Campaign name"
-                android:layout_margin="5dp" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp" />
 
             <Spinner
                 android:id="@+id/reward_category_spinner"
@@ -66,20 +69,31 @@
                 android:textColor="@color/darkBlue" />
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Video"
                 android:textSize="18sp"
-                android:layout_margin="5dp"
-                android:onClick="uploadVideo"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Upload prototype video on youtube and but link here"
                 android:textColor="@color/darkBlue" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:hint="link for prototype video"
+                android:inputType="textUri"
+                android:padding="10dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/darkBlue"
                 android:text="Duration of the campaign"
                 android:textSize="18sp" />
@@ -91,7 +105,8 @@
                 android:ems="10"
                 android:inputType="number"
                 android:hint="Number of days"
-                android:layout_margin="5dp" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -100,7 +115,9 @@
                 android:textColor="@color/darkBlue"
                 android:textSize="18sp"
                 android:text="Amount of money"
-                android:layout_margin="5dp" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -110,7 +127,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Amount of money"
-                    android:layout_margin="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
                     android:id="@+id/reward_amount_of_money_editText"
                     android:inputType="number" />
 
@@ -119,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/reward_amount_of_money_editText"
                     android:layout_toRightOf="@id/reward_amount_of_money_editText"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="13dp"
                     android:text="$"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -127,7 +145,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:textColor="@color/darkBlue"
                 android:textSize="18sp"
@@ -140,21 +160,25 @@
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:hint="Describe "
-                android:layout_margin="5dp" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/darkBlue"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:text="Vision" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:id="@+id/reward_vision_editText"
                 android:hint="Describe your vision about campaign" />
 
@@ -173,10 +197,8 @@
                 android:id="@+id/reward_offers_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="Add offers.."
                 android:inputType="textMultiLine"
@@ -186,7 +208,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/darkBlue"
                 android:text="Excutive team"
                 android:textSize="18sp" />
@@ -195,7 +219,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:layout_margin="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:id="@+id/reward_team_editText"
                 android:hint="mention the role for your team" />
 
