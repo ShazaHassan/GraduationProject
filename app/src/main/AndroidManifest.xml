@@ -76,107 +76,92 @@
             android:label="@string/Questions"
             android:parentActivityName=".Activities.HelpingCommunity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.HelpingCommunity"
             android:label="E-Fund Community"
             android:theme="@style/AppTheme.spinner" />
-
         <activity
             android:name=".Activities.TalkToExpert"
             android:label="Talk to expert"
             android:theme="@style/AppTheme.CustomThem" />
-
         <activity
             android:name=".Activities.Equity_campaign_Home_page"
             android:label="Equity Campaign"
             android:theme="@style/AppTheme.spinner" />
-
         <activity
             android:name=".Activities.Job"
             android:label="Job"
             android:theme="@style/AppTheme.spinner" />
-
         <activity
             android:name=".Activities.Personal_Page"
             android:label="Profile Page"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.Campaign_info_for_funded"
             android:label="@string/CampaignDetails"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.Shop_info_for_creator"
             android:label="Product Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.View_As"
             android:label="View as details campaign"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.FundedPage"
             android:label="Payment Process"
             android:theme="@style/AppTheme.CustomThem" />
-
         <activity
             android:name=".Activities.YourRewardCampaign"
             android:label="Your Reward Campaign"
             android:parentActivityName=".Activities.Personal_Page" />
-
         <activity
             android:name=".Activities.YourFundRewardCampaign"
             android:label="Your Funded Reward Camp"
             android:parentActivityName=".Activities.Personal_Page" />
-
         <activity
             android:name=".Activities.YourEquityCampaign"
             android:label="Your Equity Campaign"
             android:parentActivityName=".Activities.Personal_Page" />
-
         <activity
             android:name=".Activities.YourFundedEquityCampaign"
             android:label="Your Funded Equity Camp"
             android:parentActivityName=".Activities.Personal_Page" />
-
         <activity
             android:name=".Activities.AddProduct"
             android:label="Add Product" />
-
         <activity
             android:name=".Activities.ShopInfoForBuying"
             android:label="Product Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.BuyPage"
             android:label="Payment process"
             android:theme="@style/AppTheme.CustomThem" />
-
         <activity
             android:name=".Activities.AddCareer"
             android:label="Add Career" />
-
         <activity
             android:name=".Activities.JobInfoCreator"
             android:label="Job Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.JobInfoForApplied"
             android:label="Job Details"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activities.CategoryPageReward"
             android:parentActivityName=".Activities.Reward_campaign_Home_page" />
-
         <activity
             android:name=".Activities.CategoryPageEquity"
             android:parentActivityName=".Activities.Equity_campaign_Home_page" />
+        <activity
+            android:name=".Activities.CategoryPageShop"
+            android:parentActivityName=".Activities.Shop_Page" />
+        <activity
+            android:name=".Activities.CategoryPageJob"
+            android:parentActivityName=".Activities.Job" />
     </application>
 
 </manifest>

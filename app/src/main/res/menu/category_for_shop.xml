@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search_icon"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/all_projects"
+        android:title=" All products" />
+    <item
+        android:id="@+id/art"
+        android:title="Art" />
+    <item
+        android:id="@+id/craft"
+        android:title="Craft" />
+    <item
+        android:id="@+id/design"
+        android:title="Design" />
+    <item
+        android:id="@+id/fashion"
+        android:title="Fashion" />
+    <item
+        android:id="@+id/film_and_video"
+        android:title="Film and Video" />
+    <item
+        android:id="@+id/games"
+        android:title="Games" />
+    <item
+        android:id="@+id/health"
+        android:title="Health" />
+    <item
+        android:id="@+id/productivity"
+        android:title="Productivity" />
+    <item
+        android:id="@+id/food"
+        android:title="Food" />
+</menu>

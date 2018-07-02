@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search_icon"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/all_types"
+        android:title="All types" />
+    <item
+        android:id="@+id/medical"
+        android:title="Medical" />
+    <item
+        android:id="@+id/engineering"
+        android:title="Engineering" />
+    <item
+        android:id="@+id/lawyer"
+        android:title="Lawyer" />
+    <item
+        android:id="@+id/financial"
+        android:title="Financial" />
+    <item
+        android:id="@+id/sales"
+        android:title="Sales" />
+    <item
+        android:id="@+id/marketing"
+        android:title="Marketing" />
+    <item
+        android:id="@+id/research_and_development"
+        android:title="R&amp;D" />
+    <item
+        android:id="@+id/customer_service"
+        android:title="Customer service" />
+    <item
+        android:id="@+id/production"
+        android:title="Production" />
+</menu>

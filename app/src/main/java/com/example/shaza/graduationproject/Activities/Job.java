@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -125,6 +126,53 @@ public class Job extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.category_for_job, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        String cat = "category";
+        Intent catPage = new Intent(this, CategoryPageJob.class);
+        if (id == R.id.all_types) {
+            catPage.putExtra(cat, "All types");
+            startActivity(catPage);
+        } else if (id == R.id.medical) {
+            catPage.putExtra(cat, "Medical");
+            startActivity(catPage);
+        } else if (id == R.id.engineering) {
+            catPage.putExtra(cat, "Engineering");
+            startActivity(catPage);
+        } else if (id == R.id.lawyer) {
+            catPage.putExtra(cat, "Lawyer");
+            startActivity(catPage);
+        } else if (id == R.id.financial) {
+            catPage.putExtra(cat, "Financial");
+            startActivity(catPage);
+        } else if (id == R.id.sales) {
+            catPage.putExtra(cat, "Sales");
+            startActivity(catPage);
+        } else if (id == R.id.marketing) {
+            catPage.putExtra(cat, "Marketing");
+            startActivity(catPage);
+        } else if (id == R.id.research_and_development) {
+            catPage.putExtra(cat, "R&D");
+            startActivity(catPage);
+        } else if (id == R.id.customer_service) {
+            catPage.putExtra(cat, "Customer service");
+            startActivity(catPage);
+        } else if (id == R.id.production) {
+            catPage.putExtra(cat, "Production");
+            startActivity(catPage);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.name_of_app) {
@@ -180,7 +228,6 @@ public class Job extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabForViewJob);
         tabLayout.setupWithViewPager(pager);
     }
-
 
     //setup toolbar and side drawer
     private void setupDrawer() {
