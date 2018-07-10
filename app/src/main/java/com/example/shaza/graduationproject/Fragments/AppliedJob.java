@@ -55,7 +55,7 @@ public class AppliedJob extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Applied Job")) {
-                    getIdsForProd();
+                    getIdsForJob();
                 }
             }
 
@@ -68,16 +68,17 @@ public class AppliedJob extends Fragment {
         return rootView;
     }
 
-    private void getIdsForProd() {
+    private void getIdsForJob() {
         userTable.child(idUserDB).child("Applied Job").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     idJobDB = snapshot.getValue().toString();
                     jobIDS.add(idJobDB);
                 }
                 if (jobIDS.size() > 0) {
-                    getProducts(jobIDS);
+                    getJobs(jobIDS);
                 }
             }
 
@@ -88,10 +89,11 @@ public class AppliedJob extends Fragment {
         });
     }
 
-    private void getProducts(final ArrayList<String> jobIDS) {
+    private void getJobs(final ArrayList<String> jobIDS) {
         jobTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobs.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     job = snapshot.getValue(Job.class);
                     idJobDB = job.getIdJob();

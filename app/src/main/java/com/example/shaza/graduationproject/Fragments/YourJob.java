@@ -97,6 +97,7 @@ public class YourJob extends Fragment {
         jobTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobs.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     job = snapshot.getValue(Job.class);
                     idJobDB = job.getIdJob();

@@ -12,21 +12,29 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Adapters.Question_List_Adapters;
+import com.example.shaza.graduationproject.Database.Table.Question;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.QuestionList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,11 +44,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HelpingCommunity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ListView listView;
     private Question_List_Adapters adapter;
-    private ArrayList<QuestionList> list = new ArrayList<>();
+    Date startDate;
 
     private NavigationView navView;
     private FirebaseUser user;
@@ -48,50 +58,47 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
     private TextView name, email;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable;
+    RelativeLayout searchResult;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
-
+    ArrayList<Question> questionsList = new ArrayList<>();
+    TextView noResult;
+    private ArrayList<Question> questions = new ArrayList<>();
+    private DatabaseReference userTable, questionTable;
+    private EditText question;
+    private Spinner quesCategory;
+    private String ques, category, idQuestDB, publishDate;
+    private TextView noQuest;
+    private Question questionData, questionSearch;
+    private Question_List_Adapters questionAdapters;
+    private LinearLayout app;
+    private ListView listSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helping_community);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         listView = findViewById(R.id.List_of_Questions);
-        registerForContextMenu(listView);
-
-
-        list.add(new QuestionList("How to create new activity", "android", "5 mins ago"));
-        list.add(new QuestionList("How to add item to arraylist", "Java", "2 days ago"));
-        list.add(new QuestionList("How to eat 10 ton of pizza in 5 mins :'D", "Mariam", "1 year ago"));
-        list.add(new QuestionList("How to create new activity", "android", "10 mins ago"));
-        list.add(new QuestionList("How to create new activity", "android", "5 mins ago"));
-        list.add(new QuestionList("How to add item to arraylist", "Java", "2 days ago"));
-        list.add(new QuestionList("How to eat 10 ton of pizza in 5 mins :'D", "Mariam", "1 year ago"));
-        list.add(new QuestionList("How to create new activity", "android", "10 mins ago"));
-
-
-        adapter = new Question_List_Adapters(list);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent goToAnswer = new Intent(view.getContext(), CertainQuestion.class);
-                startActivity(goToAnswer); //start activity for result
-            }
-        });
-
+        question = findViewById(R.id.write_post);
+        quesCategory = findViewById(R.id.spinner_cat);
+        noQuest = findViewById(R.id.no_quest);
+        questionData = new Question();
+        app = findViewById(R.id.app);
+        listSearch = findViewById(R.id.list_search);
+        searchResult = findViewById(R.id.search_result);
+        noResult = findViewById(R.id.no_result);
         setupDrawer();
-
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
         users = new Users();
         database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
+        questionTable = database.getReference().child("Question");
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             setHeaderDrawer();
@@ -101,6 +108,7 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
             menu.findItem(R.id.login).setVisible(true);
             menu.findItem(R.id.sign_up).setVisible(true);
         }
+        showQuestion();
 
     }
 
@@ -173,57 +181,104 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
     }
 
 
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_scrolling, menu);
-        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Question_List_Adapters obj = (Question_List_Adapters) listView.getItemAtPosition(acmi.position);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        getMenuInflater().inflate(R.menu.search, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.category_for_question, menu);
         return true;
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        else if (id == R.id.action_Ask){
-            Intent Ask = new Intent(this, AskQuestionHelpingCommunity.class);
-            startActivity(Ask);
-        }
-        return super.onContextItemSelected(item);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        String cat = "category";
+        Intent catPage = new Intent(this, CategoryForQuestion.class);
+        if (id == R.id.all_questions) {
+            catPage.putExtra(cat, "All questions");
+            startActivity(catPage);
+        } else if (id == R.id.art) {
+            catPage.putExtra(cat, "Art");
+            startActivity(catPage);
+        } else if (id == R.id.craft) {
+            catPage.putExtra(cat, "Craft");
+            startActivity(catPage);
+        } else if (id == R.id.design) {
+            catPage.putExtra(cat, "Design");
+            startActivity(catPage);
+        } else if (id == R.id.fashion) {
+            catPage.putExtra(cat, "Fashion");
+            startActivity(catPage);
+        } else if (id == R.id.film_and_video) {
+            catPage.putExtra(cat, "Film and Video");
+            startActivity(catPage);
+        } else if (id == R.id.games) {
+            catPage.putExtra(cat, "Games");
+            startActivity(catPage);
+        } else if (id == R.id.health) {
+            catPage.putExtra(cat, "Health");
+            startActivity(catPage);
+        } else if (id == R.id.productivity) {
+            catPage.putExtra(cat, "Productivity");
+            startActivity(catPage);
+        } else if (id == R.id.food) {
+            catPage.putExtra(cat, "Food");
+            startActivity(catPage);
+        } else if (id == R.id.search_icon) {
+            final SearchView searchView = (SearchView) item.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(final String query) {
+                    return false;
+                }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+                @Override
+                public boolean onQueryTextChange(final String newText) {
+                    if (newText.equals("")) {
+                        app.setVisibility(View.VISIBLE);
+                        searchResult.setVisibility(View.GONE);
+                    } else {
+                        app.setVisibility(View.GONE);
+                        searchResult.setVisibility(View.VISIBLE);
+                        noResult.setVisibility(View.VISIBLE);
+                        questionTable.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                questionsList.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    questionSearch = snapshot.getValue(Question.class);
+                                    String name = questionSearch.getQuestion();
+                                    if (name.equals(newText) || name.contains(newText)) {
+                                        questionsList.add(questionSearch);
+                                    }
+                                }
+                                if (questionsList.size() > 0) {
+                                    noResult.setVisibility(View.GONE);
+                                    app.setVisibility(View.GONE);
+                                    searchResult.setVisibility(View.VISIBLE);
+                                    Question_List_Adapters adapter = new Question_List_Adapters(HelpingCommunity.this,
+                                            questionsList);
+                                    listSearch.setAdapter(adapter);
+                                    listSearch.setVisibility(View.VISIBLE);
 
-        else if (id == R.id.action_Ask){
-            Intent Ask = new Intent(this, AskQuestionHelpingCommunity.class);
-            startActivity(Ask);
+                                } else {
+                                    searchResult.setVisibility(View.VISIBLE);
+                                    noResult.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                    return true;
+
+                }
+            });
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
 
@@ -258,7 +313,10 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
         else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             navView.removeHeaderView(navView.getHeaderView(0));
             menu.findItem(R.id.logout).setVisible(false);
@@ -275,5 +333,77 @@ public class HelpingCommunity extends AppCompatActivity implements NavigationVie
     public void openExpertChat(View view) {
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
+    }
+
+    public void publishQuestion(View view) {
+        getItemFromFields();
+    }
+
+    private void getItemFromFields() {
+        ques = question.getText().toString();
+        category = quesCategory.getSelectedItem().toString();
+        checkItem();
+    }
+
+    private void checkItem() {
+        if (ques.equals("")) {
+            question.setError("Can't be empty field");
+        } else if (category.equals("Select category")) {
+            Toast.makeText(this, "Please select category", Toast.LENGTH_LONG).show();
+        } else if (user == null) {
+            Toast.makeText(this, "Please signIn First", Toast.LENGTH_LONG).show();
+        } else {
+            saveDataOnDB();
+        }
+    }
+
+    private void saveDataOnDB() {
+        startDate = Calendar.getInstance().getTime();
+        publishDate = startDate.toString();
+        idQuestDB = questionTable.push().getKey();
+        setDataForDB();
+        userTable.child(idDatabase).child("Question").child(idQuestDB).setValue(idQuestDB);
+        questionTable.child(idQuestDB).setValue(questionData).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(HelpingCommunity.this, "question publish success", Toast.LENGTH_LONG).show();
+            }
+        });
+        question.setText("");
+        quesCategory.setSelection(0);
+    }
+
+
+    private void setDataForDB() {
+        questionData.setQuestion(ques);
+        questionData.setCategory(category);
+        questionData.setCreatorID(idDatabase);
+        questionData.setPublishDate(publishDate);
+        questionData.setQuestionID(idQuestDB);
+        questionData.setUserName(userName);
+    }
+
+    private void showQuestion() {
+        questionTable.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                questions.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    questions.add(snapshot.getValue(Question.class));
+                }
+                if (questions.size() > 0) {
+                    noQuest.setVisibility(View.GONE);
+                    questionAdapters = new Question_List_Adapters(HelpingCommunity.this, questions);
+                    listView.setAdapter(questionAdapters);
+                } else {
+                    listView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -26,6 +26,7 @@ import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.Product;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -173,7 +174,7 @@ public class Shop_info_for_creator extends AppCompatActivity
                     }
                 });
                 type = product.getCampaignType();
-                getCamp(type);
+                //getCamp(type);
             }
 
             @Override
@@ -220,7 +221,7 @@ public class Shop_info_for_creator extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.edit_delete, menu);
+//        menuInflater.inflate(R.menu.edit_delete, menu);
         return true;
     }
 
@@ -270,7 +271,10 @@ public class Shop_info_for_creator extends AppCompatActivity
 
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             navView.removeHeaderView(navView.getHeaderView(0));
             menu.findItem(R.id.logout).setVisible(false);

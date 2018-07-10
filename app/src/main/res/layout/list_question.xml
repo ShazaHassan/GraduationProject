@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/no_prod_text_view"
+        android:id="@+id/no_quest_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Posts to show"
+        android:text="No Question to show"
         android:textColor="@color/darkBlue"
         android:textSize="24sp"
         android:visibility="visible"

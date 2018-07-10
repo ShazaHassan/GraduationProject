@@ -6,6 +6,7 @@
         android:id="@+id/delete_icon"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="delete"
+        android:visible="false"
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item

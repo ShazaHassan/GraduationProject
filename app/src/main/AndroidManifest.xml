@@ -21,13 +21,7 @@
         <activity
             android:name=".Activities.Home_Page"
             android:label="@string/graduation_project_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Activities.SupportStartUp"
             android:label="@string/SpportStartup"
@@ -74,12 +68,11 @@
         <activity
             android:name=".Activities.CertainQuestion"
             android:label="@string/Questions"
-            android:parentActivityName=".Activities.HelpingCommunity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".Activities.HelpingCommunity" />
         <activity
             android:name=".Activities.HelpingCommunity"
             android:label="E-Fund Community"
-            android:theme="@style/AppTheme.spinner" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.TalkToExpert"
             android:label="Talk to expert"
@@ -162,6 +155,17 @@
         <activity
             android:name=".Activities.CategoryPageJob"
             android:parentActivityName=".Activities.Job" />
+        <activity
+            android:name=".Activities.CategoryForQuestion"
+            android:parentActivityName=".Activities.HelpingCommunity" />
+        <activity
+            android:name=".Activities.WelcomePage"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

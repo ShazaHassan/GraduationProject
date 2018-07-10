@@ -98,6 +98,7 @@ public class NewestRewardCampaign extends Fragment {
                     Log.v("popular", dataSnapshot.getChildren().toString());
                 }
                 if (campaigns.size() != 0) {
+                    rearrange.clear();
                     for (int i = 0; i < campaigns.size(); i++) {
                         rearrange.add(campaigns.get(campaigns.size() - 1 - i));
                     }

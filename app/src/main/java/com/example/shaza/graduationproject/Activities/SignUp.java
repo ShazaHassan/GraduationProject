@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -125,7 +126,10 @@ public class SignUp extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.removeHeaderView(navigationView.getHeaderView(0));
@@ -238,7 +242,7 @@ public class SignUp extends AppCompatActivity
                                 startActivity(profilePage);
                         } else {
                             // If sign in fails, display a message to the user.
-                            m.setError("Wrong formt can't complete to signUp");
+                            m.setError(task.getException().getLocalizedMessage());
                             Log.w(context.toString(), "createUserWithEmail:failure", task.getException());
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

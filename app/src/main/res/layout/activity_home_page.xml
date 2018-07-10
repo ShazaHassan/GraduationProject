@@ -130,6 +130,7 @@
                             android:text="More about us.."
                             android:textAllCaps="false"
                             android:textColor="#cfcfcf"
+                            android:onClick="aboutUs"
                             android:textSize="16sp" />
 
 

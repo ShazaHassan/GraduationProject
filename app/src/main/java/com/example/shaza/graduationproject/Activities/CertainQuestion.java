@@ -5,26 +5,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shaza.graduationproject.Adapters.Answer_List_Adapter;
+import com.example.shaza.graduationproject.Database.Table.Answer;
+import com.example.shaza.graduationproject.Database.Table.Question;
 import com.example.shaza.graduationproject.Database.Table.Users;
 import com.example.shaza.graduationproject.R;
-import com.example.shaza.graduationproject.TemplateForAdapter.AnswerList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,78 +31,82 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class CertainQuestion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private ListView listView;
-    private Answer_List_Adapter adapter;
-    Button button;
-    private ArrayList<AnswerList> list = new ArrayList<>();
+public class CertainQuestion extends AppCompatActivity {
 
-    private NavigationView navView;
+
     private FirebaseUser user;
-    private View header;
-    private TextView name, email;
-    private Menu menu;
-    private String idDatabase;
-    private DatabaseReference userTable;
+    private String idDatabase, idQuest, idAnswer;
+    private DatabaseReference userTable, questionTable, answerTable;
     private FirebaseDatabase database;
-    private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+    private Question question;
+    private TextView ques, time, cat, creator, noAnswer;
+    private EditText comment;
+    private Answer answer;
+    private ListView listAnswer;
+    private ArrayList<Answer> answers = new ArrayList<>();
+    private Answer_List_Adapter adapter;
+    private String userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_certain_question_helping_community);
-        button = findViewById(R.id.button6);
-        listView = findViewById(R.id.List_of_Answers);
-
-        list.add(new AnswerList("Answer1"));
-        list.add(new AnswerList("Answer2"));
-        list.add(new AnswerList("Answer3"));
-        list.add(new AnswerList("Answer4"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-        list.add(new AnswerList("bbbbbb"));
-
-        adapter = new Answer_List_Adapter(list);
-        listView.setAdapter(adapter);
-
-        setupDrawer();
-
-        navView = findViewById(R.id.nav_view);
-        navView.setItemIconTintList(null);
-        menu = navView.getMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        Intent intent = getIntent();
+        idQuest = intent.getStringExtra("id");
         users = new Users();
         database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
+        questionTable = database.getReference().child("Question");
+        answerTable = database.getReference().child("Answer");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        answer = new Answer();
+        listAnswer = findViewById(R.id.List_of_Answers);
+        noAnswer = findViewById(R.id.no_comment);
         if (user != null) {
-            setHeaderDrawer();
-        } else {
-            navView.removeHeaderView(navView.getHeaderView(0));
-            menu.findItem(R.id.logout).setVisible(false);
-            menu.findItem(R.id.login).setVisible(true);
-            menu.findItem(R.id.sign_up).setVisible(true);
+            idDatabase = user.getUid();
+            userTable.child(idDatabase).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    userName = dataSnapshot.getValue(Users.class).getFirstName()
+                            + " " + dataSnapshot.getValue(Users.class).getLastName();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
+        ques = findViewById(R.id.question);
+        time = findViewById(R.id.q_time);
+        cat = findViewById(R.id.q_cat);
+        creator = findViewById(R.id.owner_question);
+        comment = findViewById(R.id.write_comment);
+        getQuestion();
     }
 
-    private void setHeaderDrawer() {
-        header = navView.getHeaderView(0);
-        idDatabase = user.getUid();
-        name = header.findViewById(R.id.name_at_header);
-        email = header.findViewById(R.id.mail_at_header);
-        userTable.child(idDatabase).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void getQuestion() {
+        questionTable.child(idQuest).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                users = dataSnapshot.getValue(Users.class);
-                userName = users.getFirstName() + " " + users.getLastName();
-                e_mail = user.getEmail();
-                name.setText(userName);
-                email.setText(e_mail);
+                question = dataSnapshot.getValue(Question.class);
+                ques.setText(question.getQuestion());
+                cat.setText(question.getCategory());
+                calculateTime(question);
+                creatorName(question);
+                if (dataSnapshot.hasChild("Answer")) {
+                    getAnswers();
+                }
             }
 
             @Override
@@ -112,19 +114,31 @@ public class CertainQuestion extends AppCompatActivity implements NavigationView
 
             }
         });
-        header.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent pp = new Intent(CertainQuestion.this, Personal_Page.class);
-                startActivity(pp);
-            }
-        });
-        menu.findItem(R.id.login).setVisible(false);
-        menu.findItem(R.id.sign_up).setVisible(false);
-        menu.findItem(R.id.logout).setVisible(true);
     }
 
+    private void getAnswers() {
+        questionTable.child(idQuest).child("Answer").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                answers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    answers.add(snapshot.getValue(Answer.class));
+                }
+                if (answers.size() > 0) {
+                    noAnswer.setVisibility(View.GONE);
+                    adapter = new Answer_List_Adapter(CertainQuestion.this, answers);
+                    listAnswer.setAdapter(adapter);
+                } else {
+                    listAnswer.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void makeProfilePic(String gender) {
         if (gender.equals("Female")) {
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_female_user);
@@ -138,83 +152,94 @@ public class CertainQuestion extends AppCompatActivity implements NavigationView
             pp.setImageDrawable(roundedBitmapDrawable);
         }
     }
-    private void setupDrawer() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
-        //Drawer of navigation bar icon
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-    }
-
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.name_of_app) {
-            Intent homePage = new Intent(this, Home_Page.class);
-            startActivity(homePage);
-        } else if (id == R.id.start_campaign) {
-            Intent startCampaign = new Intent(this, Create_new_campaign.class);
-            startActivity(startCampaign);
-        } else if (id == R.id.suppot_startup) {
-            Intent supportPage = new Intent(this, SupportStartUp.class);
-            startActivity(supportPage);
-        } else if (id == R.id.shop) {
-            Intent shopPage = new Intent(this, Shop_Page.class);
-            startActivity(shopPage);
-        } else if (id == R.id.job) {
-
-        } else if (id == R.id.login) {
-            Intent loginPage = new Intent(this, Login.class);
-            startActivity(loginPage);
-        } else if (id == R.id.sign_up) {
-            Intent signUpPage = new Intent(this, SignUp.class);
-            startActivity(signUpPage);
-        } else if (id == R.id.help_community){
-            Intent HelpPage = new Intent(this, HelpingCommunity.class);
-            startActivity(HelpPage);
+    private void calculateTime(Question question) {
+        Calendar c = Calendar.getInstance();
+        Date current, publish;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
+        current = Calendar.getInstance().getTime();
+        try {
+            c.setTime(dateFormat.parse(question.getPublishDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        else if (id == R.id.help) {
+        publish = c.getTime();
+        long diff = current.getTime() - publish.getTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
 
-        } else if (id == R.id.about_us) {
-
-        } else if (id == R.id.logout) {
-            navView.removeHeaderView(navView.getHeaderView(0));
-            menu.findItem(R.id.logout).setVisible(false);
-            menu.findItem(R.id.login).setVisible(true);
-            menu.findItem(R.id.sign_up).setVisible(true);
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, Home_Page.class));
+        if (days == 0) {
+            if (hours == 0) {
+                time.setText(Long.toString(minutes) + " minutes Ago");
+            } else {
+                time.setText(Long.toString(hours) + " hours Ago");
+            }
+        } else if (days < 30) {
+            time.setText(Long.toString(days) + " days ago");
+        } else if (days == 30 || days < 30 * 2) {
+            time.setText("one month ago");
+        } else if (days == 30 * 2 || days < 30 * 3) {
+            time.setText("two months ago");
+        } else if (days == 30 * 3 || days < 30 * 4) {
+            time.setText("three months ago");
+        } else if (days == 30 * 4 || days < 30 * 5) {
+            time.setText("four months ago");
+        } else if (days == 30 * 5 || days < 30 * 6) {
+            time.setText("five months ago");
+        } else if (days == 30 * 6 || days < 30 * 7) {
+            time.setText("six months ago");
+        } else if (days == 30 * 7 || days < 30 * 8) {
+            time.setText("seven months ago");
+        } else if (days == 30 * 8 || days < 30 * 9) {
+            time.setText("eight months ago");
+        } else if (days == 30 * 9 || days < 30 * 10) {
+            time.setText("nine months ago");
+        } else if (days == 30 * 10 || days < 30 * 11) {
+            time.setText("ten months ago");
+        } else if (days == 30 * 11 || days < 30 * 12) {
+            time.setText("eleven month ago");
+        } else if (days == 30 * 12 || days < 30 * 13) {
+            time.setText("one year ago");
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void creatorName(Question question) {
+        userTable.child(question.getCreatorID()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                creator.setText(dataSnapshot.getValue(Users.class).getFirstName() + " " + dataSnapshot.getValue(Users.class).getLastName());
+            }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void addComment(View view) {
+        if (user == null) {
+            Toast.makeText(this, "Please Login first", Toast.LENGTH_LONG).show();
+        } else if (comment.getText().toString().equals("")) {
+            comment.setError("Can't be empty field");
+        } else {
+            idAnswer = answerTable.push().getKey();
+            answer.setAnswer(comment.getText().toString());
+            answer.setCreatorID(idDatabase);
+            answer.setAnswerID(idAnswer);
+            answer.setUserName(userName);
+            Date publishDate = Calendar.getInstance().getTime();
+            answer.setTime(publishDate.toString());
+            questionTable.child(idQuest).child("Answer").child(idAnswer).setValue(answer).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(CertainQuestion.this, "Complete", Toast.LENGTH_LONG).show();
+                }
+            });
+            userTable.child(idDatabase).child("Answer").child(idAnswer).setValue(idAnswer);
+            comment.setText("");
         }
-        return super.onOptionsItemSelected(item);
     }
-
 }

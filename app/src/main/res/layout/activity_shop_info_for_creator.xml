@@ -101,7 +101,8 @@
                         android:onClick="goToCampDetails"
                         android:text="From Camp"
                         android:textColor="@color/darkBlue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/description_of_product_creator"

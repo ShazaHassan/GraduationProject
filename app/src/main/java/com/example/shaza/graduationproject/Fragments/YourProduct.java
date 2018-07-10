@@ -92,6 +92,7 @@ public class YourProduct extends Fragment {
         productTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                products.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     product = snapshot.getValue(Product.class);
                     idProdDB = product.getIdProduct();

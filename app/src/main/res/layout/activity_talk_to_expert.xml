@@ -40,23 +40,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:inputType="textLongMessage"
-                android:id="@+id/send_message" />
+                android:id="@+id/mail_to_expert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="Enter your mail" />
 
-            <ImageView
-                android:id="@+id/send_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/social_send_now"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="textLongMessage"
+                    android:id="@+id/send_message"
+                    android:hint="enter your Msg" />
+
+                <ImageView
+                    android:id="@+id/send_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/social_send_now"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:onClick="sendMsg"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
         </LinearLayout>
 
 

@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +26,7 @@ import com.example.shaza.graduationproject.Adapters.AdapterForShowRewardCampaign
 import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,6 +75,7 @@ public class Home_Page extends AppCompatActivity
     private long diff, seconds, minutes, hours, days;
     private EquityCampaign successEqCampaign, endingEqCampaign, newestEqCampaign;
     private AdapterForShowEquityCampaign successEqCamp, endingEqCamp, newestEqCamp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,18 +162,18 @@ public class Home_Page extends AppCompatActivity
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.search, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.search, menu);
+//        return true;
+//    }
 
     //setup view pager for reward campaign for slide campaign
     private void initRewardCampSuccess() {
 
         rewardSuccess = findViewById(R.id.list_reward_success);
-        rewardTable.addListenerForSingleValueEvent(new ValueEventListener() {
+        rewardTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 successCampaigns.clear();
@@ -191,21 +192,22 @@ public class Home_Page extends AppCompatActivity
                     minutes = seconds / 60;
                     hours = minutes / 60;
                     days = hours / 24;
-                    if (days > 0 && (successReCampaign.getNeededMoney() <= successReCampaign.getFundedMoney())) {
+                    if ((successReCampaign.getNeededMoney() <= successReCampaign.getFundedMoney())) {
                         successCampaigns.add(successReCampaign);
                     }
 
                 }
                 if (successCampaigns.size() > 0 && successCampaigns.size() <= 3) {
-                    rewardSuccess.setVisibility(View.VISIBLE);
                     successCamp = new AdapterForShowRewardCampaign(Home_Page.this, successCampaigns, R.color.darkBlue);
                     rewardSuccess.setAdapter(successCamp);
+                    rewardSuccess.setVisibility(View.VISIBLE);
                     noCampReSu.setVisibility(View.GONE);
                 } else if (successCampaigns.size() > 3) {
                     successShowCamps.clear();
                     for (int i = 0; i < 3; i++) {
                         successShowCamps.add(successCampaigns.get(i));
                     }
+                    rewardSuccess.setVisibility(View.VISIBLE);
                     successCamp = new AdapterForShowRewardCampaign(Home_Page.this, successShowCamps, R.color.darkBlue);
                     rewardSuccess.setAdapter(successCamp);
                     noCampReSu.setVisibility(View.GONE);
@@ -280,6 +282,7 @@ public class Home_Page extends AppCompatActivity
     }
 
     private void initRewardCampNewest() {
+        final ArrayList<RewardCampaign> rearrange = new ArrayList<>();
         rewardNewest = findViewById(R.id.list_reward_newest);
         rewardTable.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -316,19 +319,22 @@ public class Home_Page extends AppCompatActivity
                 }
 
                 if (newestCampaigns.size() > 0 && newestCampaigns.size() <= 3) {
-                    for (int i = 0; i < 3; i++) {
-                        newestShowCamps.add(newestCampaigns.get(i));
+                    rearrange.clear();
+                    for (int i = 0; i < newestCampaigns.size(); i++) {
+                        int x = (newestCampaigns.size() - 1 - i);
+                        rearrange.add(newestCampaigns.get(x));
                     }
-                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
+                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, rearrange, R.color.yellow);
                     rewardNewest.setAdapter(newestCamp);
                     rewardNewest.setVisibility(View.VISIBLE);
                     noCampReNe.setVisibility(View.GONE);
                 } else if (newestCampaigns.size() > 3) {
-                    newestShowCamps.clear();
+                    rearrange.clear();
                     for (int i = 0; i < 3; i++) {
-                        newestShowCamps.add(newestCampaigns.get(i));
+                        int x = (newestCampaigns.size() - 1 - i);
+                        rearrange.add(newestCampaigns.get(x));
                     }
-                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, newestShowCamps, R.color.yellow);
+                    newestCamp = new AdapterForShowRewardCampaign(Home_Page.this, rearrange, R.color.yellow);
                     rewardNewest.setAdapter(newestCamp);
                     rewardNewest.setVisibility(View.VISIBLE);
                     noCampReNe.setVisibility(View.GONE);
@@ -384,12 +390,13 @@ public class Home_Page extends AppCompatActivity
                     for (int i = 0; i < 3; i++) {
                         successEqShowCamps.add(successEqCampaigns.get(i));
                     }
+                    equitySuccess.setVisibility(View.VISIBLE);
                     successEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, successEqCampaigns, R.color.darkBlue);
                     equitySuccess.setAdapter(successEqCamp);
                     noCampEqSu.setVisibility(View.GONE);
 
                 } else {
-                    rewardSuccess.setVisibility(View.GONE);
+                    equitySuccess.setVisibility(View.GONE);
                 }
 
 
@@ -460,6 +467,7 @@ public class Home_Page extends AppCompatActivity
     }
 
     private void initEquityCampNewest() {
+        final ArrayList<EquityCampaign> rearrange = new ArrayList<>();
         equityNewest = findViewById(R.id.list_equity_newest);
         equityTable.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -498,16 +506,22 @@ public class Home_Page extends AppCompatActivity
                 }
 
                 if (newestEqCampaigns.size() > 0 && newestEqCampaigns.size() <= 3) {
-                    newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, newestEqCampaigns, R.color.yellow);
+                    rearrange.clear();
+                    for (int i = 0; i < newestEqCampaigns.size(); i++) {
+                        int x = (newestEqCampaigns.size() - 1 - i);
+                        rearrange.add(newestEqCampaigns.get(x));
+                    }
+                    newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, rearrange, R.color.yellow);
                     equityNewest.setAdapter(newestEqCamp);
                     noCampEqNe.setVisibility(View.GONE);
                     equityNewest.setVisibility(View.VISIBLE);
                 } else if (newestEqCampaigns.size() > 3) {
-                    successEqShowCamps.clear();
+                    rearrange.clear();
                     for (int i = 0; i < 3; i++) {
-                        newestEqShowCamps.add(newestEqCampaigns.get(i));
+                        int x = (newestEqCampaigns.size() - 1 - i);
+                        rearrange.add(newestEqCampaigns.get(x));
                     }
-                    newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, newestEqShowCamps, R.color.yellow);
+                    newestEqCamp = new AdapterForShowEquityCampaign(Home_Page.this, rearrange, R.color.yellow);
                     equityNewest.setAdapter(newestEqCamp);
                     noCampEqNe.setVisibility(View.GONE);
                     equityNewest.setVisibility(View.VISIBLE);
@@ -571,7 +585,10 @@ public class Home_Page extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.removeHeaderView(navigationView.getHeaderView(0));
@@ -630,4 +647,10 @@ public class Home_Page extends AppCompatActivity
         startActivity(jobPage);
     }
 
+    public void aboutUs(View view) {
+        PrefManager prefManager = new PrefManager(getApplicationContext());
+        // make first time launch TRUE
+        prefManager.setFirstTimeLaunch(true);
+        startActivity(new Intent(this, WelcomePage.class));
+    }
 }

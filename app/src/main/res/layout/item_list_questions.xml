@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="1dp"
     android:orientation="vertical"
-    android:background="@color/transparent">
+    android:background="@drawable/border_quest"
+    android:padding="5dp">
 
 
 
@@ -13,12 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:context="net.simplifiedcoding.recyclerviewoptionsmenu.MainActivity">
 
                 <TextView
                     android:id="@+id/question"
@@ -30,12 +24,10 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:text="Question"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textColorLink="@android:color/black"
                     android:textSize="22sp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,33 +35,39 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/Qcat"
+                    android:id="@+id/q_cat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|start"
                     android:layout_marginBottom="2dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="1"
                     android:text="Question categories"
-                    android:textSize="12sp" />
+                    android:textColor="@color/lightBlue"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/Qtime"
+                    android:id="@+id/q_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|start"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_gravity="right|start"
                     android:layout_marginTop="2dp"
-                    android:layout_weight="1"
                     android:text="Qtime"
-                    android:textAlignment="viewEnd"
-                    android:textSize="12sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/lightBlue"
+                    android:textSize="16sp"
                     tools:ignore="RtlCompat" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/owner_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="creator"
+                android:textColor="@color/darkBlue"
+                android:textSize="18sp" />
         </LinearLayout>
 
 

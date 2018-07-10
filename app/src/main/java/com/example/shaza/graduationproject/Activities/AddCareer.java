@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class AddCareer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_career);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Intent intent = getIntent();
         idCampDB = intent.getStringExtra("id");
         type = intent.getStringExtra("type");
@@ -163,7 +165,7 @@ public class AddCareer extends AppCompatActivity {
                                 jobTable.child(idJobDB).setValue(job).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(context, "product success create", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(context, "job success create", Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(context, Home_Page.class));
                                     }
                                 });

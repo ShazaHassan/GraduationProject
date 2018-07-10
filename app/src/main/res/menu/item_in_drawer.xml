@@ -44,7 +44,8 @@
         <item
             android:title="Help"
             android:id="@+id/help"
-            android:icon="@drawable/ic_help_black_24px" />
+            android:icon="@drawable/ic_help_black_24px"
+            android:visible="false" />
         <item
             android:title="About us"
             android:id="@+id/about_us"

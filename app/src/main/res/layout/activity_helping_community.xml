@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
-    tools:context=".Activities.Shop_Page">
+    tools:context=".Activities.HelpingCommunity">
 
 
     <LinearLayout
@@ -43,69 +43,108 @@
                 android:src="@drawable/chat"
                 android:onClick="openExpertChat" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/search_result"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:visibility="gone">
+
+                <ListView
+                    android:id="@+id/list_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/no_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:text="Nothing found"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="22sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
             <LinearLayout
+                android:id="@+id/app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="8dp"
+                    android:background="@drawable/border_quest">
+
+                    <EditText
+                        android:id="@+id/write_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:ems="10"
+                        android:freezesText="false"
+                        android:hint="write post or question..."
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLines="3"
+                        android:padding="10dp"
+                        android:textColor="@android:color/black"
+                        android:textColorLink="@android:color/black"
+                        android:textSize="18sp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/select_cat_for_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/write_post"
+                        android:layout_margin="8dp"
+                        android:text="Select Category"
+                        android:textSize="18sp" />
 
                     <Spinner
-                        android:id="@+id/category_spinner"
+                        android:id="@+id/spinner_cat"
                         style="@style/spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_centerInParent="false"
-                        android:layout_gravity="right|center"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/select_cat_for_question"
+                        android:layout_margin="8dp"
+                        android:layout_marginTop="8dp"
+                        android:entries="@array/category_for_new_campaign" />
+
+                    <Button
+                        android:id="@+id/add_post"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/spinner_cat"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="8dp"
                         android:background="@color/darkBlue"
-                        android:entries="@array/category"
-                        android:gravity="right"
-                        android:textAlignment="center" />
+                        android:onClick="publishQuestion"
+                        android:text="Post"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/editText8"
+                <TextView
+                    android:id="@+id/no_quest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_edittext"
-                    android:ems="10"
-                    android:freezesText="false"
-                    android:hint="write post..."
-                    android:inputType="textMultiLine"
-                    android:textColor="@android:color/black"
-                    android:textColorLink="@android:color/black"
-                    android:textSize="18sp"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:maxLines="3" />
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/darkBlue"
-                    android:text="Post"
-                    android:textColor="@color/white" />
+                    android:text="No posts or questions"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="22sp" />
 
                 <ListView
                     android:id="@+id/List_of_Questions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
-
-                </ListView>
+                    android:layout_margin="5dp"
+                    android:dividerHeight="5dp"
+                    android:visibility="visible" />
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

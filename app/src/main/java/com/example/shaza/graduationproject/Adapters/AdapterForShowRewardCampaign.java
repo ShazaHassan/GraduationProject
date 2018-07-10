@@ -33,7 +33,7 @@ import java.util.Date;
 
 public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
     ArrayList<RewardCampaign> rewardCampaigns = new ArrayList<>();
-    AdapterForShowEquityCampaign.Holder holder = null;
+    Holder holder = null;
     private Context context;
     private int colorResource;
     private Date currentDate, endDate;
@@ -70,12 +70,12 @@ public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.campaign_short_view, parent, false);
-            holder = new AdapterForShowEquityCampaign.Holder();
+            holder = new Holder();
             findItem(listItemView);
 
             listItemView.setTag(holder);
         } else {
-            holder = (AdapterForShowEquityCampaign.Holder) listItemView.getTag();
+            holder = (Holder) listItemView.getTag();
         }
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -98,6 +98,9 @@ public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
                 "Vision of this campaign : " + rewardCampaign.getVision() + "\n" +
                 "Offers for funded : " + rewardCampaign.getOffers() + "\n" +
                 "Team helps in campaign : " + rewardCampaign.getHelperTeam());
+
+        neededMoney = rewardCampaign.getNeededMoney();
+        fundedMoney = rewardCampaign.getFundedMoney();
         if (days <= 0) {
             holder.daysLeft.setText("Ended Camp at: " + rewardCampaign.getEndDate());
             holder.neededMoney.setText("");
@@ -112,8 +115,7 @@ public class AdapterForShowRewardCampaign extends ArrayAdapter<RewardCampaign> {
             }
         }
 
-        neededMoney = rewardCampaign.getNeededMoney();
-        fundedMoney = rewardCampaign.getFundedMoney();
+
         holder.category.setText(rewardCampaign.getCategory());
 
         int percentage = (int) ((rewardCampaign.getFundedMoney() * 1.0 / rewardCampaign.getNeededMoney()) * 1.0

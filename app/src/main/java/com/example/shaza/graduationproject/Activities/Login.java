@@ -1,5 +1,6 @@
 package com.example.shaza.graduationproject.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,13 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -94,7 +98,10 @@ public class Login extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -112,6 +119,89 @@ public class Login extends AppCompatActivity
     }
 
     public void forgetPasswordPage(View view) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("reset password");
+        final EditText newPassword = new EditText(this);
+        newPassword.setHint("Enter your mail");
+        newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(newPassword);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email;
+                email = newPassword.getText().toString();
+                if (email.equals("")) {
+                    newPassword.setError("Can't be empty field");
+                } else {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("email", "Email sent.");
+                                        Toast.makeText(Login.this, "Check your mail", Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                    } else {
+                                        newPassword.setError(task.getException().getLocalizedMessage());
+                                    }
+                                }
+                            });
+
+                }
+            }
+
+        });
+
+    }
+
+    public void resetPassword() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Set new password");
+
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(5, 5, 5, 5);
+        // Set up the input
+        final EditText newPassword = new EditText(this);
+        newPassword.setHint("Enter your new password");
+//        newPassword.setPadding(5,5,5,5);
+        final EditText repeatPassword = new EditText(this);
+        repeatPassword.setHint("repeat new password");
+//        repeatPassword.setPadding(5,5,5,5);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
+        newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        linearLayout.addView(newPassword);
+        repeatPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        linearLayout.addView(repeatPassword);
+        builder.setView(linearLayout);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newPass, repeatPass;
+                newPass = newPassword.getText().toString();
+                repeatPass = repeatPassword.getText().toString();
+                if (newPass.equals("")) {
+                    newPassword.setError("Can't Be Empty Field");
+                } else if (repeatPass.equals("")) {
+                    repeatPassword.setError("Can't Be Empty Field");
+                } else if (!newPass.equals(repeatPass)) {
+                    repeatPassword.setError("the repeated password not the same for new password");
+                }
+            }
+        });
     }
 
     public void signUpPage(View view) {

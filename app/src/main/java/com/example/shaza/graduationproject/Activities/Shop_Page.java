@@ -14,16 +14,23 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.shaza.graduationproject.Adapters.AdapterForShowProduct;
 import com.example.shaza.graduationproject.Adapters.PageAdapterForShop;
+import com.example.shaza.graduationproject.Database.Table.Product;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +39,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class Shop_Page extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,11 +51,17 @@ public class Shop_Page extends AppCompatActivity
     private TextView name, email;
     private Menu menu;
     private String idDatabase;
-    private DatabaseReference userTable;
+    RelativeLayout searchResult;
     private FirebaseDatabase database;
     private String userName, e_mail, gender;
     private Users users;
     private ImageView pp;
+    ArrayList<Product> products = new ArrayList<>();
+    Product product;
+    TextView noResult;
+    private DatabaseReference userTable, productTable;
+    private LinearLayout app;
+    private ListView listSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +69,17 @@ public class Shop_Page extends AppCompatActivity
         setContentView(R.layout.activity_shop__page);
         setupDrawer();
         setupViewPager();
-
+        app = findViewById(R.id.app);
+        listSearch = findViewById(R.id.list_search);
+        searchResult = findViewById(R.id.search_result);
+        noResult = findViewById(R.id.no_result);
         navView = findViewById(R.id.nav_view);
         navView.setItemIconTintList(null);
         menu = navView.getMenu();
         users = new Users();
         database = FirebaseDatabase.getInstance();
         userTable = database.getReference().child("Users");
+        productTable = database.getReference().child("Product");
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             setHeaderDrawer();
@@ -156,7 +175,10 @@ public class Shop_Page extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             navView.removeHeaderView(navView.getHeaderView(0));
             menu.findItem(R.id.logout).setVisible(false);
@@ -213,9 +235,63 @@ public class Shop_Page extends AppCompatActivity
         } else if (id == R.id.food) {
             catPage.putExtra(cat, "Food");
             startActivity(catPage);
+        } else if (id == R.id.search_icon) {
+            final SearchView searchView = (SearchView) item.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(final String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(final String newText) {
+                    if (newText.equals("")) {
+                        app.setVisibility(View.VISIBLE);
+                        searchResult.setVisibility(View.GONE);
+                    } else {
+                        app.setVisibility(View.GONE);
+                        searchResult.setVisibility(View.VISIBLE);
+                        noResult.setVisibility(View.VISIBLE);
+                        productTable.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                products.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    product = snapshot.getValue(Product.class);
+                                    String name = product.getName();
+                                    if (name.equals(newText) || name.contains(newText)) {
+                                        products.add(product);
+                                    }
+                                }
+                                if (products.size() > 0) {
+                                    noResult.setVisibility(View.GONE);
+                                    app.setVisibility(View.GONE);
+                                    searchResult.setVisibility(View.VISIBLE);
+                                    AdapterForShowProduct adapter = new AdapterForShowProduct(Shop_Page.this,
+                                            products, R.color.gray);
+                                    listSearch.setAdapter(adapter);
+                                    listSearch.setVisibility(View.VISIBLE);
+
+                                } else {
+                                    searchResult.setVisibility(View.VISIBLE);
+                                    noResult.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                    return true;
+
+                }
+            });
         }
         return true;
     }
+
 
     //pager set and tab set
     private void setupViewPager() {
@@ -256,4 +332,6 @@ public class Shop_Page extends AppCompatActivity
         Intent expertChat = new Intent(this, TalkToExpert.class);
         startActivity(expertChat);
     }
+
+
 }

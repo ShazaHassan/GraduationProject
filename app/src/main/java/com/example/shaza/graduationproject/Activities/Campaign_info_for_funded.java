@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,6 +59,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
     private Users users;
     private ImageView pp;
     private String idCampDB, type;
+    private Button fund;
 
     private RewardCampaign campaign;
     private EquityCampaign equityCampaign;
@@ -88,6 +91,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
         editCampName = findViewById(R.id.edit_campaign_name_creator);
         editDescCamp = findViewById(R.id.edit_description_of_campaign);
         link = findViewById(R.id.link_for_video);
+        fund = findViewById(R.id.fund_button);
 
         if (type.equals("reward")) {
             rewardTable = database.getReference().child("Reward Campaign");
@@ -192,6 +196,7 @@ public class Campaign_info_for_funded extends AppCompatActivity
             }
         } else {
             daysLeft.setText("Ended camp at: " + campaign.getEndDate());
+            fund.setVisibility(View.GONE);
             needMoney.setText("");
         }
         int percentageCalculation = (int) ((double) (campaign.getFundedMoney() * 1.0 / campaign.getNeededMoney() * 1.0) * 100);
@@ -355,7 +360,10 @@ public class Campaign_info_for_funded extends AppCompatActivity
 
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             navView.removeHeaderView(navView.getHeaderView(0));
             menu.findItem(R.id.logout).setVisible(false);

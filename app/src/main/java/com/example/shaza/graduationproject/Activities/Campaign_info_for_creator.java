@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.shaza.graduationproject.Database.Table.EquityCampaign;
 import com.example.shaza.graduationproject.Database.Table.RewardCampaign;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -349,9 +350,10 @@ public class Campaign_info_for_creator extends AppCompatActivity
         MenuInflater menuInflater = getMenuInflater();
         if (fundedMoney >= neededMoney) {
             menuInflater.inflate(R.menu.add_shop_and_job, menu);
-        } else {
-            menuInflater.inflate(R.menu.edit_delete, menu);
         }
+//        else {
+//            menuInflater.inflate(R.menu.edit_delete, menu);
+//        }
         return true;
     }
 
@@ -465,7 +467,10 @@ public class Campaign_info_for_creator extends AppCompatActivity
 
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(Campaign_info_for_creator.this, WelcomePage.class));
         } else if (id == R.id.logout) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.removeHeaderView(navigationView.getHeaderView(0));

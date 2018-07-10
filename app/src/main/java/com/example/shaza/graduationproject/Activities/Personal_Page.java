@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.shaza.graduationproject.Adapters.PageAdapterForPersonalPage;
 import com.example.shaza.graduationproject.Database.Table.Users;
+import com.example.shaza.graduationproject.PrefManager;
 import com.example.shaza.graduationproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -152,7 +153,10 @@ public class Personal_Page extends AppCompatActivity
         } else if (id == R.id.help) {
 
         } else if (id == R.id.about_us) {
-
+            PrefManager prefManager = new PrefManager(getApplicationContext());
+            // make first time launch TRUE
+            prefManager.setFirstTimeLaunch(true);
+            startActivity(new Intent(this, WelcomePage.class));
         } else if (id == R.id.logout) {
             navView.removeHeaderView(navView.getHeaderView(0));
             menu.findItem(R.id.logout).setVisible(false);

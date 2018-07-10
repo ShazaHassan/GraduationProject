@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.shaza.graduationproject.Fragments.AppliedJob;
-import com.example.shaza.graduationproject.Fragments.FavoriteQuestions;
 import com.example.shaza.graduationproject.Fragments.Profile;
 import com.example.shaza.graduationproject.Fragments.PurchasedProduct;
 import com.example.shaza.graduationproject.Fragments.YourJob;
@@ -40,17 +39,15 @@ public class PageAdapterForPersonalPage extends FragmentPagerAdapter {
             return new YourProduct();
         } else if (position == 6) {
             return new PurchasedProduct();
-        } else if (position == 7) {
-            return new YourQuestions();
         } else {
-            return new FavoriteQuestions();
+            return new YourQuestions();
         }
 
     }
 
     @Override
     public int getCount() {
-        return 9;
+        return 8;
     }
 
     @Override
@@ -69,10 +66,8 @@ public class PageAdapterForPersonalPage extends FragmentPagerAdapter {
             return context.getString(R.string.your_product);
         } else if (position == 6) {
             return context.getString(R.string.purchased_product);
-        } else if (position == 7) {
-            return context.getString(R.string.your_quest);
         } else {
-            return context.getString(R.string.favorite_quest);
+            return context.getString(R.string.your_quest);
         }
 
     }

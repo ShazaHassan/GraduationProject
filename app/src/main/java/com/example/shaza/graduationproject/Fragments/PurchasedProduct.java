@@ -70,6 +70,7 @@ public class PurchasedProduct extends Fragment {
         userTable.child(idUserDB).child("Purchase Product").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                prodIDs.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     idProdDB = snapshot.getValue().toString();
                     prodIDs.add(idProdDB);
@@ -90,6 +91,7 @@ public class PurchasedProduct extends Fragment {
         productTable.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                products.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     product = snapshot.getValue(Product.class);
                     idProdDB = product.getIdProduct();

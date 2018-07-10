@@ -48,9 +48,37 @@
                 android:src="@drawable/chat"
                 android:onClick="openExpertChat" />
 
+            <RelativeLayout
+                android:id="@+id/search_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:visibility="gone">
+
+                <ListView
+                    android:id="@+id/list_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/no_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:text="Nothing found"
+                    android:textAlignment="center"
+                    android:textColor="@color/darkBlue"
+                    android:textSize="22sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/app"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TabLayout

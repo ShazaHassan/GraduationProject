@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,13 +40,13 @@ public class New_campaign_reward extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
     private static int RESULT_LOAD_Video = 2;
 
-    private EditText campaignName, campaignDuration, campaignMoney, campaignHeighlight, campaignVision, campaignOffers, campaignTeam;
+    private EditText campaignName, campaignDuration, campaignMoney, campaignHeighlight, campaignVision, campaignOffers, campaignTeam, links;
     private String campName, campDuration, campMoney, campCategory, campHeighlight, campVision, campOffers, campTeam, sDate, daysLeft, eDate;
     private Spinner campaignCategory;
 
     private DatabaseReference userTable, rewardCampaignTable;
     private FirebaseUser currentUser;
-    private String idUserDB, idCampDB;
+    private String idUserDB, idCampDB, link;
 
     private Uri imageUri, videoUri;
     private String imageName, videoName, imageURL;
@@ -63,6 +64,7 @@ public class New_campaign_reward extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_campaign_reward);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         findItem();
         userTable = FirebaseDatabase.getInstance().getReference().child("Users");
         rewardCampaignTable = FirebaseDatabase.getInstance().getReference().child("Reward Campaign");
@@ -81,6 +83,7 @@ public class New_campaign_reward extends AppCompatActivity {
         campaignOffers = findViewById(R.id.reward_offers_editText);
         campaignTeam = findViewById(R.id.reward_team_editText);
         campaignCategory = findViewById(R.id.reward_category_spinner);
+        links = findViewById(R.id.link_for_video);
     }
 
     private void getValueFromItem() {
@@ -92,6 +95,7 @@ public class New_campaign_reward extends AppCompatActivity {
         campVision = campaignVision.getText().toString();
         campOffers = campaignOffers.getText().toString();
         campTeam = campaignTeam.getText().toString();
+        link = links.getText().toString();
     }
 
     private void checkValue() {
@@ -113,6 +117,8 @@ public class New_campaign_reward extends AppCompatActivity {
             campaignTeam.setError("Describe the roles for every member of team");
         } else if (imageUri == null) {
             Toast.makeText(this, "Please upload img for campaign", Toast.LENGTH_LONG).show();
+        } else if (link.equals("")) {
+            links.setText("can't be empty field");
         } else {
             saveDateOnDB();
         }
@@ -138,6 +144,7 @@ public class New_campaign_reward extends AppCompatActivity {
         campaign.setStartDate(sDate);
         campaign.setIDCampaign(idCampDB);
         campaign.setNoOfFunded(0);
+        campaign.setLinkForVideo(link);
     }
 
     public void uploadPhoto(View view) {
